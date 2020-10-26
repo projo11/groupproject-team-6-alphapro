@@ -7,7 +7,7 @@ import acm.graphics.GLabel;
 import acm.graphics.GPoint;
 
 public class GraphicsGame {
-	private board Board;
+	private Board board;
 	private int clickX, clickY, releaseX, releaseY, lastX, lastY;
 	public void printTitleScreen() {
 		

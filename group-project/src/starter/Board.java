@@ -1,7 +1,7 @@
 package starter;
 
 public class Board {
-private Space board[][];
+private Piece board[][];
 
 //Returns true if the Space given has coordinates that are not on the board.
 public boolean isOutOfBounds(Space s) {
@@ -28,8 +28,7 @@ public boolean canMoveNumSpaces(Space start, int r, int c) {
 }
 
 public Piece getPiece(Space s) {
-	//Returns the piece at the space on the board given.
-	return new Piece();
+	return board[s.getRow()][s.getCol()];
 }
 
 public void swapPieces(Space s1, Space s2) {

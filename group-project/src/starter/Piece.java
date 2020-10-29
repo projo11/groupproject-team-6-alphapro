@@ -11,6 +11,15 @@ public class Piece {
 	private int cost;
 	private ArrayList<Pair> PossibleMoves;
 	
+	//Constructor to create an Piece object with the given parameters.
+	public Piece(int row, int col, PieceType type, boolean color)
+	{
+		this.row = row;
+		this.col = col;
+		this.type = type;
+		this.color = color;
+	}
+	
 	public void setRow(int row)
 	{
 		this.row = row;

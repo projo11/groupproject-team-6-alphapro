@@ -17,14 +17,14 @@ public boolean moveNumSpaces(Space start, int r, int c) {
 	return true;
 }
 
-public void addPiece(PieceType type, int r, int c, boolean isWhite) {
+public void addPiece(int r, int c, PieceType type, boolean isWhite) {
 	//Creates a Piece object using the arguments and adds it to the board at the coordinates given.
 	//Be careful calling this function, because it will override any piece that is currently at that location.
 	//If desired, could be modified to return false if the location given is not null.
 	if (board[r][c] != null) {
 		return;
 	}
-	board[r][c] = new Piece(type, r, c, isWhite);
+	board[r][c] = new Piece(r, c, type, isWhite);
 }
 
 public boolean canMoveNumSpaces(Space start, int r, int c) {

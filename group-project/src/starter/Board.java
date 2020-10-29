@@ -13,7 +13,7 @@ public boolean isOutOfBounds(Space s) {
 }
 
 public boolean moveNumSpaces(Space start, int r, int c) {
-	//Moves the piece at the given space down by r and to the right by c.Returns false if the space given is null.
+	//Moves the piece at the given space down by r and to the right by c. Returns false if the space given is null.
 	return true;
 }
 
@@ -28,8 +28,9 @@ public void addPiece(int r, int c, PieceType type, boolean isWhite) {
 }
 
 public boolean canMoveNumSpaces(Space start, int r, int c) {
-	//Returns true if the location at start, translated down by r and to the right by c, is null.
-	return (board[start.getCol()+r][start.getRow()+c] == null);
+	//Returns true if the location at start, translated down by r and to the right by c, is null, or an enemy piece.
+	//return ((board[start.getCol()+r][start.getRow()+c] == null) || ());
+	return false;
 }
 
 public Piece getPiece(Space s) {
@@ -43,6 +44,20 @@ public void swapPieces(Space s1, Space s2) {
 	Piece temp = board[s1.getRow()][s1.getCol()];
 	board[s1.getRow()][s1.getCol()] = board[s2.getRow()][s2.getCol()];
 	board[s2.getRow()][s2.getCol()] = temp;
+}
+
+public boolean isOppositeTeam(Space s1, Space s2) {
+	//returns true if the pieces at the spaces given are of opposite color.
+	//returns false if one or more of the given spaces are null.
+	if (s1 != null && s2 != null) {
+		return (getPiece(s1).getColor() != getPiece(s2).getColor());
+	}
+	return false;
+}
+
+public void promotePawn(Space s, PieceType type) {
+	//replaces a pawn on the board with either a knight, rook, bishop, or queen.
+	board[s.getRow()][s.getCol()] = new Piece(s.getRow(), s.getCol(), type, getPiece(s).getColor());
 }
 
 public void flipBoard() {

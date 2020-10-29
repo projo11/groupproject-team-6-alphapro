@@ -20,62 +20,62 @@ public class Piece {
 		this.color = color;
 	}
 	
-	public void setRow(int row)
+	public void setRow(int row) //Sets row for Piece
 	{
 		this.row = row;
 	}
 	
-	public int getRow()
+	public int getRow() //Gets row for Piece
 	{
 		return row;
 	}
 	
-	public void setCol(int col)
+	public void setCol(int col) //Sets Column for Piece.
 	{
 		this.col = col;
 	}
 	
-	public int getCol()
+	public int getCol() //Gets Column for Piece
 	{
 		return col;
 	}
 	
-	public void setType(PieceType type)
+	public void setType(PieceType type) //Sets Piece type
 	{
 		this.type = type;
 	}
 	
-	public PieceType getType()
+	public PieceType getType() //Gets Piece type
 	{
 		return type;
 	}
 	
-	public void setPossibleMoves(PieceType type)
+	public void setPossibleMoves(PieceType type) //Sets Possible Moves for each Piece
 	{
 		//TO DO
 	}
 	
-	public int getPossibleMoves()
+	public int getPossibleMoves() // Gets Possible moves for each Piece
 	{
 		return 0;
 	}
 	
-	public void setColor(boolean color)
+	public void setColor(boolean color) // Sets Color for each Piece.
 	{
 		this.color = color;
 	}
 	
-	public boolean getColor()
+	public boolean getColor() //Gets each Pieces color
 	{
 		return color;
 	}
 	
-	public void setCost(int cost)
+	public void setCost(int cost) //Sets cost for each Piece.
 	{
 		this.cost = cost;
 	}
 	
-	public int getCost()
+	public int getCost() //Gets Cost for each Piece.
 	{
 		return cost;
 	}

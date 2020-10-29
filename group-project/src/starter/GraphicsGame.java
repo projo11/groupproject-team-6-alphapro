@@ -50,6 +50,7 @@ public class GraphicsGame {
 		System.out.println("Pawns can move forward one square and capture diagonally. It never move or capture backwards");
 		System.out.println("Except for their very first move where they can move forward two squares.");
 		System.out.println("if a pawn reaches the other side of the board it can become any other chess piece.");
+		System.out.println("Thus itsÅL theoretically possible having up to nine queens or up to ten rooks, bishops, or knights if all pawns are promoted.");
 	}
 	public void printBoard() {
 		board = new Board();

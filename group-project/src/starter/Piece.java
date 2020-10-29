@@ -10,6 +10,7 @@ public class Piece {
 	private boolean color; //1 = White, 0 = Black
 	private int cost;
 	private ArrayList<Pair> PossibleMoves;
+	private boolean hasMoved;
 	
 	//Constructor to create a Piece object with the given parameters.
 	public Piece(int row, int col, PieceType type, boolean color)

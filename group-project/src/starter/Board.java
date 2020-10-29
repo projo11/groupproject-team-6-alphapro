@@ -29,6 +29,12 @@ public void addPiece(int r, int c, PieceType type, boolean isWhite) {
 
 public boolean canMoveNumSpaces(Space start, int r, int c) {
 	//Returns true if the location at start, translated down by r and to the right by c, is null, or an enemy piece.
+	if(getPiece(start).getType() == PieceType.PAWN) {
+		//TODO
+	}
+	else {
+		return ((board[start.getCol()+r][start.getRow()+c] == null) || (isOppositeTeam(start, new Space(start.getCol()+r, start.getRow()+c))));
+	}
 	//return ((board[start.getCol()+r][start.getRow()+c] == null) || ());
 	return false;
 }

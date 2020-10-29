@@ -1,4 +1,5 @@
 package starter;
+import java.awt.*;
 
 import java.awt.Color;
 import java.awt.event.MouseEvent;
@@ -9,6 +10,7 @@ import acm.graphics.GPoint;
 public class GraphicsGame {
 	private Board board;
 	private int clickX, clickY, releaseX, releaseY, lastX, lastY;
+	private Dimension boardSize = new Dimension(600, 600);
 	public void printTitleScreen() {
 		
 	}
@@ -50,7 +52,8 @@ public class GraphicsGame {
 		System.out.println("if a pawn reaches the other side of the board it can become any other chess piece.");
 	}
 	public void printBoard() {
-	
+		board = new Board();
+		
 	}
 	public void printPieceShop() {
 		

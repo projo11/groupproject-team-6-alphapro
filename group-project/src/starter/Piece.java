@@ -11,7 +11,7 @@ public class Piece {
 	private int cost;
 	private ArrayList<Pair> PossibleMoves;
 	
-	//Constructor to create an Piece object with the given parameters.
+	//Constructor to create a Piece object with the given parameters.
 	public Piece(int row, int col, PieceType type, boolean color)
 	{
 		this.row = row;
@@ -62,7 +62,7 @@ public class Piece {
 	
 	public void setColor(boolean color)
 	{
-		//TO DO
+		this.color = color;
 	}
 	
 	public boolean getColor()

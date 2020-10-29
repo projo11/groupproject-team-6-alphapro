@@ -3,8 +3,9 @@ package starter;
 public class Board {
 private Piece board[][];
 
-//Returns true if the Space given has coordinates that are not on the board.
+
 public boolean isOutOfBounds(Space s) {
+	//Returns true if the Space given has coordinates that are not on the board.
 	if (s.getRow() < 0 || s.getRow() > 7 || s.getCol() < 0 || s.getCol() > 7) {
 		return true;
 	}
@@ -19,15 +20,20 @@ public boolean moveNumSpaces(Space start, int r, int c) {
 public void addPiece(PieceType type, int r, int c, boolean isWhite) {
 	//Creates a Piece object using the arguments and adds it to the board at the coordinates given.
 	//Be careful calling this function, because it will override any piece that is currently at that location.
-	//If desired, could be designed to return false if the location given is not null.
+	//If desired, could be modified to return false if the location given is not null.
+	if (board[r][c] != null) {
+		return;
+	}
+	board[r][c] = new Piece(type, r, c, isWhite);
 }
 
 public boolean canMoveNumSpaces(Space start, int r, int c) {
 	//Returns true if the location at start, translated down by r and to the right by c, is null.
-	return true;
+	return (board[start.getCol()+r][start.getRow()+c] == null);
 }
 
 public Piece getPiece(Space s) {
+	//Returns the piece located at the given space.
 	return board[s.getRow()][s.getCol()];
 }
 

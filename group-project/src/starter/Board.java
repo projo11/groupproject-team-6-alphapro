@@ -40,6 +40,9 @@ public Piece getPiece(Space s) {
 public void swapPieces(Space s1, Space s2) {
 	//Switches the location of the two pieces given. Should only be called when setting up the board pre-game, 
 	// and only if both spaces contain pieces of the same color.
+	Piece temp = board[s1.getRow()][s1.getCol()];
+	board[s1.getRow()][s1.getCol()] = board[s2.getRow()][s2.getCol()];
+	board[s2.getRow()][s2.getCol()] = temp;
 }
 
 public void flipBoard() {

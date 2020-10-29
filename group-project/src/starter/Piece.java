@@ -75,7 +75,7 @@ public class Piece {
 		this.cost = cost;
 	}
 	
-	public int getCost() //Gets Cost for each Piece
+	public int getCost() //Gets Cost for each Piece.
 	{
 		return cost;
 	}

@@ -14,7 +14,13 @@ public boolean isOutOfBounds(Space s) {
 
 public boolean moveNumSpaces(Space start, int r, int c) {
 	//Moves the piece at the given space down by r and to the right by c. Returns false if the space given is null.
-	return true;
+	if (canMoveNumSpaces(start, r, c)) {
+		getPiece(start).setHasMoved(true);
+		board[start.getRow()+r][start.getCol()+c] = getPiece(start);
+		board[start.getRow()][start.getCol()] = null;
+		return true;
+	}
+	return false;
 }
 
 public void addPiece(int r, int c, PieceType type, boolean isWhite) {

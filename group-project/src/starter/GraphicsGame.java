@@ -1,18 +1,44 @@
 package starter;
 import java.awt.*;
 
+import javax.swing.JButton;
+import javax.swing.JFrame;
 import java.awt.Color;
 import java.awt.event.MouseEvent;
 
+import acm.graphics.GImage;
 import acm.graphics.GLabel;
 import acm.graphics.GPoint;
+import acm.program.GraphicsProgram;
 
-public class GraphicsGame {
+public class GraphicsGame extends GraphicsProgram{
 	private Board board;
 	private int clickX, clickY, releaseX, releaseY, lastX, lastY;
-	private Dimension boardSize = new Dimension(600, 600);
+	private int x = 8;
+	private int y = 8;
+	public static final int PROGRAM_WIDTH = 800;
+	public static final int PROGRAM_HEIGHT = 600;
+	final JFrame parent = new JFrame();
+	
+	
+	public void init() {
+		setSize(PROGRAM_WIDTH, PROGRAM_HEIGHT);
+	}
+	
 	public void printTitleScreen() {
-		
+		GLabel Title = new GLabel("Custom Chess", 200, 100);
+		Title.setColor(Color.RED);
+		Title.setFont("TimesNewRoman-30");
+		add(Title);
+		/*GImage Background = new GImage("Background.png", 205, 200);
+		Background.sendToBack();
+		Background.setSize(300, 300);
+		add(Background);*/
+		//add background image
+		JButton start = new JButton("Start Battle");
+		start.setLocation(200, 400);
+		JButton rules = new JButton("View Rule");
+		start.setLocation(250, 400);
 	}
 	
 	public void printRules1() {
@@ -53,15 +79,33 @@ public class GraphicsGame {
 		System.out.println("Thus itsÅL theoretically possible having up to nine queens or up to ten rooks, bishops, or knights if all pawns are promoted.");
 	}
 	public void printBoard() {
-		board = new Board();
-		
+		//print board
+		board = new Board(x,y);
+		board.printB();
 	}
 	public void printPieceShop() {
 		
 	}
     public void printWiunScreen() {
+    	setSize(PROGRAM_WIDTH/2, PROGRAM_HEIGHT/2);
+    	GLabel v = new GLabel("VICTORY", 200, 100);
+		v.setColor(Color.RED);
+		v.setFont("TimesNewRoman-40");
+		add(v);
+		/*GImage Background = new GImage("Background.png", 205, 200);
+		Background.sendToBack();
+		Background.setSize(300, 300);
+		add(Background);*/
+		//add background image
+		JButton rematch = new JButton("Rematch");
+		rematch.setLocation(200, 400);
+		JButton repay = new JButton("Recreate your chess Group on the board");
+		repay.setLocation(250, 400);
+		JButton Return = new JButton("Recreate your chess Group on the board");
+		Return.setLocation(300, 400);
 		
 	}
+    
     @Override
     public void mousePressed(MouseEvent e) {
     	
@@ -72,6 +116,6 @@ public class GraphicsGame {
     }
     @Override
 	public void mouseReleased(MouseEvent e) {
-		
-	}
+    	
+    }
 }

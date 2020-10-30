@@ -9,7 +9,7 @@ public class Piece {
 	private PieceType type;
 	private boolean color; //1 = White, 0 = Black
 	private int cost;
-	private ArrayList<Pair> PossibleMoves;
+	private ArrayList<Pair<Integer, Integer>> PossibleMoves;
 	private boolean hasMoved;
 	
 	//Constructor to create a Piece object with the given parameters.
@@ -163,9 +163,9 @@ public class Piece {
 		}
 	}
 	
-	public int getPossibleMoves() // Gets Possible moves for each Piece
+	public ArrayList<Pair<Integer, Integer>> getPossibleMoves() // Gets Possible moves for each Piece
 	{
-		return 0;
+		return PossibleMoves;
 	}
 	
 	public void setColor(boolean color) // Sets Color for each Piece.

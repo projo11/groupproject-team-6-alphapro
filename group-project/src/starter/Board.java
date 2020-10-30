@@ -1,5 +1,7 @@
 package starter;
 
+import javafx.util.Pair;
+
 public class Board {
 private Piece board[][];
 private Piece temp[][];
@@ -37,8 +39,16 @@ public void addPiece(int r, int c, PieceType type, boolean isWhite) {
 public boolean canMoveNumSpaces(Space start, int r, int c) {
 	//Returns true if the location at start, translated down by r and to the right by c, is null, or an enemy piece.
 	//Contains special instructions for the movement of pawns.
-	
-	//TODO: check if the move is listed in the movesList of the piece.
+	boolean pairFound = false;
+	for (Pair<Integer, Integer> temp : getPiece(start).getPossibleMoves()) {
+		if (temp == new Pair<Integer, Integer>(r, c)) {
+			pairFound = true;
+			break; //TODO: determine if this break ruins everything
+		}
+	}
+	if(!pairFound) {
+		return false;
+	}
 	if(getPiece(start).getType() == PieceType.PAWN) {
 		if (r == -2 && c == 0) {
 			return (board[start.getRow()-1][start.getCol()] == null) && (board[start.getRow()-2][start.getCol()] == null) && (getPiece(start).getHasMoved() == false);
@@ -50,6 +60,9 @@ public boolean canMoveNumSpaces(Space start, int r, int c) {
 			return isOppositeTeam(start, new Space(start.getCol()+r, start.getRow()+c));
 		}
 		return false;
+	}
+	if (getPiece(start).getType() == PieceType.KING) {
+		//TODO: Make king not be able to kill self
 	}
 	return ((board[start.getCol()+r][start.getRow()+c] == null) || (isOppositeTeam(start, new Space(start.getCol()+r, start.getRow()+c))));
 }
@@ -89,6 +102,17 @@ public void flipBoard() {
 		}
 	}
 	board = temp;
+}
+
+public boolean isSPaceSafe(Space s, boolean isTeamWhite) {
+	//checks a space on the board to see if it is safe to move to for the team declared in the boolean.
+	return true;
+}
+
+public boolean checkmate(boolean isTeamWhite) {
+	//checks a team's king to see if it is in check. If so, looks to see if the king can move to safety. 
+	//If they cannot, looks to see if any of your pieces can block the danger.
+	return false;
 }
 
 }

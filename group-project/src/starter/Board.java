@@ -62,7 +62,9 @@ public boolean canMoveNumSpaces(Space start, int r, int c) {
 		return false;
 	}
 	if (getPiece(start).getType() == PieceType.KING) {
-		//TODO: Make king not be able to kill self
+		if (!isSPaceSafe(new Space(start.getRow()+r, start.getCol()+c), getPiece(start).getColor())) {
+			return false;
+		}
 	}
 	return ((board[start.getCol()+r][start.getRow()+c] == null) || (isOppositeTeam(start, new Space(start.getCol()+r, start.getRow()+c))));
 }

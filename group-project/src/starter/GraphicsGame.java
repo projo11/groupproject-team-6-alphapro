@@ -10,7 +10,10 @@ import acm.graphics.GPoint;
 public class GraphicsGame {
 	private Board board;
 	private int clickX, clickY, releaseX, releaseY, lastX, lastY;
-	private Dimension boardSize = new Dimension(600, 600);
+	public static final int PROGRAM_WIDTH = 900;
+	public static final int PROGRAM_HEIGHT = 900;
+	public static final int NUM_ROWS = 9;
+	public static final int NUM_COLS = 9;
 	public void printTitleScreen() {
 		
 	}

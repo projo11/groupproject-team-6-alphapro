@@ -188,12 +188,12 @@ public class Piece {
 		return cost;
 	}
 	
-	public void setHasMoved(boolean hasMoved)
+	public void setHasMoved(boolean hasMoved) //Sets that a piece has moved
 	{
 		this.hasMoved = hasMoved;
 	}
 	
-	public boolean getHasMoved()
+	public boolean getHasMoved() //Gets information that piece has moved
 	{
 		return hasMoved;
 	}

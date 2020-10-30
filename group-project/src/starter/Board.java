@@ -2,6 +2,7 @@ package starter;
 
 public class Board {
 private Piece board[][];
+private Piece temp[][];
 
 
 public boolean isOutOfBounds(Space s) {
@@ -14,7 +15,13 @@ public boolean isOutOfBounds(Space s) {
 
 public boolean moveNumSpaces(Space start, int r, int c) {
 	//Moves the piece at the given space down by r and to the right by c. Returns false if the space given is null.
-	return true;
+	if (canMoveNumSpaces(start, r, c)) {
+		getPiece(start).setHasMoved(true);
+		board[start.getRow()+r][start.getCol()+c] = getPiece(start);
+		board[start.getRow()][start.getCol()] = null;
+		return true;
+	}
+	return false;
 }
 
 public void addPiece(int r, int c, PieceType type, boolean isWhite) {
@@ -29,14 +36,22 @@ public void addPiece(int r, int c, PieceType type, boolean isWhite) {
 
 public boolean canMoveNumSpaces(Space start, int r, int c) {
 	//Returns true if the location at start, translated down by r and to the right by c, is null, or an enemy piece.
+	//Contains special instructions for the movement of pawns.
+	
+	//TODO: check if the move is listed in the movesList of the piece.
 	if(getPiece(start).getType() == PieceType.PAWN) {
-		//TODO
+		if (r == -2 && c == 0) {
+			return (board[start.getRow()-1][start.getCol()] == null) && (board[start.getRow()-2][start.getCol()] == null) && (getPiece(start).getHasMoved() == false);
+		}
+		else if (r == -1 && c == 0) {
+			return (board[start.getCol()+r][start.getRow()+c] == null);
+		}
+		else if (c == 1 || c == -1) {
+			return isOppositeTeam(start, new Space(start.getCol()+r, start.getRow()+c));
+		}
+		return false;
 	}
-	else {
-		return ((board[start.getCol()+r][start.getRow()+c] == null) || (isOppositeTeam(start, new Space(start.getCol()+r, start.getRow()+c))));
-	}
-	//return ((board[start.getCol()+r][start.getRow()+c] == null) || ());
-	return false;
+	return ((board[start.getCol()+r][start.getRow()+c] == null) || (isOppositeTeam(start, new Space(start.getCol()+r, start.getRow()+c))));
 }
 
 public Piece getPiece(Space s) {
@@ -68,6 +83,12 @@ public void promotePawn(Space s, PieceType type) {
 
 public void flipBoard() {
 	//Reverses the 2-d array board. Used to simulate looking at the board from the opposite perspective.
+	for (int i = 0; i < 8; i++) {
+		for(int j = 0; j < 8; j++) {
+			temp[i][j] = board[7-i][7-j];
+		}
+	}
+	board = temp;
 }
 
 }

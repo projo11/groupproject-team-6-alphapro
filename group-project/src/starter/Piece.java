@@ -81,6 +81,16 @@ public class Piece {
 		return cost;
 	}
 	
+	public void setHasMoved(boolean hasMoved)
+	{
+		this.hasMoved = hasMoved;
+	}
+	
+	public boolean getHasMoved()
+	{
+		return hasMoved;
+	}
+	
 	public Space ifIWereToMove()
 	{
 		return null;

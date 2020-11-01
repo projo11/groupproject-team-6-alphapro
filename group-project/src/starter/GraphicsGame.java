@@ -74,7 +74,7 @@ public class GraphicsGame {
 	public void printPieceShop() {
 		
 	}
-    public void printWiunScreen() {
+    public void printWinScreen() {
 		
 	}
     @Override

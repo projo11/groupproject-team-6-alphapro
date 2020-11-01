@@ -143,6 +143,14 @@ public class Piece {
 			Pair<Integer, Integer> move6 = new Pair<Integer, Integer> (1, -1); //Going forward diagonally to the left 1 space
 			Pair<Integer, Integer> move7 = new Pair<Integer, Integer> (-1, 1); //Going backwards diagonally to the right 1 space
 			Pair<Integer, Integer> move8 = new Pair<Integer, Integer> (1, 1); //Going backwards diagonally to the left 1 space
+			PossibleMoves.add(move1);
+			PossibleMoves.add(move2);
+			PossibleMoves.add(move3);
+			PossibleMoves.add(move4);
+			PossibleMoves.add(move5);
+			PossibleMoves.add(move6);
+			PossibleMoves.add(move7);
+			PossibleMoves.add(move8);
 		}
 	}
 	

@@ -94,6 +94,8 @@ public class GraphicsGame extends GraphicsProgram{
 	               }
 	           }
 	     }
+	}
+	public void printWinScreen() {
     	setSize(PROGRAM_WIDTH/2, PROGRAM_HEIGHT/2);
     	GLabel v = new GLabel("VICTORY", 200, 100);
 		v.setColor(Color.RED);

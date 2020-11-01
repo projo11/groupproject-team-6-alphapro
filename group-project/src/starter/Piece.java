@@ -57,7 +57,7 @@ public class Piece {
 		{
 			case PAWN: 
 				//Total Number of moves: 4; Range: 1 or 2 Spaces
-				Pair<Integer, Integer> pmove1 = new Pair<Integer, Integer> (0, -2); //Going foward 2 spaces IF pawn has yet to be moved
+				Pair<Integer, Integer> pmove1 = new Pair<Integer, Integer> (0, -2); //Going forward 2 spaces IF pawn has yet to be moved
 				Pair<Integer, Integer> pmove2 = new Pair<Integer, Integer> (0, -1); //Going forward 1 space
 				Pair<Integer, Integer> pmove3 = new Pair<Integer, Integer> (-1, -1); //Going forward diagonally to the right for capturing a piece
 				Pair<Integer, Integer> pmove4 = new Pair<Integer, Integer> (1, -1); //Going forward diagonally to the left for capturing a piece

@@ -79,6 +79,7 @@ public boolean canMoveNumSpaces(Space start, int r, int c) {
 			return !attackedByWhite[r][c];
 		}
 	}
+	//TODO: Require line of sight for non-knights and pawns.
 	return ((board[start.getCol()+r][start.getRow()+c] == null) || (isOppositeTeam(start, new Space(start.getCol()+r, start.getRow()+c))));
 }
 
@@ -137,12 +138,25 @@ public void updateAttackLists() {
 		if (temp.getColor()) {
 			//For white pieces
 			if(temp.getType() == PieceType.PAWN) {
-				attackedByWhite[temp.getRow()-1][temp.getCol()+1] = true;
+				if (!isBoardFlipped) {
+					//TODO
+				}
+				else {
+					//TODO
+				}
+				//attackedByWhite[temp.getRow()-1][temp.getCol()+1] = true;
 			}
 		}
 		else {
 			//for black pieces
-			
+			if(temp.getType() == PieceType.PAWN) {
+				if (!isBoardFlipped) {
+					//TODO
+				}
+				else {
+					//TODO
+				}
+			}
 		}
 	}
 }
@@ -157,6 +171,13 @@ public void removePiece(Space s) {
 		}
 		board[s.getRow()][s.getCol()] = null;
 	}
+}
+
+public boolean hasLineOfSight(Space start, int r, int c) {
+	//TODO: FIX
+	//Should account for diagonals, must be straight lines to work. 
+	//Should it check for out of bounds???
+	return false;
 }
 
 public boolean checkmate(boolean isTeamWhite) {

@@ -98,11 +98,11 @@ public class GraphicsGame extends GraphicsProgram{
 		Background.setSize(300, 300);
 		add(Background);*/
 		//add background image
-		JButton rematch = new JButton("Rematch");
+		JButton rematch = new JButton("Rematch.");
 		rematch.setLocation(200, 400);
-		JButton repay = new JButton("Recreate your chess Group on the board");
+		JButton repay = new JButton("Recreate your chess Group on the board.");
 		repay.setLocation(250, 400);
-		JButton Return = new JButton("Recreate your chess Group on the board");
+		JButton Return = new JButton("Return to the main Screen.");
 		Return.setLocation(300, 400);
 		
 	}

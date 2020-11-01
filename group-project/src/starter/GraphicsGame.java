@@ -1,6 +1,5 @@
 package starter;
 import java.awt.*;
-
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import java.awt.Color;
@@ -14,17 +13,16 @@ import acm.program.GraphicsProgram;
 public class GraphicsGame extends GraphicsProgram{
 	private Board board;
 	private int clickX, clickY, releaseX, releaseY, lastX, lastY;
+
 	private int x = 8;
 	private int y = 8;
-	public static final int PROGRAM_WIDTH = 800;
-	public static final int PROGRAM_HEIGHT = 600;
+	public static final int PROGRAM_WIDTH = 900;
+	public static final int PROGRAM_HEIGHT = 900;
 	final JFrame parent = new JFrame();
-	
-	
 	public void init() {
 		setSize(PROGRAM_WIDTH, PROGRAM_HEIGHT);
 	}
-
+	
 	public void printTitleScreen() {
 		setSize(PROGRAM_WIDTH/2, PROGRAM_HEIGHT/2);
 		GLabel Title = new GLabel("Custom Chess", 200, 100);
@@ -79,15 +77,23 @@ public class GraphicsGame extends GraphicsProgram{
 		System.out.println("if a pawn reaches the other side of the board it can become any other chess piece.");
 		System.out.println("Thus itsÅL theoretically possible having up to nine queens or up to ten rooks, bishops, or knights if all pawns are promoted.");
 	}
-	public void printBoard() {
-		//print board
-		//board = new Board(x,y);
-		//board.printB();
-	}
-	public void printPieceShop() {
-		
-	}
-    public void printWinScreen() {
+	public void printBoard(Graphics g) {
+		int row;
+	    int col;
+	    int x,y;
+	    for ( row = 0; row < 8; row++ ){
+	          for ( col = 0; col < 8; col++){
+	               x = col * 40;
+	               y = row * 40;
+	               if ( (row % 2) == (col % 2) ) {
+	                    g.setColor(Color.white);
+	               }
+	               else {
+	                   g.setColor(Color.black);
+	                   g.fillRect(x, y, 40, 40);
+	               }
+	           }
+	     }
     	setSize(PROGRAM_WIDTH/2, PROGRAM_HEIGHT/2);
     	GLabel v = new GLabel("VICTORY", 200, 100);
 		v.setColor(Color.RED);
@@ -104,7 +110,6 @@ public class GraphicsGame extends GraphicsProgram{
 		repay.setLocation(250, 400);
 		JButton Return = new JButton("Return to the main Screen.");
 		Return.setLocation(300, 400);
-		
 	}
     
     @Override

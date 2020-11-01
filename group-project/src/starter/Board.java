@@ -1,6 +1,7 @@
 package starter;
 
 import java.util.*;
+import javafx.util.Pair;
 
 public class Board {
 private Piece board[][];
@@ -9,6 +10,8 @@ private Piece temp[][];
 private boolean attackedByWhite[][];
 private boolean attackedByBlack[][];
 private ArrayList<Piece> pieces;
+private boolean isBoardFlipped = false;
+//NOTE: Flipped means playing from black's perspective instead of white.
 
 
 public boolean isOutOfBounds(Space s) {
@@ -23,6 +26,7 @@ public boolean moveNumSpaces(Space start, int r, int c) {
 	//Moves the piece at the given space down by r and to the right by c. Returns false if the space given is null.
 	if (canMoveNumSpaces(start, r, c)) {
 		getPiece(start).setHasMoved(true);
+		removePiece(new Space(start.getRow()+r, start.getCol()+c));
 		board[start.getRow()+r][start.getCol()+c] = getPiece(start);
 		board[start.getRow()][start.getCol()] = null;
 		return true;
@@ -46,8 +50,15 @@ public void addPiece(int r, int c, PieceType type, boolean isWhite) {
 public boolean canMoveNumSpaces(Space start, int r, int c) {
 	//Returns true if the location at start, translated down by r and to the right by c, is null, or an enemy piece.
 	//Contains special instructions for the movement of pawns.
-	
-	//TODO: check if the move is listed in the movesList of the piece.
+	boolean moveValid = false;
+	for (Pair<Integer, Integer> temp : getPiece(start).getPossibleMoves()) {
+		if (temp == new Pair<Integer, Integer>(r, c)) {
+			moveValid = true;
+		}
+	}
+	if (!moveValid) {
+		return false;
+	}
 	if(getPiece(start).getType() == PieceType.PAWN) {
 		if (r == -2 && c == 0) {
 			return (board[start.getRow()-1][start.getCol()] == null) && (board[start.getRow()-2][start.getCol()] == null) && (getPiece(start).getHasMoved() == false);
@@ -106,19 +117,38 @@ public void flipBoard() {
 		}
 	}
 	board = temp;
+	if (isBoardFlipped) {
+		isBoardFlipped = false;
+	}
+	else {
+		isBoardFlipped = true;
+	}
 }
 
 public void updateAttackLists() {
+	//updates the attackedByWhite and attackedByBlack arrays to reflect the current board state.
 	for(int i = 0; i < 8; i++) {
 		for (int j = 0; j < 8; j++) {
 			attackedByWhite[i][j] = false;
 			attackedByBlack[i][j] = false;
 		}
 	}
-	//TODO
+	for (Piece temp : pieces) {
+		if (temp.getColor()) {
+			//For white pieces
+			if(temp.getType() == PieceType.PAWN) {
+				attackedByWhite[temp.getRow()-1][temp.getCol()+1] = true;
+			}
+		}
+		else {
+			//for black pieces
+			
+		}
+	}
 }
 
 public void removePiece(Space s) {
+	//removes a piece from the board, as well as from the ArrayList of all pieces.
 	if (board[s.getRow()][s.getCol()] != null) {
 		for (Piece temp : pieces) {
 			if (temp == board[s.getRow()][s.getCol()]) {

@@ -1,7 +1,5 @@
 package starter;
 import java.awt.*;
-
-import java.awt.Color;
 import java.awt.event.MouseEvent;
 
 import acm.graphics.GLabel;
@@ -55,9 +53,23 @@ public class GraphicsGame {
 		System.out.println("if a pawn reaches the other side of the board it can become any other chess piece.");
 		System.out.println("Thus itsÅL theoretically possible having up to nine queens or up to ten rooks, bishops, or knights if all pawns are promoted.");
 	}
-	public void printBoard() {
-		board = new Board();
-		
+	public void printBoard(Graphics g) {
+		int row;
+	    int col;
+	    int x,y;
+	    for ( row = 0; row < 8; row++ ){
+	          for ( col = 0; col < 8; col++){
+	               x = col * 40;
+	               y = row * 40;
+	               if ( (row % 2) == (col % 2) ) {
+	                    g.setColor(Color.white);
+	               }
+	               else {
+	                   g.setColor(Color.black);
+	                   g.fillRect(x, y, 40, 40);
+	               }
+	           }
+	     }
 	}
 	public void printPieceShop() {
 		

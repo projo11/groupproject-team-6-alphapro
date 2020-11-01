@@ -24,8 +24,9 @@ public class GraphicsGame extends GraphicsProgram{
 	public void init() {
 		setSize(PROGRAM_WIDTH, PROGRAM_HEIGHT);
 	}
-	
+
 	public void printTitleScreen() {
+		setSize(PROGRAM_WIDTH/2, PROGRAM_HEIGHT/2);
 		GLabel Title = new GLabel("Custom Chess", 200, 100);
 		Title.setColor(Color.RED);
 		Title.setFont("TimesNewRoman-30");
@@ -86,7 +87,7 @@ public class GraphicsGame extends GraphicsProgram{
 	public void printPieceShop() {
 		
 	}
-    public void printWiunScreen() {
+    public void printWinScreen() {
     	setSize(PROGRAM_WIDTH/2, PROGRAM_HEIGHT/2);
     	GLabel v = new GLabel("VICTORY", 200, 100);
 		v.setColor(Color.RED);

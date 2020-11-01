@@ -8,6 +8,7 @@ import acm.graphics.GPoint;
 public class GraphicsGame {
 	private Board board;
 	private int clickX, clickY, releaseX, releaseY, lastX, lastY;
+	
 	public static final int PROGRAM_WIDTH = 900;
 	public static final int PROGRAM_HEIGHT = 900;
 	

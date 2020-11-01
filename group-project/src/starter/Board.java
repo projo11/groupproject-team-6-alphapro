@@ -1,10 +1,13 @@
 package starter;
-
+import java.util.*;
 import javafx.util.Pair;
 
 public class Board {
 private Piece board[][];
 private Piece temp[][];
+private boolean attackedByWhite[][];
+private boolean attackedByBlack[][];
+private ArrayList<Piece> Pieces;
 
 
 public boolean isOutOfBounds(Space s) {
@@ -33,7 +36,10 @@ public void addPiece(int r, int c, PieceType type, boolean isWhite) {
 	if (board[r][c] != null) {
 		return;
 	}
-	board[r][c] = new Piece(r, c, type, isWhite);
+	Piece piece = new Piece(r, c, type, isWhite);
+	board[r][c] = piece;
+	Pieces.add(piece);
+	//TODO: update attackedbyblack and attackedbywhite
 }
 
 public boolean canMoveNumSpaces(Space start, int r, int c) {
@@ -56,14 +62,17 @@ public boolean canMoveNumSpaces(Space start, int r, int c) {
 		else if (r == -1 && c == 0) {
 			return (board[start.getCol()+r][start.getRow()+c] == null);
 		}
-		else if (c == 1 || c == -1) {
+		else if (c == 1 || c == -1 && r == -1) {
 			return isOppositeTeam(start, new Space(start.getCol()+r, start.getRow()+c));
 		}
 		return false;
 	}
 	if (getPiece(start).getType() == PieceType.KING) {
-		if (!isSPaceSafe(new Space(start.getRow()+r, start.getCol()+c), getPiece(start).getColor())) {
-			return false;
+		if (getPiece(start).getColor()) {
+			return !attackedByBlack[r][c];
+		}
+		else {
+			return !attackedByWhite[r][c];
 		}
 	}
 	return ((board[start.getCol()+r][start.getRow()+c] == null) || (isOppositeTeam(start, new Space(start.getCol()+r, start.getRow()+c))));
@@ -106,9 +115,14 @@ public void flipBoard() {
 	board = temp;
 }
 
-public boolean isSPaceSafe(Space s, boolean isTeamWhite) {
-	//checks a space on the board to see if it is safe to move to for the team declared in the boolean.
-	return true;
+public void updateAttackLists() {
+	for(int i = 0; i < 8; i++) {
+		for (int j = 0; j < 8; j++) {
+			attackedByWhite[i][j] = false;
+			attackedByBlack[i][j] = false;
+		}
+	}
+	
 }
 
 public boolean checkmate(boolean isTeamWhite) {

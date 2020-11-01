@@ -1,26 +1,14 @@
 package starter;
 
+import java.util.*;
+
 public class Board {
 private Piece board[][];
 private Piece temp[][];
-/*set 8x8 board
-//private int nrows = 0;
-//private int ncols = 0;
-//public Board(int rows, int cols) {
-	//TODO finish implementing this constructor
-	//ncols = cols;
-	//nrows = rows;
-	//board = new Piece[rows][cols];
-//}
-//print board
-//public void printB() {
-	//for(int i = 0; i < 8; i++) {
-		//for(int j = 0; j < 8; j++) {
-			//System.out.print(board[i][j]);
-		//}
-		//System.out.println("");
-	//}
-}*/
+
+private boolean attackedByWhite[][];
+private boolean attackedByBlack[][];
+private ArrayList<Piece> Pieces;
 
 
 public boolean isOutOfBounds(Space s) {
@@ -49,7 +37,10 @@ public void addPiece(int r, int c, PieceType type, boolean isWhite) {
 	if (board[r][c] != null) {
 		return;
 	}
-	board[r][c] = new Piece(r, c, type, isWhite);
+	Piece piece = new Piece(r, c, type, isWhite);
+	board[r][c] = piece;
+	Pieces.add(piece);
+	//TODO: update attackedbyblack and attackedbywhite
 }
 
 public boolean canMoveNumSpaces(Space start, int r, int c) {
@@ -64,10 +55,18 @@ public boolean canMoveNumSpaces(Space start, int r, int c) {
 		else if (r == -1 && c == 0) {
 			return (board[start.getCol()+r][start.getRow()+c] == null);
 		}
-		else if (c == 1 || c == -1) {
+		else if (c == 1 || c == -1 && r == -1) {
 			return isOppositeTeam(start, new Space(start.getCol()+r, start.getRow()+c));
 		}
 		return false;
+	}
+	if (getPiece(start).getType() == PieceType.KING) {
+		if (getPiece(start).getColor()) {
+			return !attackedByBlack[r][c];
+		}
+		else {
+			return !attackedByWhite[r][c];
+		}
 	}
 	return ((board[start.getCol()+r][start.getRow()+c] == null) || (isOppositeTeam(start, new Space(start.getCol()+r, start.getRow()+c))));
 }
@@ -108,5 +107,22 @@ public void flipBoard() {
 	}
 	board = temp;
 }
+
+public void updateAttackLists() {
+	for(int i = 0; i < 8; i++) {
+		for (int j = 0; j < 8; j++) {
+			attackedByWhite[i][j] = false;
+			attackedByBlack[i][j] = false;
+		}
+	}
+	
+}
+
+public boolean checkmate(boolean isTeamWhite) {
+	//checks a team's king to see if it is in check. If so, looks to see if the king can move to safety. 
+	//If they cannot, looks to see if any of your pieces can block the danger.
+	return false;
+}
+
 
 }

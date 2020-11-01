@@ -8,7 +8,7 @@ private Piece temp[][];
 
 private boolean attackedByWhite[][];
 private boolean attackedByBlack[][];
-private ArrayList<Piece> Pieces;
+private ArrayList<Piece> pieces;
 
 
 public boolean isOutOfBounds(Space s) {
@@ -39,7 +39,7 @@ public void addPiece(int r, int c, PieceType type, boolean isWhite) {
 	}
 	Piece piece = new Piece(r, c, type, isWhite);
 	board[r][c] = piece;
-	Pieces.add(piece);
+	pieces.add(piece);
 	//TODO: update attackedbyblack and attackedbywhite
 }
 
@@ -115,7 +115,18 @@ public void updateAttackLists() {
 			attackedByBlack[i][j] = false;
 		}
 	}
-	
+	//TODO
+}
+
+public void removePiece(Space s) {
+	if (board[s.getRow()][s.getCol()] != null) {
+		for (Piece temp : pieces) {
+			if (temp == board[s.getRow()][s.getCol()]) {
+				pieces.remove(temp);
+			}
+		}
+		board[s.getRow()][s.getCol()] = null;
+	}
 }
 
 public boolean checkmate(boolean isTeamWhite) {

@@ -3,24 +3,24 @@ package starter;
 public class Board {
 private Piece board[][];
 private Piece temp[][];
-//set 8x8 board
-private int nrows = 0;
-private int ncols = 0;
-public Board(int rows, int cols) {
+/*set 8x8 board
+//private int nrows = 0;
+//private int ncols = 0;
+//public Board(int rows, int cols) {
 	//TODO finish implementing this constructor
-	ncols = cols;
-	nrows = rows;
-	board = new Piece[rows][cols];
-}
+	//ncols = cols;
+	//nrows = rows;
+	//board = new Piece[rows][cols];
+//}
 //print board
-public void printB() {
-	for(int i = 0; i < 8; i++) {
-		for(int j = 0; j < 8; j++) {
-			System.out.print(board[i][j]);
-		}
-		System.out.println("");
-	}
-}
+//public void printB() {
+	//for(int i = 0; i < 8; i++) {
+		//for(int j = 0; j < 8; j++) {
+			//System.out.print(board[i][j]);
+		//}
+		//System.out.println("");
+	//}
+}*/
 
 
 public boolean isOutOfBounds(Space s) {

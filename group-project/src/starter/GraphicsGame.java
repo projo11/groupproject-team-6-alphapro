@@ -80,8 +80,8 @@ public class GraphicsGame extends GraphicsProgram{
 	}
 	public void printBoard() {
 		//print board
-		board = new Board(x,y);
-		board.printB();
+		//board = new Board(x,y);
+		//board.printB();
 	}
 	public void printPieceShop() {
 		

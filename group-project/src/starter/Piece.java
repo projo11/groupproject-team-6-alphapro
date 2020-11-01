@@ -74,7 +74,7 @@ public class Piece {
 			Pair<Integer, Integer> kmove5 = new Pair<Integer, Integer> (-2, -1); //Going right 2 spaces, forward 1
 			Pair<Integer, Integer> kmove6 = new Pair<Integer, Integer> (-2, 1); //Going right 2 spaces, backwards 1
 			Pair<Integer, Integer> kmove7 = new Pair<Integer, Integer> (2, -1); //Going left 2 spaces, forward 1
-			Pair<Integer, Integer> kmove8 = new Pair<Integer, Integer> (2, 1); //Going left 2 spaces, backward 2
+			Pair<Integer, Integer> kmove8 = new Pair<Integer, Integer> (2, 1); //Going left 2 spaces, backward 1
 			PossibleMoves.add(kmove1);
 			PossibleMoves.add(kmove2);
 			PossibleMoves.add(kmove3);
@@ -180,10 +180,4 @@ public class Piece {
 	{
 		return hasMoved;
 	}
-	
-	public Space ifIWereToMove()
-	{
-		return null;
-	}
-
 }

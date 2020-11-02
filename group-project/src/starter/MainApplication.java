@@ -21,7 +21,7 @@ public class MainApplication extends GraphicsApplication {
 	}
 
 	public void switchToMenu() { // function to switch screen to menu
-		playRandomSound(); // plays a sound when switched
+		playRandomSound(); // plays a sound when switched.
 		count++;
 		switchToScreen(menu);
 	}

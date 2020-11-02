@@ -26,7 +26,7 @@ public class MainApplication extends GraphicsApplication {
 		switchToScreen(menu);
 	}
 
-	public void switchToSome() { //function to switch the screen to some screen we can use this to switch to each window
+	public void switchToSome() { //function to switch the screen to some screen we can use this to switch to each window.
 		playRandomSound();
 		switchToScreen(somePane);
 	}

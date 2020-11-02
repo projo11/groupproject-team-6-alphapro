@@ -44,7 +44,7 @@ public void addPiece(int r, int c, PieceType type, boolean isWhite) {
 	Piece piece = new Piece(r, c, type, isWhite);
 	board[r][c] = piece;
 	pieces.add(piece);
-	//TODO: update attackedbyblack and attackedbywhite
+	updateAttackLists();
 }
 
 public boolean canMoveNumSpaces(Space start, int r, int c) {
@@ -174,9 +174,12 @@ public void removePiece(Space s) {
 }
 
 public boolean hasLineOfSight(Space start, int r, int c) {
-	//TODO: FIX
-	//Should account for diagonals, must be straight lines to work. 
-	//Should it check for out of bounds???
+	if ((Math.abs(r) != Math.abs(c) && r != 0 && c != 0) || isOutOfBounds(new Space(r, c))) {
+		return false;
+	}
+	for (int i = 0; i < 8; i++) {
+		//TODO: Figure out how to check every value from start to the end
+	}
 	return false;
 }
 

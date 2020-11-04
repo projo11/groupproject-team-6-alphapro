@@ -3,6 +3,8 @@ import acm.graphics.*;
 import java.awt.*;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 import java.awt.Color;
 import java.awt.event.MouseEvent;
 
@@ -56,7 +58,7 @@ public class GraphicsGame extends GraphicsProgram{
 		System.out.println("If a king is in check, then the player must make a move that eliminates the threat of capture and cannot"); 
 		System.out.println("leave the king in check. Checkmate happens when a king is placed in check and there is no legal move to escape."); 
 		System.out.println("Checkmate ends the game and the side whose king was checkmated looses.");  
-		
+		printRules2();
 	}
 	public void printRules2() {
 		System.out.println("Special Rules:");
@@ -98,22 +100,30 @@ public class GraphicsGame extends GraphicsProgram{
 	     }
 	}
 	public void printWinScreen() {
-    	setSize(PROGRAM_WIDTH/2, PROGRAM_HEIGHT/2);
-    	GLabel v = new GLabel("VICTORY", 200, 100);
-		v.setColor(Color.RED);
-		v.setFont("TimesNewRoman-40");
-		add(v);
-		/*GImage Background = new GImage("Background.png", 205, 200);
-		Background.sendToBack();
-		Background.setSize(300, 300);
-		add(Background);*/
-		//add background image
+		JLabel v = new JLabel("Victory");
+		final JFrame rules1 = new JFrame("WinScreen");
+		JPanel firstPanel = new JPanel();
+		firstPanel.setLayout(null);
+		//firstPanel.setMaximumSize(new Dimension(400, 400));
+		rules1.setSize(PROGRAM_WIDTH/2, PROGRAM_HEIGHT/2);
+		v.setFont(new Font("TimesNewRoman", Font.BOLD, 20));
+		v.setBounds(150, -100, 300, 300);
 		JButton rematch = new JButton("Rematch.");
-		rematch.setLocation(200, 400);
+		rematch.setBounds(135, 100, 100, 50);
 		JButton repay = new JButton("Recreate your chess Group on the board.");
-		repay.setLocation(250, 400);
-		JButton Return = new JButton("Return to the main Screen.");
-		Return.setLocation(300, 400);
+		rematch.setBounds(135, 110, 100, 50);
+		/*JButton Return = new JButton("Return to the main Screen.");
+		Return.setPreferredSize(new Dimension(100, 70));
+		firstPanel.add(rematch);
+		firstPanel.add(repay);
+		firstPanel.add(Return);*/
+		firstPanel.add(rematch);
+		firstPanel.add(repay);
+		firstPanel.add(v);
+		//v.setLocation(200, 0);
+		rules1.setContentPane(firstPanel);
+		rules1.setVisible(true);
+		//
 	}
     
     @Override

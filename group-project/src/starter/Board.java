@@ -44,7 +44,7 @@ public void addPiece(int r, int c, PieceType type, boolean isWhite) {
 	Piece piece = new Piece(r, c, type, isWhite);
 	board[r][c] = piece;
 	pieces.add(piece);
-	//TODO: update attackedbyblack and attackedbywhite
+	updateAttackLists();
 }
 
 public boolean canMoveNumSpaces(Space start, int r, int c) {
@@ -139,22 +139,53 @@ public void updateAttackLists() {
 			//For white pieces
 			if(temp.getType() == PieceType.PAWN) {
 				if (!isBoardFlipped) {
-					//TODO
+					attackedByWhite[temp.getRow()-1][temp.getCol()+1] = true;
+					attackedByWhite[temp.getRow()-1][temp.getCol()-1] = true;
 				}
 				else {
-					//TODO
+					attackedByWhite[temp.getRow()+1][temp.getCol()+1] = true;
+					attackedByWhite[temp.getRow()+1][temp.getCol()-1] = true;
 				}
-				//attackedByWhite[temp.getRow()-1][temp.getCol()+1] = true;
+			}
+			else if (temp.getType() == PieceType.KNIGHT){
+				for (Pair<Integer, Integer> pair : temp.getPossibleMoves()) {
+					if(!isOutOfBounds(new Space(temp.getRow()+pair.getKey(), temp.getRow()+pair.getKey()))) { 
+						attackedByWhite[temp.getRow()+pair.getKey()][temp.getRow()+pair.getKey()] = true;
+					}
+				}
+			}
+			else {
+				for (Pair<Integer, Integer> pair : temp.getPossibleMoves()) {
+					if(!isOutOfBounds(new Space(temp.getRow()+pair.getKey(), temp.getRow()+pair.getKey())) && hasLineOfSight(new Space(temp.getRow(), temp.getCol()), pair.getKey(), pair.getValue())) { 
+						attackedByWhite[temp.getRow()+pair.getKey()][temp.getRow()+pair.getKey()] = true; //TODO: Could be severly optimised
+					}
+				}
 			}
 		}
 		else {
 			//for black pieces
 			if(temp.getType() == PieceType.PAWN) {
 				if (!isBoardFlipped) {
-					//TODO
+					attackedByBlack[temp.getRow()+1][temp.getCol()+1] = true;
+					attackedByBlack[temp.getRow()+1][temp.getCol()-1] = true;
 				}
 				else {
-					//TODO
+					attackedByBlack[temp.getRow()-1][temp.getCol()+1] = true;
+					attackedByBlack[temp.getRow()-1][temp.getCol()-1] = true;
+				}
+			}
+			else if (temp.getType() == PieceType.KNIGHT){
+				for (Pair<Integer, Integer> pair : temp.getPossibleMoves()) {
+					if(!isOutOfBounds(new Space(temp.getRow()+pair.getKey(), temp.getRow()+pair.getKey()))) {
+						attackedByBlack[temp.getRow()+pair.getKey()][temp.getRow()+pair.getKey()] = true;
+					}
+				}
+			}
+			else {
+				for (Pair<Integer, Integer> pair : temp.getPossibleMoves()) {
+					if(!isOutOfBounds(new Space(temp.getRow()+pair.getKey(), temp.getRow()+pair.getKey())) && hasLineOfSight(new Space(temp.getRow(), temp.getCol()), pair.getKey(), pair.getValue())) { 
+						attackedByBlack[temp.getRow()+pair.getKey()][temp.getRow()+pair.getKey()] = true; //TODO: Could be severly optimised
+					}
 				}
 			}
 		}
@@ -174,10 +205,16 @@ public void removePiece(Space s) {
 }
 
 public boolean hasLineOfSight(Space start, int r, int c) {
-	//TODO: FIX
-	//Should account for diagonals, must be straight lines to work. 
-	//Should it check for out of bounds???
-	return false;
+	//returns true if the piece at start has line of sight to the space translated by r and c.
+	if ((Math.abs(r) != Math.abs(c) && r != 0 && c != 0) || isOutOfBounds(new Space(r, c))) {
+		return false;
+	}
+	for (int i = 0; i < Math.abs(c); i++) {
+		if (board[start.getRow()+((i+1)*Integer.signum(r))][start.getCol()+((i+1)*Integer.signum(c))] != null) {
+			return false;
+		}
+	}
+	return true;
 }
 
 public boolean checkmate(boolean isTeamWhite) {

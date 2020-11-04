@@ -139,23 +139,46 @@ public void updateAttackLists() {
 			//For white pieces
 			if(temp.getType() == PieceType.PAWN) {
 				if (!isBoardFlipped) {
-					//TODO
+					attackedByWhite[temp.getRow()-1][temp.getCol()+1] = true;
+					attackedByWhite[temp.getRow()-1][temp.getCol()-1] = true;
 				}
 				else {
-					//TODO
+					attackedByWhite[temp.getRow()+1][temp.getCol()+1] = true;
+					attackedByWhite[temp.getRow()+1][temp.getCol()-1] = true;
 				}
-				//attackedByWhite[temp.getRow()-1][temp.getCol()+1] = true;
+			}
+			else if (temp.getType() == PieceType.KNIGHT){
+				for (Pair<Integer, Integer> pair : temp.getPossibleMoves()) {
+					if(!isOutOfBounds(new Space(temp.getRow()+pair.getKey(), temp.getRow()+pair.getKey()))) { //TODO: Might be backwards
+						attackedByWhite[temp.getRow()+pair.getKey()][temp.getRow()+pair.getKey()] = true;
+					}
+				}
+			}
+			else {
+				//TODO
 			}
 		}
 		else {
 			//for black pieces
 			if(temp.getType() == PieceType.PAWN) {
 				if (!isBoardFlipped) {
-					//TODO
+					attackedByBlack[temp.getRow()+1][temp.getCol()+1] = true;
+					attackedByBlack[temp.getRow()+1][temp.getCol()-1] = true;
 				}
 				else {
-					//TODO
+					attackedByBlack[temp.getRow()-1][temp.getCol()+1] = true;
+					attackedByBlack[temp.getRow()-1][temp.getCol()-1] = true;
 				}
+			}
+			else if (temp.getType() == PieceType.KNIGHT){
+				for (Pair<Integer, Integer> pair : temp.getPossibleMoves()) {
+					if(!isOutOfBounds(new Space(temp.getRow()+pair.getKey(), temp.getRow()+pair.getKey()))) { //TODO: Might be backwards
+						attackedByBlack[temp.getRow()+pair.getKey()][temp.getRow()+pair.getKey()] = true;
+					}
+				}
+			}
+			else {
+				//TODO
 			}
 		}
 	}
@@ -174,13 +197,16 @@ public void removePiece(Space s) {
 }
 
 public boolean hasLineOfSight(Space start, int r, int c) {
+	//returns true if the piece at start has line of sight to the space translated by r and c.
 	if ((Math.abs(r) != Math.abs(c) && r != 0 && c != 0) || isOutOfBounds(new Space(r, c))) {
 		return false;
 	}
-	for (int i = 0; i < 8; i++) {
-		//TODO: Figure out how to check every value from start to the end
+	for (int i = 0; i < Math.abs(c); i++) {
+		if (board[start.getRow()+((i+1)*Integer.signum(r))][start.getCol()+((i+1)*Integer.signum(c))] != null) {
+			return false;
+		}
 	}
-	return false;
+	return true;
 }
 
 public boolean checkmate(boolean isTeamWhite) {

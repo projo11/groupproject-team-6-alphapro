@@ -149,13 +149,17 @@ public void updateAttackLists() {
 			}
 			else if (temp.getType() == PieceType.KNIGHT){
 				for (Pair<Integer, Integer> pair : temp.getPossibleMoves()) {
-					if(!isOutOfBounds(new Space(temp.getRow()+pair.getKey(), temp.getRow()+pair.getKey()))) { //TODO: Might be backwards
+					if(!isOutOfBounds(new Space(temp.getRow()+pair.getKey(), temp.getRow()+pair.getKey()))) { 
 						attackedByWhite[temp.getRow()+pair.getKey()][temp.getRow()+pair.getKey()] = true;
 					}
 				}
 			}
 			else {
-				//TODO
+				for (Pair<Integer, Integer> pair : temp.getPossibleMoves()) {
+					if(!isOutOfBounds(new Space(temp.getRow()+pair.getKey(), temp.getRow()+pair.getKey())) && hasLineOfSight(new Space(temp.getRow(), temp.getCol()), pair.getKey(), pair.getValue())) { 
+						attackedByWhite[temp.getRow()+pair.getKey()][temp.getRow()+pair.getKey()] = true; //TODO: Could be severly optimised
+					}
+				}
 			}
 		}
 		else {
@@ -172,13 +176,17 @@ public void updateAttackLists() {
 			}
 			else if (temp.getType() == PieceType.KNIGHT){
 				for (Pair<Integer, Integer> pair : temp.getPossibleMoves()) {
-					if(!isOutOfBounds(new Space(temp.getRow()+pair.getKey(), temp.getRow()+pair.getKey()))) { //TODO: Might be backwards
+					if(!isOutOfBounds(new Space(temp.getRow()+pair.getKey(), temp.getRow()+pair.getKey()))) {
 						attackedByBlack[temp.getRow()+pair.getKey()][temp.getRow()+pair.getKey()] = true;
 					}
 				}
 			}
 			else {
-				//TODO
+				for (Pair<Integer, Integer> pair : temp.getPossibleMoves()) {
+					if(!isOutOfBounds(new Space(temp.getRow()+pair.getKey(), temp.getRow()+pair.getKey())) && hasLineOfSight(new Space(temp.getRow(), temp.getCol()), pair.getKey(), pair.getValue())) { 
+						attackedByBlack[temp.getRow()+pair.getKey()][temp.getRow()+pair.getKey()] = true; //TODO: Could be severly optimised
+					}
+				}
 			}
 		}
 	}

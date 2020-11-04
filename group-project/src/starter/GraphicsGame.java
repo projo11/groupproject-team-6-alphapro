@@ -4,15 +4,17 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import java.awt.Color;
+
 import java.awt.event.MouseEvent;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import acm.graphics.GImage;
 import acm.graphics.GLabel;
 import acm.graphics.GPoint;
 import acm.program.GraphicsProgram;
 
-public class GraphicsGame extends GraphicsProgram{
+public class GraphicsGame extends GraphicsProgram implements ActionListener{
 	private Board board;
 	private int clickX, clickY, releaseX, releaseY, lastX, lastY;
 
@@ -26,20 +28,41 @@ public class GraphicsGame extends GraphicsProgram{
 	}
 	
 	public void printTitleScreen() {
-		setSize(PROGRAM_WIDTH/2, PROGRAM_HEIGHT/2);
-		GLabel Title = new GLabel("Custom Chess", 200, 100);
-		Title.setColor(Color.RED);
-		Title.setFont("TimesNewRoman-30");
-		add(Title);
+		final JFrame mainM = new JFrame("Main Menu");
+		mainM.setSize(PROGRAM_WIDTH, PROGRAM_HEIGHT);
+		JLabel Title = new JLabel("Custom Chess");
+		Title.setForeground(Color.red);
+		Title.setFont(new Font("TimesNewRoman", Font.BOLD, 20));
+		Title.setBounds(375, -100, 300, 300);
+		JPanel firstPanel = new JPanel();
+		firstPanel.setBackground(Color.white);
+		firstPanel.setLayout(null);
 		/*GImage Background = new GImage("Background.png", 205, 200);
 		Background.sendToBack();
 		Background.setSize(300, 300);
 		add(Background);*/
 		//add background image
 		JButton start = new JButton("Start Battle");
-		start.setLocation(200, 400);
+		start.setBounds(335, 450, 200, 100);
+		start.setFont(new Font("TimesNewRoman", Font.BOLD, 20));
+		start.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e){  
+	            printPieceShop();
+			}
+		});
 		JButton rules = new JButton("View Rule");
-		start.setLocation(250, 400);
+		rules.setBounds(335, 600, 200, 100);
+		rules.setFont(new Font("TimesNewRoman", Font.BOLD, 20));
+		rules.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e){  
+	            printRules1();
+			}
+		});
+		firstPanel.add(start);
+		firstPanel.add(rules);
+		firstPanel.add(Title);
+		mainM.setContentPane(firstPanel);
+		mainM.setVisible(true);
 	}
 	
 	public void printRules1() {
@@ -101,29 +124,63 @@ public class GraphicsGame extends GraphicsProgram{
 		JLabel v = new JLabel("Victory");
 		final JFrame rules1 = new JFrame("WinScreen");
 		JPanel firstPanel = new JPanel();
+		firstPanel.setBackground(Color.cyan);
 		firstPanel.setLayout(null);
-		//firstPanel.setMaximumSize(new Dimension(400, 400));
 		rules1.setSize(PROGRAM_WIDTH/2, PROGRAM_HEIGHT/2);
 		v.setFont(new Font("TimesNewRoman", Font.BOLD, 20));
-		v.setBounds(150, -100, 300, 300);
+		v.setForeground(Color.red);
+		v.setBounds(155, -100, 300, 300);
 		JButton rematch = new JButton("Rematch.");
-		rematch.setBounds(135, 100, 100, 50);
+		rematch.setBounds(135, 80, 100, 50);
+		rematch.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e){ //one click, reprint board
+	            printBoard(null);
+			}
+		});
 		JButton repay = new JButton("Recreate your chess Group on the board.");
-		rematch.setBounds(135, 110, 100, 50);
-		/*JButton Return = new JButton("Return to the main Screen.");
-		Return.setPreferredSize(new Dimension(100, 70));
+		repay.setBounds(85, 140, 200, 50);
+		repay.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e){ //one click, go back to piece shop
+	            printPieceShop();
+			}
+		});
+		JButton Return = new JButton("Return to the main Screen.");
+		Return.setBounds(85, 200, 200, 50);
+		Return.addActionListener(new ActionListener() {//one click, go back to main screen
+			public void actionPerformed(ActionEvent e){  
+	            printTitleScreen();
+			}
+		});
 		firstPanel.add(rematch);
 		firstPanel.add(repay);
-		firstPanel.add(Return);*/
-		firstPanel.add(rematch);
-		firstPanel.add(repay);
+		firstPanel.add(Return);
 		firstPanel.add(v);
-		//v.setLocation(200, 0);
 		rules1.setContentPane(firstPanel);
 		rules1.setVisible(true);
-		//
 	}
-    
+    public void printPieceShop() {
+    	final JFrame shop = new JFrame("Piece Shop");
+		shop.setSize(400, 600);
+		JPanel firstPanel = new JPanel();
+		firstPanel.setBackground(Color.lightGray);
+		JLabel tital = new JLabel("Piece Shop");
+		tital.setFont(new Font("TimesNewRoman", Font.BOLD, 20));
+		tital.setForeground(Color.BLACK);
+		tital.setBounds(100, -100, 300, 300);
+		JLabel Name = new JLabel("Piece Name");
+		Name.setFont(new Font("TimesNewRoman", 15, 15));
+		Name.setForeground(Color.BLACK);
+		Name.setBounds(0, 600, 300, 300);
+		JLabel Cost = new JLabel("Piece Cost");
+		Cost.setFont(new Font("TimesNewRoman", 15, 15));
+		Cost.setForeground(Color.BLACK);
+		Cost.setBounds(200, 300, 300, 300);
+		firstPanel.add(tital);
+		firstPanel.add(Name);
+		//firstPanel.add(Cost);
+		shop.setContentPane(firstPanel);
+		shop.setVisible(true);
+    }
     @Override
     public void mousePressed(MouseEvent e) {
     	
@@ -136,4 +193,5 @@ public class GraphicsGame extends GraphicsProgram{
 	public void mouseReleased(MouseEvent e) {
     	
     }
+   
 }

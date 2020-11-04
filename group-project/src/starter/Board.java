@@ -236,8 +236,8 @@ public boolean checkmate(boolean isTeamWhite) {
 	 * STEP 2: Can the king move to safety?
 	 * STEP 3: Determine sources of danger
 	 * STEP 3.a: Check Ls for knights, see if they can be taken out
-	 * STEP 3.b: Check diagonals for bishops or rooks, see if they can be taken out
-	 * STEP 3.c: Check straights for rooks or queens, see if they can be taken out
+	 * STEP 3.b: Check diagonals for bishops or rooks, see if they can be taken out or blocked
+	 * STEP 3.c: Check straights for rooks or queens, see if they can be taken out or blocked
 	\*/
 	return false;
 }

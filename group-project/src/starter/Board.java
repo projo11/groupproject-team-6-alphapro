@@ -79,8 +79,10 @@ public boolean canMoveNumSpaces(Space start, int r, int c) {
 			return !attackedByWhite[r][c];
 		}
 	}
-	//TODO: Require line of sight for non-knights and pawns.
-	return ((board[start.getCol()+r][start.getRow()+c] == null) || (isOppositeTeam(start, new Space(start.getCol()+r, start.getRow()+c))));
+	if (getPiece(start).getType() == PieceType.KNIGHT) {
+		return (board[start.getCol()+r][start.getRow()+c] == null) || (isOppositeTeam(start, new Space(start.getCol()+r, start.getRow()+c)));
+	}
+	return (hasLineOfSight(start, r, c) && ((board[start.getCol()+r][start.getRow()+c] == null) || (isOppositeTeam(start, new Space(start.getCol()+r, start.getRow()+c)))));
 }
 
 public Piece getPiece(Space s) {

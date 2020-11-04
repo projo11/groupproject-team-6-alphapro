@@ -209,7 +209,14 @@ public boolean hasLineOfSight(Space start, int r, int c) {
 	if ((Math.abs(r) != Math.abs(c) && r != 0 && c != 0) || isOutOfBounds(new Space(r, c))) {
 		return false;
 	}
-	for (int i = 0; i < Math.abs(c); i++) {
+	int greater;
+	if (r > c) {
+		greater = r;
+	}
+	else {
+		greater = c;
+	}
+	for (int i = 0; i < Math.abs(greater-1); i++) {//TODO: Determine if greater-1 is working as intended
 		if (board[start.getRow()+((i+1)*Integer.signum(r))][start.getCol()+((i+1)*Integer.signum(c))] != null) {
 			return false;
 		}
@@ -220,6 +227,7 @@ public boolean hasLineOfSight(Space start, int r, int c) {
 public boolean checkmate(boolean isTeamWhite) {
 	//checks a team's king to see if it is in check. If so, looks to see if the king can move to safety. 
 	//If they cannot, looks to see if any of your pieces can block the danger.
+	//TODO: Implement
 	return false;
 }
 

@@ -230,6 +230,15 @@ public boolean checkmate(boolean isTeamWhite) {
 	//checks a team's king to see if it is in check. If so, looks to see if the king can move to safety. 
 	//If they cannot, looks to see if any of your pieces can block the danger or kill the attacker.
 	//TODO: Implement
+	
+	/*\
+	 * STEP 1: Is king in check?
+	 * STEP 2: Can the king move to safety?
+	 * STEP 3: Determine sources of danger
+	 * STEP 3.a: Check Ls for knights, see if they can be taken out
+	 * STEP 3.b: Check diagonals for bishops or rooks, see if they can be taken out
+	 * STEP 3.c: Check straights for rooks or queens, see if they can be taken out
+	\*/
 	return false;
 }
 

@@ -1,4 +1,5 @@
 package starter;
+import acm.graphics.*;
 import java.awt.*;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -13,6 +14,7 @@ import acm.program.GraphicsProgram;
 public class GraphicsGame extends GraphicsProgram{
 	private Board board;
 	private int clickX, clickY, releaseX, releaseY, lastX, lastY;
+	private GObject toDrag;
 
 	private int x = 8;
 	private int y = 8;
@@ -44,13 +46,13 @@ public class GraphicsGame extends GraphicsProgram{
 		System.out.println("Basic Rules:");
 		System.out.println("The player with the white pieces always moves first.");
 		System.out.println("Players take turns alternately moving one piece at a time.");
-		System.out.println("Movement is required. If a playerÅLs turn is to move, he is not in check but has no legal moves");
-		System.out.println("this situation is called ÅgStalemateÅh and it ends the game in a draw.");
+		System.out.println("Movement is required. If a playerÔøΩLs turn is to move, he is not in check but has no legal moves");
+		System.out.println("this situation is called ÔøΩgStalemateÔøΩh and it ends the game in a draw.");
 		System.out.println("Each type of piece has its own method of movement.");
-		System.out.println("A piece may be moved to another position or may capture an opponentÅLs piece,");
+		System.out.println("A piece may be moved to another position or may capture an opponentÔøΩLs piece,");
 		System.out.println("replacing on its square (en passant being the only exception).");
 		System.out.println("With the exception of the knight, a piece may not move over or through any of the other pieces.");
-		System.out.println("When a king is threatened with capture (but can protect himself or escape), itÅLs called check.");
+		System.out.println("When a king is threatened with capture (but can protect himself or escape), itÔøΩLs called check.");
 		System.out.println("If a king is in check, then the player must make a move that eliminates the threat of capture and cannot"); 
 		System.out.println("leave the king in check. Checkmate happens when a king is placed in check and there is no legal move to escape."); 
 		System.out.println("Checkmate ends the game and the side whose king was checkmated looses.");  
@@ -75,7 +77,7 @@ public class GraphicsGame extends GraphicsProgram{
 		System.out.println("Pawns can move forward one square and capture diagonally. It never move or capture backwards");
 		System.out.println("Except for their very first move where they can move forward two squares.");
 		System.out.println("if a pawn reaches the other side of the board it can become any other chess piece.");
-		System.out.println("Thus itsÅL theoretically possible having up to nine queens or up to ten rooks, bishops, or knights if all pawns are promoted.");
+		System.out.println("Thus itsÔøΩL theoretically possible having up to nine queens or up to ten rooks, bishops, or knights if all pawns are promoted.");
 	}
 	public void printBoard(Graphics g) {
 		int row;
@@ -116,14 +118,24 @@ public class GraphicsGame extends GraphicsProgram{
     
     @Override
     public void mousePressed(MouseEvent e) {
-    	
+    	toDrag = getElementAt(e.getX(), e.getY());
+    	lastX = e.getX();
+    	lastY = e.getY();
 	}
     @Override
     public void mouseDragged(MouseEvent e) {
-    
+    	if(toDrag != null)
+    	{
+    		toDrag.move(e.getX()-lastX, e.getY()-lastY);
+    	}
+    	lastX = e.getX();
+    	lastY = e.getY();
     }
     @Override
 	public void mouseReleased(MouseEvent e) {
-    	
+    	//TODO: Write code that will theoretically move a chess piece back to it's original spot
+    	//		if the place it was moved to is not a valid movement for that piece or the piece
+    	//		cannot capture the piece it is trying to land on
+    	toDrag = null;
     }
 }

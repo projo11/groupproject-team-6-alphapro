@@ -228,7 +228,7 @@ public boolean hasLineOfSight(Space start, int r, int c) {
 
 public boolean checkmate(boolean isTeamWhite) {
 	//checks a team's king to see if it is in check. If so, looks to see if the king can move to safety. 
-	//If they cannot, looks to see if any of your pieces can block the danger.
+	//If they cannot, looks to see if any of your pieces can block the danger or kill the attacker.
 	//TODO: Implement
 	return false;
 }

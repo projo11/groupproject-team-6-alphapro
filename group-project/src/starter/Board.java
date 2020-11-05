@@ -13,6 +13,11 @@ private ArrayList<Piece> pieces;
 private boolean isBoardFlipped = false;
 //NOTE: Flipped means playing from black's perspective instead of white.
 
+public Board() {
+	addPiece(7, 4, PieceType.KING, true);
+	addPiece(0, 4, PieceType.KING, false);
+}
+
 
 public boolean isOutOfBounds(Space s) {
 	//Returns true if the Space given has coordinates that are not on the board.
@@ -114,6 +119,7 @@ public void promotePawn(Space s, PieceType type) {
 
 public void flipBoard() {
 	//Reverses the 2-d array board. Used to simulate looking at the board from the opposite perspective.
+	//NOTE: Flipped means playing from black's perspective instead of white.
 	for (int i = 0; i < 8; i++) {
 		for(int j = 0; j < 8; j++) {
 			temp[i][j] = board[7-i][7-j];
@@ -229,16 +235,26 @@ public boolean hasLineOfSight(Space start, int r, int c) {
 public boolean checkmate(boolean isTeamWhite) {
 	//checks a team's king to see if it is in check. If so, looks to see if the king can move to safety. 
 	//If they cannot, looks to see if any of your pieces can block the danger or kill the attacker.
-	//TODO: Implement
-	
 	/*\
+	 * STEP 0: Locate King
 	 * STEP 1: Is king in check?
 	 * STEP 2: Can the king move to safety?
 	 * STEP 3: Determine sources of danger
 	 * STEP 3.a: Check Ls for knights, see if they can be taken out
-	 * STEP 3.b: Check diagonals for bishops or rooks, see if they can be taken out
-	 * STEP 3.c: Check straights for rooks or queens, see if they can be taken out
+	 * STEP 3.b: Check diagonals for bishops or rooks, see if they can be taken out or blocked
+	 * STEP 3.c: Check straights for rooks or queens, see if they can be taken out or blocked
 	\*/
+	Space kingLoc;
+	for (Piece temp : pieces) {
+		if (temp.getColor() == isTeamWhite && temp.getType() == PieceType.KING) {
+			kingLoc = new Space(temp.getRow(), temp.getCol());
+		}
+	}
+	if (isTeamWhite) {
+	}
+	else {
+		
+	}
 	return false;
 }
 

@@ -201,6 +201,8 @@ public class GraphicsGame extends GraphicsProgram implements ActionListener{
     	{
     		toDrag.move(e.getX()-lastX, e.getY()-lastY);
     	}
+    	clickX = e.getX();
+    	clickY = e.getY();
     	lastX = e.getX();
     	lastY = e.getY();
     }
@@ -209,17 +211,35 @@ public class GraphicsGame extends GraphicsProgram implements ActionListener{
     	//TODO: Write code that will theoretically move a chess piece back to it's original spot
     	//		if the place it was moved to is not a valid movement for that piece or the piece
     	//		cannot capture the piece it is trying to land on
+    	Space space = convertXYToSpace(clickX, clickY);
     	toDrag = null;
     }
     
-    //TODO: Below I'm just adding functions to help support the mouse functions
-    public Space convertXYtoSpace(double x, double y)
+    //Below are functions used to help with the mouse listener functions
+    //Code that converts XY coordinates into a Space
+    public Space convertXYToSpace(double x, double y)
     {
-    	//NOTES
-    	//Rows: 8, Cols: 8
-    	//Space space; //= new Space()
-    	//return space;
-    	return null;
+    	Space space = new Space((int)(y/spaceHeight()), (int)(x/spaceWidth())); 
+    	return space;
     }
+    
+    //Code that returns the Piece in a given space with the provided XY coordinates
+    public Piece getPieceFromXY(double x, double y)
+    {
+    	Space space = convertXYToSpace(x, y);
+    	return board.getPiece(space);
+    }
+    
+    //Code that returns the width of the spaces
+    private double spaceWidth() 
+    {
+		return PROGRAM_WIDTH/8;
+	}
+
+    //Code that returns the height of the spaces
+	private double spaceHeight() 
+	{
+		return PROGRAM_HEIGHT/8;
+	}
    
 }

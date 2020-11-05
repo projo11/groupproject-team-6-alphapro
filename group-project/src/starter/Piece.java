@@ -19,6 +19,21 @@ public class Piece {
 		this.col = col;
 		this.type = type;
 		this.color = color;
+		switch(type)
+		{
+		case PAWN:
+			cost = 1;
+		case KNIGHT:
+			cost = 3;
+		case BISHOP:
+			cost = 3;
+		case ROOK:
+			cost = 4;
+		case QUEEN: 
+			cost = 7;
+		case KING: 
+			cost = 0; //Each player MUST have a King and automatically starts with one
+		}
 	}
 	
 	public void setRow(int row) //Sets row for Piece
@@ -177,11 +192,6 @@ public class Piece {
 	public boolean getColor() //Gets each Pieces color
 	{
 		return color;
-	}
-	
-	public void setCost(int cost) //Sets cost for each Piece.
-	{
-		this.cost = cost;
 	}
 	
 	public int getCost() //Gets Cost for each Piece.

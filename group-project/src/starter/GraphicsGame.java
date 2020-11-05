@@ -26,7 +26,9 @@ public class GraphicsGame extends GraphicsProgram implements ActionListener{
 	public void init() {
 		setSize(PROGRAM_WIDTH, PROGRAM_HEIGHT);
 	}
-	
+	public void run() {
+		printTitleScreen();
+	}
 	public void printTitleScreen() {
 		final JFrame mainM = new JFrame("Main Menu");
 		mainM.setSize(PROGRAM_WIDTH, PROGRAM_HEIGHT);
@@ -160,26 +162,78 @@ public class GraphicsGame extends GraphicsProgram implements ActionListener{
 	}
     public void printPieceShop() {
     	final JFrame shop = new JFrame("Piece Shop");
-		shop.setSize(400, 600);
+		shop.setSize(400, 400);
 		JPanel firstPanel = new JPanel();
 		firstPanel.setBackground(Color.lightGray);
+		firstPanel.setLayout(null);
 		JLabel tital = new JLabel("Piece Shop");
 		tital.setFont(new Font("TimesNewRoman", Font.BOLD, 20));
 		tital.setForeground(Color.BLACK);
-		tital.setBounds(100, -100, 300, 300);
+		tital.setBounds(130, -100, 300, 300);
 		JLabel Name = new JLabel("Piece Name");
-		Name.setFont(new Font("TimesNewRoman", 15, 15));
+		Name.setFont(new Font("TimesNewRoman", Font.BOLD, 15));
 		Name.setForeground(Color.BLACK);
-		Name.setBounds(0, 600, 300, 300);
+		Name.setBounds(0, 50, 100, 100);
 		JLabel Cost = new JLabel("Piece Cost");
-		Cost.setFont(new Font("TimesNewRoman", 15, 15));
+		Cost.setFont(new Font("TimesNewRoman", Font.BOLD, 15));
 		Cost.setForeground(Color.BLACK);
-		Cost.setBounds(200, 300, 300, 300);
+		Cost.setBounds(130, 50, 100, 100);
+		JLabel pawn = new JLabel("Pawn");
+		pawn.setFont(new Font("TimesNewRoman", 15, 15));
+		pawn.setForeground(Color.BLACK);
+		pawn.setBounds(0, 80, 100, 100);
+		JLabel pawnC = new JLabel("1");
+		pawnC.setFont(new Font("TimesNewRoman", 15, 15));
+		pawnC.setForeground(Color.BLACK);
+		pawnC.setBounds(130, 80, 100, 100);
+		JLabel knight = new JLabel("Knight");
+		knight.setFont(new Font("TimesNewRoman", 15, 15));
+		knight.setForeground(Color.BLACK);
+		knight.setBounds(0, 120, 100, 100);
+		JLabel KnightC = new JLabel("3");
+		KnightC.setFont(new Font("TimesNewRoman", 15, 15));
+		KnightC.setForeground(Color.BLACK);
+		KnightC.setBounds(130, 120, 100, 100);
+		JLabel Bishop = new JLabel("Bishop");
+		Bishop.setFont(new Font("TimesNewRoman", 15, 15));
+		Bishop.setForeground(Color.BLACK);
+		Bishop.setBounds(0, 160, 100, 100);
+		JLabel BishopC = new JLabel("3");
+		BishopC.setFont(new Font("TimesNewRoman", 15, 15));
+		BishopC.setForeground(Color.BLACK);
+		BishopC.setBounds(130, 160, 100, 100);
+		JLabel Rook = new JLabel("Rook");
+		Rook.setFont(new Font("TimesNewRoman", 15, 15));
+		Rook.setForeground(Color.BLACK);
+		Rook.setBounds(0, 200, 100, 100);
+		JLabel RookC = new JLabel("4");
+		RookC.setFont(new Font("TimesNewRoman", 15, 15));
+		RookC.setForeground(Color.BLACK);
+		RookC.setBounds(130, 200, 100, 100);
+		JLabel Queen = new JLabel("Queen");
+		Queen.setFont(new Font("TimesNewRoman", 15, 15));
+		Queen.setForeground(Color.BLACK);
+		Queen.setBounds(0, 240, 100, 100);
+		JLabel QueenC = new JLabel("7");
+		QueenC.setFont(new Font("TimesNewRoman", 15, 15));
+		QueenC.setForeground(Color.BLACK);
+		QueenC.setBounds(130, 240, 100, 100);
 		firstPanel.add(tital);
 		firstPanel.add(Name);
-		//firstPanel.add(Cost);
+		firstPanel.add(Cost);
+		firstPanel.add(pawn);
+		firstPanel.add(pawnC);
+		firstPanel.add(knight);
+		firstPanel.add(KnightC);
+		firstPanel.add(Bishop);
+		firstPanel.add(BishopC);
+		firstPanel.add(Rook);
+		firstPanel.add(RookC);
+		firstPanel.add(Queen);
+		firstPanel.add(QueenC);
 		shop.setContentPane(firstPanel);
 		shop.setVisible(true);
+		printBoard(null);
     }
     @Override
     public void mousePressed(MouseEvent e) {

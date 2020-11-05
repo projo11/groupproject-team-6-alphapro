@@ -131,6 +131,12 @@ public class GraphicsGame extends GraphicsProgram{
     	toDrag = getElementAt(e.getX(), e.getY());
     	lastX = e.getX();
     	lastY = e.getY();
+    	clickX = e.getX();
+    	clickY = e.getY();
+    	
+    	//NOTE: may need the convert XY to Space function like in Traffic Jam
+    	//Space space = new Space(e.getX(), e.getY());
+    	//Piece selected = board.getPiece(space);
 	}
     @Override
     public void mouseDragged(MouseEvent e) {
@@ -147,5 +153,15 @@ public class GraphicsGame extends GraphicsProgram{
     	//		if the place it was moved to is not a valid movement for that piece or the piece
     	//		cannot capture the piece it is trying to land on
     	toDrag = null;
+    }
+    
+    //TODO: Below I'm just adding functions to help support the mouse functions
+    public Space convertXYtoSpace(double x, double y)
+    {
+    	//NOTES
+    	//Rows: 8, Cols: 8
+    	//Space space; //= new Space()
+    	//return space;
+    	return null;
     }
 }

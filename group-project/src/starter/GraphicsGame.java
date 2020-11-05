@@ -28,7 +28,9 @@ public class GraphicsGame extends GraphicsProgram implements ActionListener{
 	public void init() {
 		setSize(PROGRAM_WIDTH, PROGRAM_HEIGHT);
 	}
-	
+	public void run() {
+		printTitleScreen();
+	}
 	public void printTitleScreen() {
 		final JFrame mainM = new JFrame("Main Menu");
 		mainM.setSize(PROGRAM_WIDTH, PROGRAM_HEIGHT);
@@ -42,7 +44,7 @@ public class GraphicsGame extends GraphicsProgram implements ActionListener{
 		/*GImage Background = new GImage("Background.png", 205, 200);
 		Background.sendToBack();
 		Background.setSize(300, 300);
-		add(Background);*/
+		add(Background); */
 		//add background image
 		JButton start = new JButton("Start Battle");
 		start.setBounds(335, 450, 200, 100);
@@ -71,13 +73,13 @@ public class GraphicsGame extends GraphicsProgram implements ActionListener{
 		System.out.println("Basic Rules:");
 		System.out.println("The player with the white pieces always moves first.");
 		System.out.println("Players take turns alternately moving one piece at a time.");
-		System.out.println("Movement is required. If a player�Ls turn is to move, he is not in check but has no legal moves");
-		System.out.println("this situation is called �gStalemate�h and it ends the game in a draw.");
+		System.out.println("Movement is required. If a player�ｿｽLs turn is to move, he is not in check but has no legal moves");
+		System.out.println("this situation is called �ｿｽgStalemate�ｿｽh and it ends the game in a draw.");
 		System.out.println("Each type of piece has its own method of movement.");
-		System.out.println("A piece may be moved to another position or may capture an opponent�Ls piece,");
+		System.out.println("A piece may be moved to another position or may capture an opponent�ｿｽLs piece,");
 		System.out.println("replacing on its square (en passant being the only exception).");
 		System.out.println("With the exception of the knight, a piece may not move over or through any of the other pieces.");
-		System.out.println("When a king is threatened with capture (but can protect himself or escape), it�Ls called check.");
+		System.out.println("When a king is threatened with capture (but can protect himself or escape), it�ｿｽLs called check.");
 		System.out.println("If a king is in check, then the player must make a move that eliminates the threat of capture and cannot"); 
 		System.out.println("leave the king in check. Checkmate happens when a king is placed in check and there is no legal move to escape."); 
 		System.out.println("Checkmate ends the game and the side whose king was checkmated looses.");  
@@ -102,7 +104,7 @@ public class GraphicsGame extends GraphicsProgram implements ActionListener{
 		System.out.println("Pawns can move forward one square and capture diagonally. It never move or capture backwards");
 		System.out.println("Except for their very first move where they can move forward two squares.");
 		System.out.println("if a pawn reaches the other side of the board it can become any other chess piece.");
-		System.out.println("Thus its�L theoretically possible having up to nine queens or up to ten rooks, bishops, or knights if all pawns are promoted.");
+		System.out.println("Thus its theoretically possible having up to nine queens or up to ten rooks, bishops, or knights if all pawns are promoted.");
 	}
 	public void printBoard(Graphics g) {
 		int row;
@@ -162,26 +164,78 @@ public class GraphicsGame extends GraphicsProgram implements ActionListener{
 	}
     public void printPieceShop() {
     	final JFrame shop = new JFrame("Piece Shop");
-		shop.setSize(400, 600);
+		shop.setSize(400, 400);
 		JPanel firstPanel = new JPanel();
 		firstPanel.setBackground(Color.lightGray);
+		firstPanel.setLayout(null);
 		JLabel tital = new JLabel("Piece Shop");
 		tital.setFont(new Font("TimesNewRoman", Font.BOLD, 20));
 		tital.setForeground(Color.BLACK);
-		tital.setBounds(100, -100, 300, 300);
+		tital.setBounds(130, -100, 300, 300);
 		JLabel Name = new JLabel("Piece Name");
-		Name.setFont(new Font("TimesNewRoman", 15, 15));
+		Name.setFont(new Font("TimesNewRoman", Font.BOLD, 15));
 		Name.setForeground(Color.BLACK);
-		Name.setBounds(0, 600, 300, 300);
+		Name.setBounds(0, 50, 100, 100);
 		JLabel Cost = new JLabel("Piece Cost");
-		Cost.setFont(new Font("TimesNewRoman", 15, 15));
+		Cost.setFont(new Font("TimesNewRoman", Font.BOLD, 15));
 		Cost.setForeground(Color.BLACK);
-		Cost.setBounds(200, 300, 300, 300);
+		Cost.setBounds(130, 50, 100, 100);
+		JLabel pawn = new JLabel("Pawn");
+		pawn.setFont(new Font("TimesNewRoman", 15, 15));
+		pawn.setForeground(Color.BLACK);
+		pawn.setBounds(0, 80, 100, 100);
+		JLabel pawnC = new JLabel("1");
+		pawnC.setFont(new Font("TimesNewRoman", 15, 15));
+		pawnC.setForeground(Color.BLACK);
+		pawnC.setBounds(130, 80, 100, 100);
+		JLabel knight = new JLabel("Knight");
+		knight.setFont(new Font("TimesNewRoman", 15, 15));
+		knight.setForeground(Color.BLACK);
+		knight.setBounds(0, 120, 100, 100);
+		JLabel KnightC = new JLabel("3");
+		KnightC.setFont(new Font("TimesNewRoman", 15, 15));
+		KnightC.setForeground(Color.BLACK);
+		KnightC.setBounds(130, 120, 100, 100);
+		JLabel Bishop = new JLabel("Bishop");
+		Bishop.setFont(new Font("TimesNewRoman", 15, 15));
+		Bishop.setForeground(Color.BLACK);
+		Bishop.setBounds(0, 160, 100, 100);
+		JLabel BishopC = new JLabel("3");
+		BishopC.setFont(new Font("TimesNewRoman", 15, 15));
+		BishopC.setForeground(Color.BLACK);
+		BishopC.setBounds(130, 160, 100, 100);
+		JLabel Rook = new JLabel("Rook");
+		Rook.setFont(new Font("TimesNewRoman", 15, 15));
+		Rook.setForeground(Color.BLACK);
+		Rook.setBounds(0, 200, 100, 100);
+		JLabel RookC = new JLabel("4");
+		RookC.setFont(new Font("TimesNewRoman", 15, 15));
+		RookC.setForeground(Color.BLACK);
+		RookC.setBounds(130, 200, 100, 100);
+		JLabel Queen = new JLabel("Queen");
+		Queen.setFont(new Font("TimesNewRoman", 15, 15));
+		Queen.setForeground(Color.BLACK);
+		Queen.setBounds(0, 240, 100, 100);
+		JLabel QueenC = new JLabel("7");
+		QueenC.setFont(new Font("TimesNewRoman", 15, 15));
+		QueenC.setForeground(Color.BLACK);
+		QueenC.setBounds(130, 240, 100, 100);
 		firstPanel.add(tital);
 		firstPanel.add(Name);
-		//firstPanel.add(Cost);
+		firstPanel.add(Cost);
+		firstPanel.add(pawn);
+		firstPanel.add(pawnC);
+		firstPanel.add(knight);
+		firstPanel.add(KnightC);
+		firstPanel.add(Bishop);
+		firstPanel.add(BishopC);
+		firstPanel.add(Rook);
+		firstPanel.add(RookC);
+		firstPanel.add(Queen);
+		firstPanel.add(QueenC);
 		shop.setContentPane(firstPanel);
 		shop.setVisible(true);
+		printBoard(null);
     }
     @Override
     public void mousePressed(MouseEvent e) {

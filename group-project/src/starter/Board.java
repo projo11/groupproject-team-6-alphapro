@@ -79,8 +79,10 @@ public boolean canMoveNumSpaces(Space start, int r, int c) {
 			return !attackedByWhite[r][c];
 		}
 	}
-	//TODO: Require line of sight for non-knights and pawns.
-	return ((board[start.getCol()+r][start.getRow()+c] == null) || (isOppositeTeam(start, new Space(start.getCol()+r, start.getRow()+c))));
+	if (getPiece(start).getType() == PieceType.KNIGHT) {
+		return (board[start.getCol()+r][start.getRow()+c] == null) || (isOppositeTeam(start, new Space(start.getCol()+r, start.getRow()+c)));
+	}
+	return (hasLineOfSight(start, r, c) && ((board[start.getCol()+r][start.getRow()+c] == null) || (isOppositeTeam(start, new Space(start.getCol()+r, start.getRow()+c)))));
 }
 
 public Piece getPiece(Space s) {
@@ -209,7 +211,14 @@ public boolean hasLineOfSight(Space start, int r, int c) {
 	if ((Math.abs(r) != Math.abs(c) && r != 0 && c != 0) || isOutOfBounds(new Space(r, c))) {
 		return false;
 	}
-	for (int i = 0; i < Math.abs(c); i++) {
+	int greater;
+	if (r > c) {
+		greater = r;
+	}
+	else {
+		greater = c;
+	}
+	for (int i = 0; i < Math.abs(greater-1); i++) {//TODO: Determine if greater-1 is working as intended
 		if (board[start.getRow()+((i+1)*Integer.signum(r))][start.getCol()+((i+1)*Integer.signum(c))] != null) {
 			return false;
 		}
@@ -219,7 +228,17 @@ public boolean hasLineOfSight(Space start, int r, int c) {
 
 public boolean checkmate(boolean isTeamWhite) {
 	//checks a team's king to see if it is in check. If so, looks to see if the king can move to safety. 
-	//If they cannot, looks to see if any of your pieces can block the danger.
+	//If they cannot, looks to see if any of your pieces can block the danger or kill the attacker.
+	//TODO: Implement
+	
+	/*\
+	 * STEP 1: Is king in check?
+	 * STEP 2: Can the king move to safety?
+	 * STEP 3: Determine sources of danger
+	 * STEP 3.a: Check Ls for knights, see if they can be taken out
+	 * STEP 3.b: Check diagonals for bishops or rooks, see if they can be taken out
+	 * STEP 3.c: Check straights for rooks or queens, see if they can be taken out
+	\*/
 	return false;
 }
 

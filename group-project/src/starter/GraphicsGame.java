@@ -44,7 +44,7 @@ public class GraphicsGame extends GraphicsProgram implements ActionListener{
 		/*GImage Background = new GImage("Background.png", 205, 200);
 		Background.sendToBack();
 		Background.setSize(300, 300);
-		add(Background);*/
+		add(Background); */
 		//add background image
 		JButton start = new JButton("Start Battle");
 		start.setBounds(335, 450, 200, 100);
@@ -73,13 +73,13 @@ public class GraphicsGame extends GraphicsProgram implements ActionListener{
 		System.out.println("Basic Rules:");
 		System.out.println("The player with the white pieces always moves first.");
 		System.out.println("Players take turns alternately moving one piece at a time.");
-		System.out.println("Movement is required. If a player�Ls turn is to move, he is not in check but has no legal moves");
-		System.out.println("this situation is called �gStalemate�h and it ends the game in a draw.");
+		System.out.println("Movement is required. If a player�ｿｽLs turn is to move, he is not in check but has no legal moves");
+		System.out.println("this situation is called �ｿｽgStalemate�ｿｽh and it ends the game in a draw.");
 		System.out.println("Each type of piece has its own method of movement.");
-		System.out.println("A piece may be moved to another position or may capture an opponent�Ls piece,");
+		System.out.println("A piece may be moved to another position or may capture an opponent�ｿｽLs piece,");
 		System.out.println("replacing on its square (en passant being the only exception).");
 		System.out.println("With the exception of the knight, a piece may not move over or through any of the other pieces.");
-		System.out.println("When a king is threatened with capture (but can protect himself or escape), it�Ls called check.");
+		System.out.println("When a king is threatened with capture (but can protect himself or escape), it�ｿｽLs called check.");
 		System.out.println("If a king is in check, then the player must make a move that eliminates the threat of capture and cannot"); 
 		System.out.println("leave the king in check. Checkmate happens when a king is placed in check and there is no legal move to escape."); 
 		System.out.println("Checkmate ends the game and the side whose king was checkmated looses.");  
@@ -104,7 +104,7 @@ public class GraphicsGame extends GraphicsProgram implements ActionListener{
 		System.out.println("Pawns can move forward one square and capture diagonally. It never move or capture backwards");
 		System.out.println("Except for their very first move where they can move forward two squares.");
 		System.out.println("if a pawn reaches the other side of the board it can become any other chess piece.");
-		System.out.println("Thus its�L theoretically possible having up to nine queens or up to ten rooks, bishops, or knights if all pawns are promoted.");
+		System.out.println("Thus its theoretically possible having up to nine queens or up to ten rooks, bishops, or knights if all pawns are promoted.");
 	}
 	public void printBoard(Graphics g) {
 		int row;

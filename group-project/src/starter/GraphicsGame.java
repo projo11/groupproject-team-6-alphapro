@@ -73,13 +73,13 @@ public class GraphicsGame extends GraphicsProgram implements ActionListener{
 		System.out.println("Basic Rules:");
 		System.out.println("The player with the white pieces always moves first.");
 		System.out.println("Players take turns alternately moving one piece at a time.");
-		System.out.println("Movement is required. If a player�ｿｽLs turn is to move, he is not in check but has no legal moves");
-		System.out.println("this situation is called �ｿｽgStalemate�ｿｽh and it ends the game in a draw.");
+		System.out.println("Movement is required. If a player�Ls turn is to move, he is not in check but has no legal moves");
+		System.out.println("this situation is called �gStalemate�h and it ends the game in a draw.");
 		System.out.println("Each type of piece has its own method of movement.");
-		System.out.println("A piece may be moved to another position or may capture an opponent�ｿｽLs piece,");
+		System.out.println("A piece may be moved to another position or may capture an opponent�Ls piece,");
 		System.out.println("replacing on its square (en passant being the only exception).");
 		System.out.println("With the exception of the knight, a piece may not move over or through any of the other pieces.");
-		System.out.println("When a king is threatened with capture (but can protect himself or escape), it�ｿｽLs called check.");
+		System.out.println("When a king is threatened with capture (but can protect himself or escape), it�Ls called check.");
 		System.out.println("If a king is in check, then the player must make a move that eliminates the threat of capture and cannot"); 
 		System.out.println("leave the king in check. Checkmate happens when a king is placed in check and there is no legal move to escape."); 
 		System.out.println("Checkmate ends the game and the side whose king was checkmated looses.");  
@@ -188,6 +188,13 @@ public class GraphicsGame extends GraphicsProgram implements ActionListener{
 		pawnC.setFont(new Font("TimesNewRoman", 15, 15));
 		pawnC.setForeground(Color.BLACK);
 		pawnC.setBounds(130, 80, 100, 100);
+		JButton Bp = new JButton("Buy");
+		Bp.setBounds(260, 80, 100, 50);
+		//Bp.addActionListener(new ActionListener() {
+			//public void actionPerformed(ActionEvent e){ //one click, reprint board
+	            //Piece.Piece()
+			//}
+		//);
 		JLabel knight = new JLabel("Knight");
 		knight.setFont(new Font("TimesNewRoman", 15, 15));
 		knight.setForeground(Color.BLACK);
@@ -196,6 +203,13 @@ public class GraphicsGame extends GraphicsProgram implements ActionListener{
 		KnightC.setFont(new Font("TimesNewRoman", 15, 15));
 		KnightC.setForeground(Color.BLACK);
 		KnightC.setBounds(130, 120, 100, 100);
+		JButton BK = new JButton("Buy");
+		BK.setBounds(260, 120, 100, 50);
+		//BK.addActionListener(new ActionListener() {
+			//public void actionPerformed(ActionEvent e){ //one click, reprint board
+	            //Piece.Piece()
+			//}
+		//);
 		JLabel Bishop = new JLabel("Bishop");
 		Bishop.setFont(new Font("TimesNewRoman", 15, 15));
 		Bishop.setForeground(Color.BLACK);
@@ -204,6 +218,13 @@ public class GraphicsGame extends GraphicsProgram implements ActionListener{
 		BishopC.setFont(new Font("TimesNewRoman", 15, 15));
 		BishopC.setForeground(Color.BLACK);
 		BishopC.setBounds(130, 160, 100, 100);
+		JButton BI = new JButton("Buy");
+		BI.setBounds(260, 160, 100, 50);
+		//BI.addActionListener(new ActionListener() {
+			//public void actionPerformed(ActionEvent e){ //one click, reprint board
+	            //Piece.Piece()
+			//}
+		//);
 		JLabel Rook = new JLabel("Rook");
 		Rook.setFont(new Font("TimesNewRoman", 15, 15));
 		Rook.setForeground(Color.BLACK);
@@ -212,6 +233,13 @@ public class GraphicsGame extends GraphicsProgram implements ActionListener{
 		RookC.setFont(new Font("TimesNewRoman", 15, 15));
 		RookC.setForeground(Color.BLACK);
 		RookC.setBounds(130, 200, 100, 100);
+		JButton BR = new JButton("Buy");
+		BR.setBounds(260, 160, 100, 50);
+		//BR.addActionListener(new ActionListener() {
+			//public void actionPerformed(ActionEvent e){ //one click, reprint board
+	            //Piece.Piece()
+			//}
+		//);
 		JLabel Queen = new JLabel("Queen");
 		Queen.setFont(new Font("TimesNewRoman", 15, 15));
 		Queen.setForeground(Color.BLACK);
@@ -220,6 +248,13 @@ public class GraphicsGame extends GraphicsProgram implements ActionListener{
 		QueenC.setFont(new Font("TimesNewRoman", 15, 15));
 		QueenC.setForeground(Color.BLACK);
 		QueenC.setBounds(130, 240, 100, 100);
+		JButton BQ = new JButton("Buy");
+		BQ.setBounds(260, 160, 100, 50);
+		//BQ.addActionListener(new ActionListener() {
+			//public void actionPerformed(ActionEvent e){ //one click, reprint board
+	            //Piece.Piece()
+			//}
+		//);
 		firstPanel.add(tital);
 		firstPanel.add(Name);
 		firstPanel.add(Cost);

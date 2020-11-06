@@ -240,17 +240,66 @@ public boolean checkmate(boolean isTeamWhite) {
 	 * STEP 1: Is king in check?
 	 * STEP 2: Can the king move to safety?
 	 * STEP 3: Determine sources of danger
-	 * STEP 3.a: Check Ls for knights, see if they can be taken out
-	 * STEP 3.b: Check diagonals for bishops or rooks, see if they can be taken out or blocked
-	 * STEP 3.c: Check straights for rooks or queens, see if they can be taken out or blocked
+	 * STEP 3.a: Check Ls for knights
+	 * STEP 3.b: Check diagonals for bishops or rooks
+	 * STEP 3.c: Check straights for rooks or queens
+	 * STEP 4: Determine if the danger can be blocked
 	\*/
-	Space kingLoc;
+	//STEP 0
+	Space kingLoc = null;
+	Piece attacker = null;
 	for (Piece temp : pieces) {
 		if (temp.getColor() == isTeamWhite && temp.getType() == PieceType.KING) {
 			kingLoc = new Space(temp.getRow(), temp.getCol());
 		}
 	}
 	if (isTeamWhite) {
+		//WHITE TEAM
+		//STEP 1
+		if (!attackedByBlack[kingLoc.getRow()][kingLoc.getCol()]) {
+			return false;
+		}
+		//STEP 2
+		for (int i = -1; i < 2; i++) {
+			for (int j = -1; j < 2; j++) {
+				if (!isOutOfBounds(new Space(kingLoc.getRow()+i, kingLoc.getCol()+i))) {
+					if (!attackedByBlack[kingLoc.getRow()+i][kingLoc.getCol()+i]) {
+						return false;
+					}
+				}
+			}
+		}
+		//STEP 3
+		//check for knights
+		for (int i = -1; i < 2; i+=2) {
+			for (int j = -1; j < 2; j+=2) {
+				if (!isOutOfBounds(new Space(kingLoc.getRow()+(2*i), kingLoc.getCol()+j))) {
+					if (getPiece(new Space(kingLoc.getRow()+(2*i), kingLoc.getCol()+j)).getType() == PieceType.KNIGHT && getPiece(new Space(kingLoc.getRow()+i, kingLoc.getCol()+(2*j))).getColor()) {
+						if (attacker != null) {
+							return true;
+						}
+						else {
+							attacker = getPiece(new Space(kingLoc.getRow()+(2*i), kingLoc.getCol()+j));
+						}
+					}
+				}
+				if (!isOutOfBounds(new Space(kingLoc.getRow()+i, kingLoc.getCol()+(2*j)))) {
+					if (getPiece(new Space(kingLoc.getRow()+i, kingLoc.getCol()+(2*j))).getType() == PieceType.KNIGHT && getPiece(new Space(kingLoc.getRow()+i, kingLoc.getCol()+(2*j))).getColor()) {
+						if (attacker != null) {
+							return true;
+						}
+						else {
+							attacker = getPiece(new Space(kingLoc.getRow()+i, kingLoc.getCol()+(2*j)));
+						}
+					}
+				}
+			}
+		}
+		//check diagonals
+		
+		//check straights
+		
+		//STEP 4
 	}
 	else {
 		

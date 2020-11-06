@@ -244,13 +244,31 @@ public boolean checkmate(boolean isTeamWhite) {
 	 * STEP 3.b: Check diagonals for bishops or rooks, see if they can be taken out or blocked
 	 * STEP 3.c: Check straights for rooks or queens, see if they can be taken out or blocked
 	\*/
-	Space kingLoc;
+	//STEP 0
+	Space kingLoc = null;
 	for (Piece temp : pieces) {
 		if (temp.getColor() == isTeamWhite && temp.getType() == PieceType.KING) {
 			kingLoc = new Space(temp.getRow(), temp.getCol());
 		}
 	}
 	if (isTeamWhite) {
+		//WHITE TEAM
+		//STEP 1
+		if (!attackedByBlack[kingLoc.getRow()][kingLoc.getCol()]) {
+			return false;
+		}
+		//STEP 2
+		for (int i = -1; i < 2; i++) {
+			for (int j = -1; j < 2; j++) {
+				if (!isOutOfBounds(new Space(kingLoc.getRow()+i, kingLoc.getCol()+i))) {
+					if (!attackedByBlack[kingLoc.getRow()+i][kingLoc.getCol()+i]) {
+						return false;
+					}
+				}
+			}
+		}
+		//STEP 3
+		//check for knights
 	}
 	else {
 		

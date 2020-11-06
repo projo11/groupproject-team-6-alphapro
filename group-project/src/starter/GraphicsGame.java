@@ -73,13 +73,13 @@ public class GraphicsGame extends GraphicsProgram implements ActionListener{
 		System.out.println("Basic Rules:");
 		System.out.println("The player with the white pieces always moves first.");
 		System.out.println("Players take turns alternately moving one piece at a time.");
-		System.out.println("Movement is required. If a playerLs turn is to move, he is not in check but has no legal moves");
-		System.out.println("this situation is called gStalemateh and it ends the game in a draw.");
+		System.out.println("Movement is required. If a playerï¿½Ls turn is to move, he is not in check but has no legal moves");
+		System.out.println("this situation is called ï¿½gStalemateï¿½h and it ends the game in a draw.");
 		System.out.println("Each type of piece has its own method of movement.");
-		System.out.println("A piece may be moved to another position or may capture an opponentLs piece,");
+		System.out.println("A piece may be moved to another position or may capture an opponentï¿½Ls piece,");
 		System.out.println("replacing on its square (en passant being the only exception).");
 		System.out.println("With the exception of the knight, a piece may not move over or through any of the other pieces.");
-		System.out.println("When a king is threatened with capture (but can protect himself or escape), itLs called check.");
+		System.out.println("When a king is threatened with capture (but can protect himself or escape), itï¿½Ls called check.");
 		System.out.println("If a king is in check, then the player must make a move that eliminates the threat of capture and cannot"); 
 		System.out.println("leave the king in check. Checkmate happens when a king is placed in check and there is no legal move to escape."); 
 		System.out.println("Checkmate ends the game and the side whose king was checkmated looses.");  
@@ -297,26 +297,81 @@ public class GraphicsGame extends GraphicsProgram implements ActionListener{
     }
     @Override
 	public void mouseReleased(MouseEvent e) {
-    	//TODO: Write code that will theoretically move a chess piece back to it's original spot
-    	//		if the place it was moved to is not a valid movement for that piece or the piece
-    	//		cannot capture the piece it is trying to land on
     	Space space = convertXYToSpace(clickX, clickY);
-    	toDrag = null;
+    	Piece piece = getPieceFromXY(clickX, clickY);
+    	if(piece != null)
+    	{
+    		board.moveNumSpaces(space, calculateRowsMoved(), calculateColsMoved());
+    		removeAll();
+    		//printBoard(); NOTE: find out what kind of Graphic object to put in parameters
+    	}
+    	if(piece.getColor() == true) //true = white -> piece is white
+    	{
+    		if(board.checkmate(piece.getColor()) == true) //if a white piece puts the opponent in checkmate
+    		{
+    			removeAll();
+    			printWinScreen();
+    		}
+    	}
+    	else //false = black -> piece is black
+    	{
+    		if(board.checkmate(piece.getColor()) == true) //if a black piece puts the opponent in checkmate
+    		{
+    			removeAll();
+    			printWinScreen();
+    		}
+    	}
     }
     
     //Below are functions used to help with the mouse listener functions
     //Code that converts XY coordinates into a Space
-    public Space convertXYToSpace(double x, double y)
+    private Space convertXYToSpace(double x, double y)
     {
     	Space space = new Space((int)(y/spaceHeight()), (int)(x/spaceWidth())); 
     	return space;
     }
     
     //Code that returns the Piece in a given space with the provided XY coordinates
-    public Piece getPieceFromXY(double x, double y)
+    private Piece getPieceFromXY(double x, double y)
     {
     	Space space = convertXYToSpace(x, y);
     	return board.getPiece(space);
+    }
+    
+    //Code that returns how many rows a piece has moved
+    private int calculateRowsMoved()
+    {
+    	int rowsMoved = 0;
+    	Space start = convertXYToSpace(clickX, clickY);
+    	Space end = convertXYToSpace(lastX, lastY);
+    	Piece piece = getPieceFromXY(clickX, clickY);
+    	if(piece != null)
+    	{
+    		rowsMoved = end.getRow() - start.getRow();
+    	}
+    	else //If no piece was selected, the amount of rows moved is 0
+    	{
+    		rowsMoved = 0;
+    	}
+    	return rowsMoved;
+    }
+    
+  //Code that returns how many cols a piece has moved
+    private int calculateColsMoved()
+    {
+    	int colsMoved = 0;
+    	Space start = convertXYToSpace(clickX, clickY);
+    	Space end = convertXYToSpace(lastX, lastY);
+    	Piece piece = getPieceFromXY(clickX, clickY);
+    	if(piece != null)
+    	{
+    		colsMoved = end.getCol() - start.getCol();
+    	}
+    	else //If no piece was selected, the amount of rows moved is 0
+    	{
+    		colsMoved = 0;
+    	}
+    	return colsMoved;
     }
     
     //Code that returns the width of the spaces

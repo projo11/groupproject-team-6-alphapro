@@ -20,8 +20,8 @@ public class GraphicsGame extends GraphicsProgram implements ActionListener{
 	private int clickX, clickY, releaseX, releaseY, lastX, lastY;
 	private GObject toDrag;
 
-	private int x = 8;
-	private int y = 8;
+	private int x = 8; //Chess board width dimension
+	private int y = 8; //Chess board height dimension
 	public static final int PROGRAM_WIDTH = 900;
 	public static final int PROGRAM_HEIGHT = 900;
 	final JFrame parent = new JFrame();
@@ -279,10 +279,6 @@ public class GraphicsGame extends GraphicsProgram implements ActionListener{
     	lastY = e.getY();
     	clickX = e.getX();
     	clickY = e.getY();
-    	
-    	//NOTE: may need the convert XY to Space function like in Traffic Jam
-    	//Space space = new Space(e.getX(), e.getY());
-    	//Piece selected = board.getPiece(space);
 	}
     @Override
     public void mouseDragged(MouseEvent e) {
@@ -290,8 +286,6 @@ public class GraphicsGame extends GraphicsProgram implements ActionListener{
     	{
     		toDrag.move(e.getX()-lastX, e.getY()-lastY);
     	}
-    	clickX = e.getX();
-    	clickY = e.getY();
     	lastX = e.getX();
     	lastY = e.getY();
     }
@@ -377,13 +371,13 @@ public class GraphicsGame extends GraphicsProgram implements ActionListener{
     //Code that returns the width of the spaces
     private double spaceWidth() 
     {
-		return PROGRAM_WIDTH/8;
+		return PROGRAM_WIDTH/x;
 	}
 
     //Code that returns the height of the spaces
 	private double spaceHeight() 
 	{
-		return PROGRAM_HEIGHT/8;
+		return PROGRAM_HEIGHT/y;
 	}
    
 }

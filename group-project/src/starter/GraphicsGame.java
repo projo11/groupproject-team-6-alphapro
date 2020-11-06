@@ -19,6 +19,7 @@ public class GraphicsGame extends GraphicsProgram implements ActionListener{
 	private Board board;
 	private int clickX, clickY, releaseX, releaseY, lastX, lastY;
 	private GObject toDrag;
+	private boolean isPlayingMatch;
 
 	private int x = 8; //Chess board width dimension
 	private int y = 8; //Chess board height dimension
@@ -32,6 +33,7 @@ public class GraphicsGame extends GraphicsProgram implements ActionListener{
 		printTitleScreen();
 	}
 	public void printTitleScreen() {
+		isPlayingMatch = false; //NOTE: Added so that the code a match is currently not being played
 		final JFrame mainM = new JFrame("Main Menu");
 		mainM.setSize(PROGRAM_WIDTH, PROGRAM_HEIGHT);
 		JLabel Title = new JLabel("Custom Chess");
@@ -125,6 +127,7 @@ public class GraphicsGame extends GraphicsProgram implements ActionListener{
 	     }
 	}
 	public void printWinScreen() {
+		isPlayingMatch = false; //NOTE: Added so that the code knows the game is over
 		JLabel v = new JLabel("Victory");
 		final JFrame rules1 = new JFrame("WinScreen");
 		JPanel firstPanel = new JPanel();
@@ -291,29 +294,40 @@ public class GraphicsGame extends GraphicsProgram implements ActionListener{
     }
     @Override
 	public void mouseReleased(MouseEvent e) {
+    	//TODO: May need to add some kind of boolean check to see if the game is being played or
+    	//		if the players are just setting up their pieces on the board, so the code does
+    	//		try and do the checkmate checks during board set up.
     	Space space = convertXYToSpace(clickX, clickY);
     	Piece piece = getPieceFromXY(clickX, clickY);
-    	if(piece != null)
+    	//TODO: Figure out where to make it so that isPlayingMatch becomes true
+    	if(isPlayingMatch == true) //If the players are currently playing a match
     	{
-    		board.moveNumSpaces(space, calculateRowsMoved(), calculateColsMoved());
-    		removeAll();
-    		//printBoard(); NOTE: find out what kind of Graphic object to put in parameters
+    		if(piece != null)
+        	{
+        		board.moveNumSpaces(space, calculateRowsMoved(), calculateColsMoved());
+        		removeAll();
+        		//printBoard(); NOTE: find out what kind of Graphic object to put in parameters
+        	}
+        	if(piece.getColor() == true) //true = white -> piece is white
+        	{
+        		if(board.checkmate(piece.getColor()) == true) //if a white piece puts the opponent in checkmate
+        		{
+        			removeAll();
+        			printWinScreen();
+        		}
+        	}
+        	else //false = black -> piece is black
+        	{
+        		if(board.checkmate(piece.getColor()) == true) //if a black piece puts the opponent in checkmate
+        		{
+        			removeAll();
+        			printWinScreen();
+        		}
+        	}
     	}
-    	if(piece.getColor() == true) //true = white -> piece is white
+    	else //If the players are currently just looking at the menus(i.e. title screen, rules, win screen)/setting up the board
     	{
-    		if(board.checkmate(piece.getColor()) == true) //if a white piece puts the opponent in checkmate
-    		{
-    			removeAll();
-    			printWinScreen();
-    		}
-    	}
-    	else //false = black -> piece is black
-    	{
-    		if(board.checkmate(piece.getColor()) == true) //if a black piece puts the opponent in checkmate
-    		{
-    			removeAll();
-    			printWinScreen();
-    		}
+    		toDrag = null;
     	}
     }
     

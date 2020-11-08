@@ -39,31 +39,39 @@ public class MainApplication extends GraphicsApplication {
 
 /*
 public class MainApplication extends GraphicsApplication{
-public static final int WINDOW_WIDTH = 900;
-public static final int WINDOW_HEIGHT = 900;
-public static final String MUSIC_FOLDER = "sounds";
-private static final String [] SOUND_FILES = { "menumusic.mp3", "chessgamemusic.mp3"};
+	public static final int WINDOW_WIDTH = 900;
+	public static final int WINDOW_HEIGHT = 900;
+	public static final String MUSIC_FOLDER = "sounds";
+	private static final String [] SOUND_FILES = {"chessgamemusic.mp3"};
 
-private SomePane somePane;
-private MenuPane menu;
-private int count;
+	private GamePane gamePane;
+	private MenuPane menu;
+	private int count;
 
-public void init(){
-	setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
+	public void init(){
+		setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
 	}
 	
-public void run() {
-	System.out.println("Hello world!");
-	somePane = new SomePane(this);
-	menu = new MenuPane(this);
-	switchToMenu();
+	public void run() {
+		System.out.println("Welcome to the Custom Chess Game!");
+		gamePane = new GamePane(this);
+		menu = new MenuPane(this);
+		switchToMenu();
 	}
 
-public void switchToMenu() {
-playSound();
-count++;
-switchToScreen(menu);
-}
+	public void switchToMenu() {
+		playSoundf();
+		count++;
+		switchToScreen(menu);
+	}
+	public void switchToGame(){
+		playSoundf();
+		switchToScreen(gamePane);
+	}
+	private void playSoundf();{
+		AudioPlayer audio = AudioPlayer.getInstance();
+		audio.playSound(MUSIC_FOLDER, SOUND_FILES[count % SOUND_FILES.length]);
+	}
 
 }
 

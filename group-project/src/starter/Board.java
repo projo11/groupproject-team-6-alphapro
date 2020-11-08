@@ -248,6 +248,7 @@ public boolean checkmate(boolean isTeamWhite) {
 	//STEP 0
 	Space kingLoc = null;
 	Piece attacker = null;
+	Space toCheck = null;
 	for (Piece temp : pieces) {
 		if (temp.getColor() == isTeamWhite && temp.getType() == PieceType.KING) {
 			kingLoc = new Space(temp.getRow(), temp.getCol());
@@ -273,6 +274,34 @@ public boolean checkmate(boolean isTeamWhite) {
 		//check for knights
 		for (int i = -1; i < 2; i+=2) {
 			for (int j = -1; j < 2; j+=2) {
+				toCheck = new Space(kingLoc.getRow()+(2*i), kingLoc.getCol()+j);
+				if (!isOutOfBounds(toCheck)) {
+					if (getPiece(toCheck).getType() == PieceType.KNIGHT && getPiece(toCheck).getColor()) {
+						if (attacker != null) {
+							return true;
+						}
+						else {
+							attacker = getPiece(toCheck);
+						}
+					}
+				}
+				toCheck = new Space(kingLoc.getRow()+i, kingLoc.getCol()+(2*j));
+				if (!isOutOfBounds(toCheck)) {
+					if (getPiece(toCheck).getType() == PieceType.KNIGHT && getPiece(toCheck).getColor()) {
+						if (attacker != null) {
+							return true;
+						}
+						else {
+							attacker = getPiece(toCheck);
+						}
+					}
+				}
+			}
+		}
+		//check diagonals
+		for (int i = 0; i < 4; i++) {
+			
+			for (int j = 0; j < 8; j++) {
 				if (!isOutOfBounds(new Space(kingLoc.getRow()+(2*i), kingLoc.getCol()+j))) {
 					if (getPiece(new Space(kingLoc.getRow()+(2*i), kingLoc.getCol()+j)).getType() == PieceType.KNIGHT && getPiece(new Space(kingLoc.getRow()+i, kingLoc.getCol()+(2*j))).getColor()) {
 						if (attacker != null) {
@@ -295,8 +324,6 @@ public boolean checkmate(boolean isTeamWhite) {
 				}
 			}
 		}
-		//check diagonals
-		
 		//check straights
 		
 		//STEP 4

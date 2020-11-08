@@ -243,7 +243,8 @@ public boolean checkmate(boolean isTeamWhite) {
 	 * STEP 3.a: Check Ls for knights
 	 * STEP 3.b: Check diagonals for bishops or rooks
 	 * STEP 3.c: Check straights for rooks or queens
-	 * STEP 4: Determine if the danger can be blocked
+	 * STEP 4: Determine if the danger can be eliminated
+	 * STEP 5: Determine if line-of-sight to the attacker can be intercepted
 	\*/
 	//STEP 0
 	Space kingLoc = null;
@@ -276,7 +277,7 @@ public boolean checkmate(boolean isTeamWhite) {
 			for (int j = -1; j < 2; j+=2) {
 				toCheck = new Space(kingLoc.getRow()+(2*i), kingLoc.getCol()+j);
 				if (!isOutOfBounds(toCheck)) {
-					if (getPiece(toCheck).getType() == PieceType.KNIGHT && getPiece(toCheck).getColor()) {
+					if (getPiece(toCheck).getType() == PieceType.KNIGHT && !getPiece(toCheck).getColor()) {
 						if (attacker != null) {
 							return true;
 						}
@@ -287,7 +288,36 @@ public boolean checkmate(boolean isTeamWhite) {
 				}
 				toCheck = new Space(kingLoc.getRow()+i, kingLoc.getCol()+(2*j));
 				if (!isOutOfBounds(toCheck)) {
-					if (getPiece(toCheck).getType() == PieceType.KNIGHT && getPiece(toCheck).getColor()) {
+					if (getPiece(toCheck).getType() == PieceType.KNIGHT && !getPiece(toCheck).getColor()) {
+						if (attacker != null) {
+							return true;
+						}
+						else {
+							attacker = getPiece(toCheck);
+						}
+					}
+				}//TODO: Optimize in the same fashion as the diag function
+			}
+		}
+		//check diagonals
+		for (int i = 0; i < 4; i++) {
+			for (int j = 1; j < 9; j++) {
+				switch(i) {
+				case 0: 
+					toCheck = new Space(kingLoc.getRow()-i, kingLoc.getCol()+i);//Up-right
+					break;
+				case 1: 
+					toCheck = new Space(kingLoc.getRow()+i, kingLoc.getCol()+i);//Down-right
+					break;
+				case 2: 
+					toCheck = new Space(kingLoc.getRow()+i, kingLoc.getCol()-i);//Down-left
+					break;
+				case 3:
+					toCheck = new Space(kingLoc.getRow()-i, kingLoc.getCol()-i);//Up-left
+					break;
+				}
+				if (!isOutOfBounds(toCheck)) {
+					if ((getPiece(toCheck).getType() == PieceType.BISHOP || getPiece(toCheck).getType() == PieceType.QUEEN) && !getPiece(toCheck).getColor()) {
 						if (attacker != null) {
 							return true;
 						}
@@ -298,34 +328,35 @@ public boolean checkmate(boolean isTeamWhite) {
 				}
 			}
 		}
-		//check diagonals
+		//check straights
 		for (int i = 0; i < 4; i++) {
-			
-			for (int j = 0; j < 8; j++) {
-				if (!isOutOfBounds(new Space(kingLoc.getRow()+(2*i), kingLoc.getCol()+j))) {
-					if (getPiece(new Space(kingLoc.getRow()+(2*i), kingLoc.getCol()+j)).getType() == PieceType.KNIGHT && getPiece(new Space(kingLoc.getRow()+i, kingLoc.getCol()+(2*j))).getColor()) {
-						if (attacker != null) {
-							return true;
-						}
-						else {
-							attacker = getPiece(new Space(kingLoc.getRow()+(2*i), kingLoc.getCol()+j));
-						}
-					}
+			for (int j = 1; j < 9; j++) {
+				switch(i) {
+				case 0: 
+					toCheck = new Space(kingLoc.getRow(), kingLoc.getCol()+i);//Right
+					break;
+				case 1: 
+					toCheck = new Space(kingLoc.getRow()+i, kingLoc.getCol());//Down
+					break;
+				case 2: 
+					toCheck = new Space(kingLoc.getRow(), kingLoc.getCol()-i);//Left
+					break;
+				case 3:
+					toCheck = new Space(kingLoc.getRow()-i, kingLoc.getCol());//Up
+					break;
 				}
-				if (!isOutOfBounds(new Space(kingLoc.getRow()+i, kingLoc.getCol()+(2*j)))) {
-					if (getPiece(new Space(kingLoc.getRow()+i, kingLoc.getCol()+(2*j))).getType() == PieceType.KNIGHT && getPiece(new Space(kingLoc.getRow()+i, kingLoc.getCol()+(2*j))).getColor()) {
+				if (!isOutOfBounds(toCheck)) {
+					if ((getPiece(toCheck).getType() == PieceType.ROOK || getPiece(toCheck).getType() == PieceType.QUEEN) && !getPiece(toCheck).getColor()) {
 						if (attacker != null) {
 							return true;
 						}
 						else {
-							attacker = getPiece(new Space(kingLoc.getRow()+i, kingLoc.getCol()+(2*j)));
+							attacker = getPiece(toCheck);
 						}
 					}
 				}
 			}
 		}
-		//check straights
-		
 		//STEP 4
 	}
 	else {

@@ -157,15 +157,15 @@ public void updateAttackLists() {
 			}
 			else if (temp.getType() == PieceType.KNIGHT){
 				for (Pair<Integer, Integer> pair : temp.getPossibleMoves()) {
-					if(!isOutOfBounds(new Space(temp.getRow()+pair.getKey(), temp.getRow()+pair.getKey()))) { 
-						attackedByWhite[temp.getRow()+pair.getKey()][temp.getRow()+pair.getKey()] = true;
+					if(!isOutOfBounds(new Space(temp.getRow()+pair.getKey(), temp.getCol()+pair.getValue()))) { 
+						attackedByWhite[temp.getRow()+pair.getKey()][temp.getCol()+pair.getValue()] = true;
 					}
 				}
 			}
-			else {
+			else { //TODO: Do not count moves where the king would be unsafe
 				for (Pair<Integer, Integer> pair : temp.getPossibleMoves()) {
-					if(!isOutOfBounds(new Space(temp.getRow()+pair.getKey(), temp.getRow()+pair.getKey())) && hasLineOfSight(new Space(temp.getRow(), temp.getCol()), pair.getKey(), pair.getValue())) { 
-						attackedByWhite[temp.getRow()+pair.getKey()][temp.getRow()+pair.getKey()] = true; //TODO: Could be severly optimised
+					if(!isOutOfBounds(new Space(temp.getRow()+pair.getKey(), temp.getCol()+pair.getValue())) && hasLineOfSight(new Space(temp.getRow(), temp.getCol()), pair.getKey(), pair.getValue())) { 
+						attackedByWhite[temp.getRow()+pair.getKey()][temp.getCol()+pair.getValue()] = true; //TODO: Could be severly optimised
 					}
 				}
 			}
@@ -358,6 +358,21 @@ public boolean checkmate(boolean isTeamWhite) {
 			}
 		}
 		//STEP 4
+		if (attackedByWhite[attacker.getRow()][attacker.getCol()]) { 
+			//TODO: Figure out how to disallow the king putting itself in danger using this
+			//Currently, it will not see checkmate if the only way out is to kill the attacker using your king. Howerver,
+			//this may result in the king being killable.
+			return false;
+		}
+		if (attacker.getType() == PieceType.KNIGHT) {
+			return true;
+		}
+		//STEP 5
+		if (attacker.getRow() == kingLoc.getRow() || attacker.getCol() == kingLoc.getCol()) {
+			int r = attacker.getRow() - kingLoc.getRow();
+			int c = attacker.getCol() - kingLoc.getCol();
+			//TODO: Finish
+		}
 	}
 	else {
 		

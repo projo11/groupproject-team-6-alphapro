@@ -19,7 +19,7 @@ public class GraphicsGame extends GraphicsProgram implements ActionListener{
 	private Board board;
 	private int clickX, clickY, releaseX, releaseY, lastX, lastY;
 	private GObject toDrag;
-	private boolean isPlayingMatch;
+	private boolean isPlayingMatch; //Boolean variable to indicate if a chess match is being played
 
 	private int x = 8; //Chess board width dimension
 	private int y = 8; //Chess board height dimension
@@ -31,9 +31,10 @@ public class GraphicsGame extends GraphicsProgram implements ActionListener{
 	}
 	public void run() {
 		printTitleScreen();
+		addMouseListeners();
 	}
 	public void printTitleScreen() {
-		isPlayingMatch = false; //NOTE: Added so that the code a match is currently not being played
+		isPlayingMatch = false; //NOTE: Added so that the code knows a match is currently not being played
 		final JFrame mainM = new JFrame("Main Menu");
 		mainM.setSize(PROGRAM_WIDTH, PROGRAM_HEIGHT);
 		JLabel Title = new JLabel("Custom Chess");
@@ -294,19 +295,17 @@ public class GraphicsGame extends GraphicsProgram implements ActionListener{
     }
     @Override
 	public void mouseReleased(MouseEvent e) {
-    	//TODO: May need to add some kind of boolean check to see if the game is being played or
-    	//		if the players are just setting up their pieces on the board, so the code does
-    	//		try and do the checkmate checks during board set up.
     	Space space = convertXYToSpace(clickX, clickY);
     	Piece piece = getPieceFromXY(clickX, clickY);
     	//TODO: Figure out where to make it so that isPlayingMatch becomes true
-    	if(isPlayingMatch == true) //If the players are currently playing a match
+    	
+    	if(isPlayingMatch == true) //If the players are currently playing a match, mouseReleased() will behave like the below
     	{
     		if(piece != null)
         	{
         		board.moveNumSpaces(space, calculateRowsMoved(), calculateColsMoved());
         		removeAll();
-        		//printBoard(); NOTE: find out what kind of Graphic object to put in parameters
+        		printBoard(null); //NOTE: Fix this!
         	}
         	if(piece.getColor() == true) //true = white -> piece is white
         	{
@@ -325,7 +324,7 @@ public class GraphicsGame extends GraphicsProgram implements ActionListener{
         		}
         	}
     	}
-    	else //If the players are currently just looking at the menus(i.e. title screen, rules, win screen)/setting up the board
+    	else //If the players are currently just looking at the menus(i.e. title screen, rules, win screen)/setting up the board, mouseReleased() will behave like below
     	{
     		toDrag = null;
     	}
@@ -375,7 +374,7 @@ public class GraphicsGame extends GraphicsProgram implements ActionListener{
     	{
     		colsMoved = end.getCol() - start.getCol();
     	}
-    	else //If no piece was selected, the amount of rows moved is 0
+    	else //If no piece was selected, the amount of cols moved is 0
     	{
     		colsMoved = 0;
     	}

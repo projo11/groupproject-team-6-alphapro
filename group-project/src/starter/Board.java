@@ -368,16 +368,188 @@ public boolean checkmate(boolean isTeamWhite) {
 			return true;
 		}
 		//STEP 5
-		if (attacker.getRow() == kingLoc.getRow() || attacker.getCol() == kingLoc.getCol()) {
-			int r = attacker.getRow() - kingLoc.getRow();
-			int c = attacker.getCol() - kingLoc.getCol();
-			//TODO: Finish
+		ArrayList<Space> blockLocations = new ArrayList<Space>();
+		int r = attacker.getRow() - kingLoc.getRow();
+		int c = attacker.getCol() - kingLoc.getCol();
+		if (r == 1 || c == 1) {
+			return true;
+		}
+		if (c < 0) {
+			c++;
+		}
+		if (c > 0) {
+			c--;
+		}
+		if (r < 0) {
+			r++;
+		}
+		if (r > 0) {
+			r--;
+		}
+		int distance = 0;
+		if (Math.abs(r) > Math.abs(c)) {
+			distance = Math.abs(r);
+		}
+		else {
+			distance = Math.abs(c);
+		}
+		for (int i = 0; i < distance; i++) {
+			blockLocations.add(new Space (kingLoc.getRow()+(i*Integer.signum(r)), kingLoc.getCol()+(i*Integer.signum(c))));
+		}
+		for (Space temp : blockLocations) {
+			if (attackedByWhite[temp.getRow()][temp.getCol()]) {
+				return false;
+			}
 		}
 	}
-	else {
-		
+	else { 
+		//BLACK TEAM
+				//STEP 1
+				if (!attackedByWhite[kingLoc.getRow()][kingLoc.getCol()]) {
+					return false;
+				}
+				//STEP 2
+				for (int i = -1; i < 2; i++) {
+					for (int j = -1; j < 2; j++) {
+						if (!isOutOfBounds(new Space(kingLoc.getRow()+i, kingLoc.getCol()+i))) {
+							if (!attackedByWhite[kingLoc.getRow()+i][kingLoc.getCol()+i]) {
+								return false;
+							}
+						}
+					}
+				}
+				//STEP 3
+				//check for knights
+				for (int i = -1; i < 2; i+=2) {
+					for (int j = -1; j < 2; j+=2) {
+						toCheck = new Space(kingLoc.getRow()+(2*i), kingLoc.getCol()+j);
+						if (!isOutOfBounds(toCheck)) {
+							if (getPiece(toCheck).getType() == PieceType.KNIGHT && !getPiece(toCheck).getColor()) {
+								if (attacker != null) {
+									return true;
+								}
+								else {
+									attacker = getPiece(toCheck);
+								}
+							}
+						}
+						toCheck = new Space(kingLoc.getRow()+i, kingLoc.getCol()+(2*j));
+						if (!isOutOfBounds(toCheck)) {
+							if (getPiece(toCheck).getType() == PieceType.KNIGHT && !getPiece(toCheck).getColor()) {
+								if (attacker != null) {
+									return true;
+								}
+								else {
+									attacker = getPiece(toCheck);
+								}
+							}
+						}//TODO: Optimize in the same fashion as the diag function
+					}
+				}
+				//check diagonals
+				for (int i = 0; i < 4; i++) {
+					for (int j = 1; j < 9; j++) {
+						switch(i) {
+						case 0: 
+							toCheck = new Space(kingLoc.getRow()-i, kingLoc.getCol()+i);//Up-right
+							break;
+						case 1: 
+							toCheck = new Space(kingLoc.getRow()+i, kingLoc.getCol()+i);//Down-right
+							break;
+						case 2: 
+							toCheck = new Space(kingLoc.getRow()+i, kingLoc.getCol()-i);//Down-left
+							break;
+						case 3:
+							toCheck = new Space(kingLoc.getRow()-i, kingLoc.getCol()-i);//Up-left
+							break;
+						}
+						if (!isOutOfBounds(toCheck)) {
+							if ((getPiece(toCheck).getType() == PieceType.BISHOP || getPiece(toCheck).getType() == PieceType.QUEEN) && !getPiece(toCheck).getColor()) {
+								if (attacker != null) {
+									return true;
+								}
+								else {
+									attacker = getPiece(toCheck);
+								}
+							}
+						}
+					}
+				}
+				//check straights
+				for (int i = 0; i < 4; i++) {
+					for (int j = 1; j < 9; j++) {
+						switch(i) {
+						case 0: 
+							toCheck = new Space(kingLoc.getRow(), kingLoc.getCol()+i);//Right
+							break;
+						case 1: 
+							toCheck = new Space(kingLoc.getRow()+i, kingLoc.getCol());//Down
+							break;
+						case 2: 
+							toCheck = new Space(kingLoc.getRow(), kingLoc.getCol()-i);//Left
+							break;
+						case 3:
+							toCheck = new Space(kingLoc.getRow()-i, kingLoc.getCol());//Up
+							break;
+						}
+						if (!isOutOfBounds(toCheck)) {
+							if ((getPiece(toCheck).getType() == PieceType.ROOK || getPiece(toCheck).getType() == PieceType.QUEEN) && !getPiece(toCheck).getColor()) {
+								if (attacker != null) {
+									return true;
+								}
+								else {
+									attacker = getPiece(toCheck);
+								}
+							}
+						}
+					}
+				}
+				//STEP 4
+				if (attackedByBlack[attacker.getRow()][attacker.getCol()]) { 
+					//TODO: Figure out how to disallow the king putting itself in danger using this
+					//Currently, it will not see checkmate if the only way out is to kill the attacker using your king. Howerver,
+					//this may result in the king being killable.
+					return false;
+				}
+				if (attacker.getType() == PieceType.KNIGHT) {
+					return true;
+				}
+				//STEP 5
+				ArrayList<Space> blockLocations = new ArrayList<Space>();
+				int r = attacker.getRow() - kingLoc.getRow();
+				int c = attacker.getCol() - kingLoc.getCol();
+				if (r == 1 || c == 1) {
+					return true;
+				}
+				if (c < 0) {
+					c++;
+				}
+				if (c > 0) {
+					c--;
+				}
+				if (r < 0) {
+					r++;
+				}
+				if (r > 0) {
+					r--;
+				}
+				int distance = 0;
+				if (Math.abs(r) > Math.abs(c)) {
+					distance = Math.abs(r);
+				}
+				else {
+					distance = Math.abs(c);
+				}
+				for (int i = 0; i < distance; i++) {
+					blockLocations.add(new Space (kingLoc.getRow()+(i*Integer.signum(r)), kingLoc.getCol()+(i*Integer.signum(c))));
+				}
+				for (Space temp : blockLocations) {
+					if (attackedByBlack[temp.getRow()][temp.getCol()]) {
+						return false;
+					}
+				}
 	}
-	return false;
+	return true;
 }
 
 

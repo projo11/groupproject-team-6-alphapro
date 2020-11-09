@@ -27,6 +27,7 @@ public class GraphicsGame extends GraphicsProgram implements ActionListener{
 	public static final int SPACE_HEIGHT = 40;
 	public static final int PROGRAM_WIDTH = 900;
 	public static final int PROGRAM_HEIGHT = 900;
+	public static final int BOARD_SHIFT = 100;
 	final JFrame parent = new JFrame();
 	public void init() {
 		setSize(PROGRAM_WIDTH, PROGRAM_HEIGHT);
@@ -262,6 +263,14 @@ public class GraphicsGame extends GraphicsProgram implements ActionListener{
 	               }
 	           }
 	     }
+	    for (Piece temp : board.getPieces()) {
+	    	GImage toAdd;
+	    	String filePath;
+	    	if (temp.getColor()) {
+	    	}
+	    	//GObject toAdd = new GObject(temp.getCol()*SPACE_WIDTH, temp.getRow()*SPACE_HEIGHT, SPACE_WIDTH, SPACE_HEIGHT);
+	    	//TODO: FIX
+	    }
 	}
 	public void printWinScreen() {
 		isPlayingMatch = false; //NOTE: Added so that the code knows the game is over

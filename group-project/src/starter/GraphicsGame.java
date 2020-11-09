@@ -57,7 +57,7 @@ public class GraphicsGame extends GraphicsProgram implements ActionListener{
 	            printPieceShop();
 			}
 		});
-		JButton rules = new JButton("View Rule");
+		JButton rules = new JButton("View Rules");
 		rules.setBounds(335, 600, 200, 100);
 		rules.setFont(new Font("TimesNewRoman", Font.BOLD, 20));
 		rules.addActionListener(new ActionListener() {
@@ -439,7 +439,7 @@ public class GraphicsGame extends GraphicsProgram implements ActionListener{
         	{
         		board.moveNumSpaces(space, calculateRowsMoved(), calculateColsMoved());
         		removeAll();
-        		printBoard(null); //NOTE: Fix this!
+        		printBoard(null); //TODO: Fix this!
         	}
         	if(piece.getColor() == true) //true = white -> piece is white
         	{

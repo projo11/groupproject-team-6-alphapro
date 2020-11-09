@@ -145,7 +145,8 @@ public void updateAttackLists() {
 	for (Piece temp : pieces) {
 		if (temp.getColor()) {
 			//For white pieces
-			if(temp.getType() == PieceType.PAWN) {
+			switch(temp.getType()) {
+			case PAWN: 
 				if (!isBoardFlipped) {
 					attackedByWhite[temp.getRow()-1][temp.getCol()+1] = true;
 					attackedByWhite[temp.getRow()-1][temp.getCol()-1] = true;
@@ -154,15 +155,20 @@ public void updateAttackLists() {
 					attackedByWhite[temp.getRow()+1][temp.getCol()+1] = true;
 					attackedByWhite[temp.getRow()+1][temp.getCol()-1] = true;
 				}
-			}
-			else if (temp.getType() == PieceType.KNIGHT){
+				break;
+			case KNIGHT:
 				for (Pair<Integer, Integer> pair : temp.getPossibleMoves()) {
 					if(!isOutOfBounds(new Space(temp.getRow()+pair.getKey(), temp.getCol()+pair.getValue()))) { 
 						attackedByWhite[temp.getRow()+pair.getKey()][temp.getCol()+pair.getValue()] = true;
 					}
 				}
-			}
-			else { //TODO: Do not count moves where the king would be unsafe
+				break;
+			case KING:
+				//TODO: Figure out a better way to optimise this. 
+				//Currently the script ignores kings until after this part is done, so that
+				//the king will not be allowed to enter an attacked space.
+				break;
+			default:
 				for (Pair<Integer, Integer> pair : temp.getPossibleMoves()) {
 					if(!isOutOfBounds(new Space(temp.getRow()+pair.getKey(), temp.getCol()+pair.getValue())) && hasLineOfSight(new Space(temp.getRow(), temp.getCol()), pair.getKey(), pair.getValue())) { 
 						attackedByWhite[temp.getRow()+pair.getKey()][temp.getCol()+pair.getValue()] = true; //TODO: Could be severly optimised
@@ -172,7 +178,8 @@ public void updateAttackLists() {
 		}
 		else {
 			//for black pieces
-			if(temp.getType() == PieceType.PAWN) {
+			switch(temp.getType()) {
+			case PAWN: 
 				if (!isBoardFlipped) {
 					attackedByBlack[temp.getRow()+1][temp.getCol()+1] = true;
 					attackedByBlack[temp.getRow()+1][temp.getCol()-1] = true;
@@ -181,18 +188,41 @@ public void updateAttackLists() {
 					attackedByBlack[temp.getRow()-1][temp.getCol()+1] = true;
 					attackedByBlack[temp.getRow()-1][temp.getCol()-1] = true;
 				}
-			}
-			else if (temp.getType() == PieceType.KNIGHT){
+				break;
+			case KNIGHT:
 				for (Pair<Integer, Integer> pair : temp.getPossibleMoves()) {
 					if(!isOutOfBounds(new Space(temp.getRow()+pair.getKey(), temp.getRow()+pair.getKey()))) {
 						attackedByBlack[temp.getRow()+pair.getKey()][temp.getRow()+pair.getKey()] = true;
 					}
 				}
+				break;
+			case KING:
+				//Figure out a better way to optimise this. 
+				//Currently the script ignores kings until after this part is done, so that
+				//the king will not be allowed to enter an attacked space.
+				break;
+				default:
+					for (Pair<Integer, Integer> pair : temp.getPossibleMoves()) {
+						if(!isOutOfBounds(new Space(temp.getRow()+pair.getKey(), temp.getRow()+pair.getKey())) && hasLineOfSight(new Space(temp.getRow(), temp.getCol()), pair.getKey(), pair.getValue())) { 
+							attackedByBlack[temp.getRow()+pair.getKey()][temp.getRow()+pair.getKey()] = true; //TODO: Could be severly optimised
+					}
+				}
+			}
+		}
+	}
+	for (Piece temp : pieces) {
+		if (temp.getType() == PieceType.KING) {
+			if (temp.getColor()) {
+				for (Pair<Integer, Integer> pair : temp.getPossibleMoves()) {
+					if(!isOutOfBounds(new Space(temp.getRow()+pair.getKey(), temp.getCol()+pair.getValue())) && !attackedByBlack[temp.getRow()+pair.getKey()][temp.getCol()+pair.getValue()]) { 
+						attackedByWhite[temp.getRow()+pair.getKey()][temp.getCol()+pair.getValue()] = true; 
+					}
+				}
 			}
 			else {
 				for (Pair<Integer, Integer> pair : temp.getPossibleMoves()) {
-					if(!isOutOfBounds(new Space(temp.getRow()+pair.getKey(), temp.getRow()+pair.getKey())) && hasLineOfSight(new Space(temp.getRow(), temp.getCol()), pair.getKey(), pair.getValue())) { 
-						attackedByBlack[temp.getRow()+pair.getKey()][temp.getRow()+pair.getKey()] = true; //TODO: Could be severly optimised
+					if(!isOutOfBounds(new Space(temp.getRow()+pair.getKey(), temp.getCol()+pair.getValue())) && !attackedByWhite[temp.getRow()+pair.getKey()][temp.getCol()+pair.getValue()]) { 
+						attackedByBlack[temp.getRow()+pair.getKey()][temp.getCol()+pair.getValue()] = true; 
 					}
 				}
 			}
@@ -359,9 +389,6 @@ public boolean checkmate(boolean isTeamWhite) {
 		}
 		//STEP 4
 		if (attackedByWhite[attacker.getRow()][attacker.getCol()]) { 
-			//TODO: Figure out how to disallow the king putting itself in danger using this
-			//Currently, it will not see checkmate if the only way out is to kill the attacker using your king. Howerver,
-			//this may result in the king being killable.
 			return false;
 		}
 		if (attacker.getType() == PieceType.KNIGHT) {
@@ -506,9 +533,6 @@ public boolean checkmate(boolean isTeamWhite) {
 				}
 				//STEP 4
 				if (attackedByBlack[attacker.getRow()][attacker.getCol()]) { 
-					//TODO: Figure out how to disallow the king putting itself in danger using this
-					//Currently, it will not see checkmate if the only way out is to kill the attacker using your king. Howerver,
-					//this may result in the king being killable.
 					return false;
 				}
 				if (attacker.getType() == PieceType.KNIGHT) {

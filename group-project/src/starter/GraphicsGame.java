@@ -17,12 +17,14 @@ import acm.program.GraphicsProgram;
 
 public class GraphicsGame extends GraphicsProgram implements ActionListener{
 	private Board board;
-	private int clickX, clickY, releaseX, releaseY, lastX, lastY;
+	private int clickX, clickY, lastX, lastY;
 	private GObject toDrag;
 	private boolean isPlayingMatch; //Boolean variable to indicate if a chess match is being played
 
 	private int x = 8; //Chess board width dimension
 	private int y = 8; //Chess board height dimension
+	public static final int SPACE_WIDTH = 40;
+	public static final int SPACE_HEIGHT = 40;
 	public static final int PROGRAM_WIDTH = 900;
 	public static final int PROGRAM_HEIGHT = 900;
 	final JFrame parent = new JFrame();
@@ -468,7 +470,7 @@ public class GraphicsGame extends GraphicsProgram implements ActionListener{
     //Code that converts XY coordinates into a Space
     private Space convertXYToSpace(double x, double y)
     {
-    	Space space = new Space((int)(y/spaceHeight()), (int)(x/spaceWidth())); 
+    	Space space = new Space((int)(y/SPACE_HEIGHT), (int)(x/SPACE_WIDTH)); 
     	return space;
     }
     
@@ -514,17 +516,5 @@ public class GraphicsGame extends GraphicsProgram implements ActionListener{
     	}
     	return colsMoved;
     }
-    
-    //Code that returns the width of the spaces
-    private double spaceWidth() 
-    {
-		return PROGRAM_WIDTH/x;
-	}
 
-    //Code that returns the height of the spaces
-	private double spaceHeight() 
-	{
-		return PROGRAM_HEIGHT/y;
-	}
-   
 }

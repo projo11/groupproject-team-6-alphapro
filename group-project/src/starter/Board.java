@@ -576,5 +576,9 @@ public boolean checkmate(boolean isTeamWhite) {
 	return true;
 }
 
+public ArrayList<Piece>getPieces() {
+	return pieces;
+}
+
 
 }

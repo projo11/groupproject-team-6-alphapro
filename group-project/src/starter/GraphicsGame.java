@@ -30,7 +30,6 @@ public class GraphicsGame extends GraphicsProgram implements ActionListener{
 	final JFrame parent = new JFrame();
 	public void init() {
 		setSize(PROGRAM_WIDTH, PROGRAM_HEIGHT);
-		
 	}
 	public void run() {
 		printTitleScreen();

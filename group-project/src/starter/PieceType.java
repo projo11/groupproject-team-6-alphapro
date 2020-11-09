@@ -5,12 +5,12 @@ public enum PieceType {
 	
 	public String toString() {
 		switch(this) {
-			case PAWN: return "pawn";
-			case KNIGHT: return "knight";
-			case BISHOP: return "bishop";
-			case ROOK: return "rook";
-			case QUEEN: return "queen";
-			case KING: return "king";
+			case PAWN: return "P";
+			case KNIGHT: return "Knight";
+			case BISHOP: return "Bishop";
+			case ROOK: return "Rook";
+			case QUEEN: return "Queen";
+			case KING: return "King";
 		}
 		return "n/a";
 	}

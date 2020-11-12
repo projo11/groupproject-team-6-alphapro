@@ -14,6 +14,7 @@ import acm.graphics.GImage;
 import acm.graphics.GLabel;
 import acm.graphics.GPoint;
 import acm.program.GraphicsProgram;
+import acm.graphics.*;
 
 public class GraphicsGame extends GraphicsProgram implements ActionListener{
 	private Board board;
@@ -34,7 +35,7 @@ public class GraphicsGame extends GraphicsProgram implements ActionListener{
 	public void run() {
 		printTitleScreen();
 		addMouseListeners();
-		printBoard();
+		//printBoard();
 	}
 	public void printTitleScreen() {
 		isPlayingMatch = false; //NOTE: Added so that the code knows a match is currently not being played
@@ -247,37 +248,39 @@ public class GraphicsGame extends GraphicsProgram implements ActionListener{
 		rules.setContentPane(firstPanel);
 		rules.setVisible(true);
 	}
+
 	public void printBoard(Graphics g) {
-		int row;
-	    int col;
-	    int x,y;
-	    for ( row = 0; row < 8; row++ ){
-	          for ( col = 0; col < 8; col++){
-	               x = BOARD_SHIFT + col * 40;
-	               y = BOARD_SHIFT + row * 40;
-	               if ( (row % 2) == (col % 2) ) {
-	                    g.setColor(Color.white);
-	               }
-	               else {
-	                   g.setColor(Color.black);
-	                   g.fillRect(x, y, 40, 40);
-	               }
-	           }
-	     }
-	    for (Piece temp : board.getPieces()) {
-	    	GImage toAdd;
-	    	String filePath;
-	    	if (temp.getColor()) {
-	    		filePath = new String("White_" + temp.getType().toString() + ".png");
-	    	}
-	    	else {
-	    		filePath = new String("Black_" + temp.getType().toString() + ".png");
-	    	}
-	    	toAdd = new GImage(filePath, temp.getCol()*SPACE_WIDTH, temp.getRow()*SPACE_HEIGHT);
-	    	toAdd.setSize(40, 40);
-	    	add(toAdd);
-	    }
+	int row;
+    int col;
+    int x,y;
+    for ( row = 0; row < 8; row++ ){
+          for ( col = 0; col < 8; col++){
+               x = BOARD_SHIFT + col * 40;
+               y = BOARD_SHIFT + row * 40;
+               if ( (row % 2) == (col % 2) ) {
+                    g.setColor(Color.white);
+               }
+               else {
+                   g.setColor(Color.black);
+                   g.fillRect(x, y, 40, 40);
+               }
+           }
+     }
+    for (Piece temp : board.getPieces()) {
+    	GImage toAdd;
+    	String filePath;
+    	if (temp.getColor()) {
+    		filePath = new String("White_" + temp.getType().toString() + ".png");
+    	}
+    	else {
+    		filePath = new String("Black_" + temp.getType().toString() + ".png");
+    	}
+    	toAdd = new GImage(filePath, temp.getCol()*SPACE_WIDTH, temp.getRow()*SPACE_HEIGHT);
+    	toAdd.setSize(40, 40);
+    	add(toAdd);
+    	}
 	}
+
 	public void printWinScreen() {
 		isPlayingMatch = false; //NOTE: Added so that the code knows the game is over
 		JLabel v = new JLabel("Victory");

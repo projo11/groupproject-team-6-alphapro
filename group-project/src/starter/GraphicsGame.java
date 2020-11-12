@@ -296,7 +296,7 @@ public class GraphicsGame extends GraphicsProgram implements ActionListener{
 		rematch.setBounds(135, 80, 100, 50);
 		rematch.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e){ //one click, reprint board
-	            printBoard(null);
+	            printBoard();
 			}
 		});
 		JButton repay = new JButton("Recreate your chess Group on the board.");
@@ -428,7 +428,7 @@ public class GraphicsGame extends GraphicsProgram implements ActionListener{
 		firstPanel.add(QueenC);
 		shop.setContentPane(firstPanel);
 		shop.setVisible(true);
-		printBoard(null);
+		printBoard();
     }
     @Override
     public void mousePressed(MouseEvent e) {
@@ -459,7 +459,7 @@ public class GraphicsGame extends GraphicsProgram implements ActionListener{
         	{
         		board.moveNumSpaces(space, calculateRowsMoved(), calculateColsMoved());
         		removeAll();
-        		printBoard(null); //TODO: Fix this!
+        		printBoard(); //TODO: Fix this!
         	}
         	if(piece.getColor() == true) //true = white -> piece is white
         	{
@@ -499,6 +499,9 @@ public class GraphicsGame extends GraphicsProgram implements ActionListener{
     	return board.getPiece(space);
     }
     
+    //TODO: When calculating calculating rows moved and cols moved, must change it to account
+    //		for the BOARD_SHIFT of 100 pixels; ANY pieces that are moved outside of the board
+    //		is not allowed
     //Code that returns how many rows a piece has moved
     private int calculateRowsMoved()
     {

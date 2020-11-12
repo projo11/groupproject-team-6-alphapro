@@ -21,8 +21,7 @@ public class GraphicsGame extends GraphicsProgram implements ActionListener{
 	private int clickX, clickY, lastX, lastY;
 	private GObject toDrag;
 	private boolean isPlayingMatch; //Boolean variable to indicate if a chess match is being played
-	private int x = 8; //Chess board width dimension
-	private int y = 8; //Chess board height dimension
+
 	public static final int SPACE_WIDTH = 40;
 	public static final int SPACE_HEIGHT = 40;
 	public static final int PROGRAM_WIDTH = 900;
@@ -459,7 +458,7 @@ public class GraphicsGame extends GraphicsProgram implements ActionListener{
         	{
         		board.moveNumSpaces(space, calculateRowsMoved(), calculateColsMoved());
         		removeAll();
-        		printBoard(); //TODO: Fix this!
+        		printBoard(); 
         	}
         	if(piece.getColor() == true) //true = white -> piece is white
         	{
@@ -506,12 +505,16 @@ public class GraphicsGame extends GraphicsProgram implements ActionListener{
     private int calculateRowsMoved()
     {
     	int rowsMoved = 0;
-    	Space start = convertXYToSpace(clickX, clickY);
-    	Space end = convertXYToSpace(lastX, lastY);
+    	Space start = convertXYToSpace(clickX, clickY); 
+    	Space end = convertXYToSpace(lastX, lastY); 
     	Piece piece = getPieceFromXY(clickX, clickY);
     	if(piece != null)
     	{
     		rowsMoved = end.getRow() - start.getRow();
+    	}
+    	else if(lastX <= BOARD_SHIFT) //If the place the player moved the chess piece is out of bounds, then the move is invalid the the rows moved is 0
+    	{
+    		rowsMoved = 0;
     	}
     	else //If no piece was selected, the amount of rows moved is 0
     	{
@@ -530,6 +533,10 @@ public class GraphicsGame extends GraphicsProgram implements ActionListener{
     	if(piece != null)
     	{
     		colsMoved = end.getCol() - start.getCol();
+    	}
+    	else if(lastY <= BOARD_SHIFT) //If the place the player moved the chess piece is out of bounds, then the move is invalid the the cols moved is 0
+    	{
+    		colsMoved = 0;
     	}
     	else //If no piece was selected, the amount of cols moved is 0
     	{

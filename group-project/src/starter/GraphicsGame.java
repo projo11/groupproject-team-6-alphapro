@@ -265,7 +265,7 @@ public class GraphicsGame extends GraphicsProgram implements ActionListener{
 		rematch.setBounds(135, 80, 100, 50);
 		rematch.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e){ //one click, reprint board
-	            printBoard(null);
+	            printBoard();
 			}
 		});
 		JButton repay = new JButton("Recreate your chess Group on the board.");
@@ -397,7 +397,7 @@ public class GraphicsGame extends GraphicsProgram implements ActionListener{
 		firstPanel.add(QueenC);
 		shop.setContentPane(firstPanel);
 		shop.setVisible(true);
-		printBoard(null);
+		printBoard();
     }
     @Override
     public void mousePressed(MouseEvent e) {
@@ -428,7 +428,7 @@ public class GraphicsGame extends GraphicsProgram implements ActionListener{
         	{
         		board.moveNumSpaces(space, calculateRowsMoved(), calculateColsMoved());
         		removeAll();
-        		printBoard(null); //TODO: Fix this!
+        		printBoard(); //TODO: Fix this!
         	}
         	if(piece.getColor() == true) //true = white -> piece is white
         	{

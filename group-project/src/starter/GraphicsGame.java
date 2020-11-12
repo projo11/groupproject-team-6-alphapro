@@ -248,23 +248,15 @@ public class GraphicsGame extends GraphicsProgram implements ActionListener{
 		rules.setVisible(true);
 	}
 
-	public void printBoard(Graphics g) {
-	int row;
-    int col;
-    int x,y;
-    for ( row = 0; row < 8; row++ ){
-          for ( col = 0; col < 8; col++){
-               x = BOARD_SHIFT + col * 40;
-               y = BOARD_SHIFT + row * 40;
-               if ( (row % 2) == (col % 2) ) {
-                    g.setColor(Color.white);
-               }
-               else {
-                   g.setColor(Color.black);
-                   g.fillRect(x, y, 40, 40);
-               }
-           }
-     }
+	public void printBoard() {
+		int[][] pboard= new int[9][9];
+		for(int i = 0; i < pboard.length; i++) {
+			for (int j = 0; j < pboard[i].length; j++) {
+				
+			}
+		}
+		
+	
     for (Piece temp : board.getPieces()) {
     	GImage toAdd;
     	String filePath;

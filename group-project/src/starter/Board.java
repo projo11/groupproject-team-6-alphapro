@@ -400,7 +400,7 @@ public boolean checkmate(boolean isTeamWhite) {
 		int c = attacker.getCol() - kingLoc.getCol();
 		if (r == 1 || c == 1) {
 			return true;
-		}
+		}//TODO: Use signum
 		if (c < 0) {
 			c++;
 		}
@@ -545,6 +545,7 @@ public boolean checkmate(boolean isTeamWhite) {
 				if (r == 1 || c == 1) {
 					return true;
 				}
+				//TODO: Use signum
 				if (c < 0) {
 					c++;
 				}

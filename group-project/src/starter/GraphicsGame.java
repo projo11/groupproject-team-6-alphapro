@@ -34,6 +34,7 @@ public class GraphicsGame extends GraphicsProgram implements ActionListener{
 	public void run() {
 		printTitleScreen();
 		addMouseListeners();
+		printBoard();
 	}
 	public void printTitleScreen() {
 		isPlayingMatch = false; //NOTE: Added so that the code knows a match is currently not being played
@@ -252,8 +253,8 @@ public class GraphicsGame extends GraphicsProgram implements ActionListener{
 	    int x,y;
 	    for ( row = 0; row < 8; row++ ){
 	          for ( col = 0; col < 8; col++){
-	               x = col * 40;
-	               y = row * 40;
+	               x = BOARD_SHIFT + col * 40;
+	               y = BOARD_SHIFT + row * 40;
 	               if ( (row % 2) == (col % 2) ) {
 	                    g.setColor(Color.white);
 	               }
@@ -267,9 +268,14 @@ public class GraphicsGame extends GraphicsProgram implements ActionListener{
 	    	GImage toAdd;
 	    	String filePath;
 	    	if (temp.getColor()) {
+	    		filePath = new String("White_" + temp.getType().toString() + ".png");
 	    	}
-	    	//GObject toAdd = new GObject(temp.getCol()*SPACE_WIDTH, temp.getRow()*SPACE_HEIGHT, SPACE_WIDTH, SPACE_HEIGHT);
-	    	//TODO: FIX
+	    	else {
+	    		filePath = new String("Black_" + temp.getType().toString() + ".png");
+	    	}
+	    	toAdd = new GImage(filePath, temp.getCol()*SPACE_WIDTH, temp.getRow()*SPACE_HEIGHT);
+	    	toAdd.setSize(40, 40);
+	    	add(toAdd);
 	    }
 	}
 	public void printWinScreen() {

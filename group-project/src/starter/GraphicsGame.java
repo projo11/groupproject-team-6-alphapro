@@ -14,9 +14,10 @@ import acm.graphics.GImage;
 import acm.graphics.GLabel;
 import acm.graphics.GPoint;
 import acm.program.GraphicsProgram;
+import acm.graphics.*;
 
 public class GraphicsGame extends GraphicsProgram implements ActionListener{
-	private Board board;
+	private Board board[][];
 	private int clickX, clickY, lastX, lastY;
 	private GObject toDrag;
 	private boolean isPlayingMatch; //Boolean variable to indicate if a chess match is being played
@@ -246,31 +247,8 @@ public class GraphicsGame extends GraphicsProgram implements ActionListener{
 		rules.setContentPane(firstPanel);
 		rules.setVisible(true);
 	}
-	public void printBoard(Graphics g) {
-		int row;
-	    int col;
-	    int x,y;
-	    for ( row = 0; row < 8; row++ ){
-	          for ( col = 0; col < 8; col++){
-	               x = col * 40;
-	               y = row * 40;
-	               if ( (row % 2) == (col % 2) ) {
-	                    g.setColor(Color.white);
-	               }
-	               else {
-	                   g.setColor(Color.black);
-	                   g.fillRect(x, y, 40, 40);
-	               }
-	           }
-	     }
-	    for (Piece temp : board.getPieces()) {
-	    	GImage toAdd;
-	    	String filePath;
-	    	if (temp.getColor()) {
-	    	}
-	    	//GObject toAdd = new GObject(temp.getCol()*SPACE_WIDTH, temp.getRow()*SPACE_HEIGHT, SPACE_WIDTH, SPACE_HEIGHT);
-	    	//TODO: FIX
-	    }
+	public void printBoard() {
+		
 	}
 	public void printWinScreen() {
 		isPlayingMatch = false; //NOTE: Added so that the code knows the game is over

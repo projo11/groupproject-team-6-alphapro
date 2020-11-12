@@ -35,7 +35,7 @@ public class GraphicsGame extends GraphicsProgram implements ActionListener{
 	public void run() {
 		printTitleScreen();
 		addMouseListeners();
-		//printBoard();
+		printBoard();
 	}
 	public void printTitleScreen() {
 		isPlayingMatch = false; //NOTE: Added so that the code knows a match is currently not being played

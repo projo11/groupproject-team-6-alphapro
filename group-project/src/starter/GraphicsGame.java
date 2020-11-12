@@ -490,6 +490,9 @@ public class GraphicsGame extends GraphicsProgram implements ActionListener{
     	return board.getPiece(space);
     }
     
+    //TODO: When calculating calculating rows moved and cols moved, must change it to account
+    //		for the BOARD_SHIFT of 100 pixels; ANY pieces that are moved outside of the board
+    //		is not allowed
     //Code that returns how many rows a piece has moved
     private int calculateRowsMoved()
     {

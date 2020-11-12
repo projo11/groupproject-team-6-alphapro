@@ -20,7 +20,6 @@ public class GraphicsGame extends GraphicsProgram implements ActionListener{
 	private int clickX, clickY, lastX, lastY;
 	private GObject toDrag;
 	private boolean isPlayingMatch; //Boolean variable to indicate if a chess match is being played
-
 	private int x = 8; //Chess board width dimension
 	private int y = 8; //Chess board height dimension
 	public static final int SPACE_WIDTH = 40;
@@ -57,6 +56,7 @@ public class GraphicsGame extends GraphicsProgram implements ActionListener{
 		start.setFont(new Font("TimesNewRoman", Font.BOLD, 20));
 		start.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e){  
+				mainM.setVisible(false);
 	            printPieceShop();
 			}
 		});

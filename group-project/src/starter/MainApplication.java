@@ -61,7 +61,6 @@ public class MainApplication extends GraphicsApplication{
 
 	public void switchToMenu() {
 		playSoundf();
-		count++;
 		switchToScreen(menu);
 	}
 	public void switchToGame(){
@@ -70,7 +69,7 @@ public class MainApplication extends GraphicsApplication{
 	}
 	private void playSoundf();{
 		AudioPlayer audio = AudioPlayer.getInstance();
-		audio.playSound(MUSIC_FOLDER, SOUND_FILES[count % SOUND_FILES.length]);
+		audio.playSound(MUSIC_FOLDER, FILENAME);
 	}
 
 }

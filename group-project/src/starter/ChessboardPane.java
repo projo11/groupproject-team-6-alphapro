@@ -38,6 +38,7 @@ public void printBoard() {
 				block.setFillColor(Color.white);
 				block.setFilled(true);
 			}
+			x = x + 100;
 		}
 		else {
 			if(j%2 == 0) {
@@ -47,7 +48,7 @@ public void printBoard() {
 			else {
 				block.setFillColor(Color.black);
 				block.setFilled(true);
-		}
+			}
 		x = x + 100;
 	}
 			}

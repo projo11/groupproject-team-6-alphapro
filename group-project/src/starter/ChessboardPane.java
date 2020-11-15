@@ -101,7 +101,7 @@ public void printBoard() {
 			}
 			y = y + 100;
 			}
-		x = 50;
+		x = 50; 
 		}
 		else {//print the alphabet label at the bottom of the board
 			GLabel hlabel = new GLabel("A", 150, 850);

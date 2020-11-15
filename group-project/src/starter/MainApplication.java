@@ -31,6 +31,7 @@ public class MainApplication extends GraphicsApplication{
 		switchToScreen(menu);
 	}
 	public void switchToGame(){
+		//board.flipBoard();
 		switchToScreen(chessPane);
 	}
 	

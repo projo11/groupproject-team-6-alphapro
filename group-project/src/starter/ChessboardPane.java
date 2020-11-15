@@ -11,6 +11,7 @@ import java.awt.event.MouseEvent;
 
 public class ChessboardPane extends GraphicsPane implements ActionListener {
 private MainApplication program;
+
 public static final int SPACE_WIDTH = 40;
 public static final int SPACE_HEIGHT = 40;
 public static final int BOARD_SHIFT = 100;
@@ -21,13 +22,12 @@ public ChessboardPane(MainApplication app) {
 		program = app;
 	}
 public void printBoard() {
-	int[][] pboard= new int[9][9];
+	int[][] pboard= new int[8][8];
 	int x = 50;
 	int y = 50;
 	for (int i = 0; i < pboard.length; i++) {//print the board
-		if(i < 8) {
+		if(i < 7) {
 		for (int j = 0; j < pboard[i].length; j++) {
-			if(j != 0) {
 				GRect block = new GRect(x, y, 100, 100);
 				program.add(block);
 				if(i%2 == 0) {
@@ -53,56 +53,8 @@ public void printBoard() {
 					x = x + 100;
 				}
 			}
-			else {
-				switch(i) {//print the number label at the side of the board
-				case 0: 
-					GLabel eight = new GLabel("8", x, y);
-					program.add(eight);
-					x = x + 100;
-					
-				case 1: 
-					GLabel seven = new GLabel("7", x, y);
-					program.add(seven);
-					x = x + 100;
-					
-				case 2: 
-					GLabel six = new GLabel("6", x, y);
-					program.add(six);
-					x = x + 100;
-					
-				case 3: 
-					GLabel five = new GLabel("5", x, y);
-					program.add(five);
-					x = x + 100;
-					
-				case 4: 
-					GLabel four = new GLabel("4", x, y);
-					program.add(four);
-					x = x + 100;
-					
-				case 5: 
-					GLabel three = new GLabel("3", x, y);
-					program.add(three);
-					x = x + 100;
-					
-				case 6: 
-					GLabel two = new GLabel("2", x, y);
-					program.add(two);
-					x = x + 100;
-					
-				case 7: 
-					GLabel one = new GLabel("1", x, y);
-					program.add(one);
-					x = x + 100;
-					
-				case 8: 
-					x = x + 100;
-					
-				}
-			}
-			y = y + 100;
-			}
 		x = 50; 
+		y = y + 100;
 		}
 		else {//print the alphabet label at the bottom of the board
 			GLabel hlabel = new GLabel("A", 150, 850);
@@ -121,6 +73,22 @@ public void printBoard() {
 			program.add(blabel);
 			GLabel alabel = new GLabel("H", 850, 850);
 			program.add(alabel);
+			GLabel eight = new GLabel("8", 50, 50);
+			program.add(eight);
+			GLabel seven = new GLabel("7", 50, 150);
+			program.add(seven);
+			GLabel six = new GLabel("6", 50, 250);
+			program.add(six);
+			GLabel five = new GLabel("5", 50, 350);
+			program.add(five);
+			GLabel four = new GLabel("4", 50, 450);
+			program.add(four);
+			GLabel three = new GLabel("3", 50, 550);
+			program.add(three);
+			GLabel two = new GLabel("2", 50, 650);
+			program.add(two);
+			GLabel one = new GLabel("1", 50, 750);
+			program.add(one);
 		}
 	}
 	
@@ -134,8 +102,14 @@ for (Piece temp : program.getBoard().getPieces()) {
 	else {
 		filePath = new String("Black_" + temp.getType().toString() + ".png");
 	}
-	toAdd = new GImage(filePath, temp.getCol()*SPACE_WIDTH, temp.getRow()*SPACE_HEIGHT);
-	toAdd.setSize(40, 40);
+	if (temp.getType() == PieceType.PAWN) {
+		toAdd = new GImage(filePath, temp.getCol()*SPACE_WIDTH + BOARD_SHIFT + 15, temp.getRow()*SPACE_HEIGHT + BOARD_SHIFT + 15);
+		toAdd.setSize(SPACE_WIDTH-30, SPACE_HEIGHT-30);
+	}
+	else {
+		toAdd = new GImage(filePath, temp.getCol()*SPACE_WIDTH + BOARD_SHIFT + 10, temp.getRow()*SPACE_HEIGHT + BOARD_SHIFT + 10);
+		toAdd.setSize(SPACE_WIDTH-20, SPACE_HEIGHT-20);
+	}
 	program.add(toAdd);
 	}
 	

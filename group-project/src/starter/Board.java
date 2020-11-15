@@ -254,7 +254,7 @@ public boolean hasLineOfSight(Space start, int r, int c) {
 	else {
 		greater = c;
 	}
-	for (int i = 0; i < Math.abs(greater-1); i++) {//TODO: Determine if greater-1 is working as intended
+	for (int i = 0; i < Math.abs(greater)-1; i++) {//TODO: Determine if greater-1 is working as intended
 		if (board[start.getRow()+((i+1)*Integer.signum(r))][start.getCol()+((i+1)*Integer.signum(c))] != null) {
 			return false;
 		}
@@ -263,6 +263,7 @@ public boolean hasLineOfSight(Space start, int r, int c) {
 }
 
 public boolean[][] getAttackList(boolean isTeamWhite) {
+	//Returns the 2d attacked-by array for the given team color.
 	if (isTeamWhite) {
 		return attackedByWhite;
 	}
@@ -272,6 +273,8 @@ public boolean[][] getAttackList(boolean isTeamWhite) {
 }
 
 public boolean checkmate(boolean isTeamWhite) {
+	//Returns true if the given team has been checkmated.
+	
 	//checks a team's king to see if it is in check. If so, looks to see if the king can move to safety. 
 	//If they cannot, looks to see if any of your pieces can block the danger or kill the attacker.
 	/*\

@@ -24,7 +24,7 @@ public void printBoard() {
 	int[][] pboard= new int[9][9];
 	int x = 50;
 	int y = 50;
-	for (int i = 0; i < pboard.length; i++) {
+	for (int i = 0; i < pboard.length; i++) {//print the board
 		if(i < 9) {
 		for (int j = 0; j < pboard[i].length; j++) {
 			if(i != 0) {
@@ -53,32 +53,49 @@ public void printBoard() {
 	}
 			}
 			else {
-				switch(i) {
+				switch(i) {//print the number label at the side of the board
 				case 0: 
-					System.out.print("8");
+					GLabel eight = new GLabel("8", x, y);
+					program.add(eight);
+					x = x + 100;
 					break;
 				case 1: 
-					System.out.print("7");
+					GLabel seven = new GLabel("7", x, y);
+					program.add(seven);
+					x = x + 100;
 					break;
 				case 2: 
-					System.out.print("6");
+					GLabel six = new GLabel("6", x, y);
+					program.add(six);
+					x = x + 100;
 					break;
 				case 3: 
-					System.out.print("5");
+					GLabel five = new GLabel("5", x, y);
+					program.add(five);
+					x = x + 100;
 					break;
 				case 4: 
-					System.out.print("4");
+					GLabel four = new GLabel("4", x, y);
+					program.add(four);
+					x = x + 100;
 					break;
 				case 5: 
-					System.out.print("3");
+					GLabel three = new GLabel("3", x, y);
+					program.add(three);
+					x = x + 100;
 					break;
 				case 6: 
-					System.out.print("2");
+					GLabel two = new GLabel("2", x, y);
+					program.add(two);
+					x = x + 100;
 					break;
 				case 7: 
-					System.out.print("1");
+					GLabel one = new GLabel("1", x, y);
+					program.add(one);
+					x = x + 100;
 					break;
 				case 8: 
+					x = x + 100;
 					break;
 				}
 					
@@ -87,8 +104,23 @@ public void printBoard() {
 	y = y + 100;
 }
 		}
-		else {
-			System.out.print("abcdefgh");
+		else {//print the alphabet label at the bottom of the board
+			GLabel hlabel = new GLabel("H", 150, 850);
+			program.add(hlabel);
+			GLabel glabel = new GLabel("G", 250, 850);
+			program.add(glabel);
+			GLabel flabel = new GLabel("F", 350, 850);
+			program.add(flabel);
+			GLabel elabel = new GLabel("E", 450, 850);
+			program.add(elabel);
+			GLabel dlabel = new GLabel("D", 550, 850);
+			program.add(dlabel);
+			GLabel clabel = new GLabel("C", 650, 850);
+			program.add(clabel);
+			GLabel blabel = new GLabel("B", 750, 850);
+			program.add(blabel);
+			GLabel alabel = new GLabel("A", 850, 850);
+			program.add(alabel);
 		}
 	
 

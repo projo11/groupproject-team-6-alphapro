@@ -104,21 +104,21 @@ public void printBoard() {
 			}
 		}
 		else {//print the alphabet label at the bottom of the board
-			GLabel hlabel = new GLabel("H", 150, 850);
+			GLabel hlabel = new GLabel("A", 150, 850);
 			program.add(hlabel);
-			GLabel glabel = new GLabel("G", 250, 850);
+			GLabel glabel = new GLabel("B", 250, 850);
 			program.add(glabel);
-			GLabel flabel = new GLabel("F", 350, 850);
+			GLabel flabel = new GLabel("C", 350, 850);
 			program.add(flabel);
-			GLabel elabel = new GLabel("E", 450, 850);
+			GLabel elabel = new GLabel("D", 450, 850);
 			program.add(elabel);
-			GLabel dlabel = new GLabel("D", 550, 850);
+			GLabel dlabel = new GLabel("E", 550, 850);
 			program.add(dlabel);
-			GLabel clabel = new GLabel("C", 650, 850);
+			GLabel clabel = new GLabel("F", 650, 850);
 			program.add(clabel);
-			GLabel blabel = new GLabel("B", 750, 850);
+			GLabel blabel = new GLabel("G", 750, 850);
 			program.add(blabel);
-			GLabel alabel = new GLabel("A", 850, 850);
+			GLabel alabel = new GLabel("H", 850, 850);
 			program.add(alabel);
 		}
 	}

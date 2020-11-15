@@ -30,6 +30,7 @@ public MainMenuPane(MainApplication app) {
 	public void showContents() {
 		// TODO Auto-generated method stub
 		GImage image = new GImage("Background.png");
+		image.setBounds(0,0,900,900);
 		program.add(image,0,0);
 		GLabel Title = new GLabel("Custom Chess",305, 400);
 		Title.setColor(Color.white);

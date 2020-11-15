@@ -24,33 +24,33 @@ public void printBoard() {
 	int x = 50;
 	int y = 50;
 	for (int i = 0; i < pboard.length; i++) {//print the board
-		if(i < 9) {
+		if(i < 8) {
 		for (int j = 0; j < pboard[i].length; j++) {
 			if(j != 0) {
-		GRect block = new GRect(x, y, 100, 100);
-		program.add(block);
-		if(i%2 == 0) {
-			if(j%2 == 0) {
-				block.setFillColor(Color.black);
-				block.setFilled(true);
-			}
-			else {
-				block.setFillColor(Color.white);
-				block.setFilled(true);
-			}
-			x = x + 100;
-		}
-		else {
-			if(j%2 == 0) {
-				block.setFillColor(Color.white);
-				block.setFilled(true);
-			}
-			else {
-				block.setFillColor(Color.black);
-				block.setFilled(true);
-			}
-		x = x + 100;
-	}
+				GRect block = new GRect(x, y, 100, 100);
+				program.add(block);
+				if(i%2 == 0) {
+					if(j%2 == 0) {
+						block.setFillColor(Color.black);
+						block.setFilled(true);
+					}
+					else {
+						block.setFillColor(Color.white);
+						block.setFilled(true);
+					}
+					x = x + 100;
+				}
+				else {
+					if(j%2 == 0) {
+						block.setFillColor(Color.white);
+						block.setFilled(true);
+					}
+					else {
+						block.setFillColor(Color.black);
+						block.setFilled(true);
+					}
+					x = x + 100;
+				}
 			}
 			else {
 				switch(i) {//print the number label at the side of the board
@@ -99,9 +99,9 @@ public void printBoard() {
 					
 				}
 			}
-	x = 50;
-	y = y + 100;
-}
+			x = 50;
+			y = y + 100;
+			}
 		}
 		else {//print the alphabet label at the bottom of the board
 			GLabel hlabel = new GLabel("H", 150, 850);

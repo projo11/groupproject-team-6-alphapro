@@ -101,8 +101,14 @@ for (Piece temp : program.getBoard().getPieces()) {
 	else {
 		filePath = new String("Black_" + temp.getType().toString() + ".png");
 	}
-	toAdd = new GImage(filePath, temp.getCol()*SPACE_WIDTH + BOARD_SHIFT, temp.getRow()*SPACE_HEIGHT + BOARD_SHIFT);
-	toAdd.setSize(SPACE_WIDTH, SPACE_HEIGHT);
+	if (temp.getType() == PieceType.PAWN) {
+		toAdd = new GImage(filePath, temp.getCol()*SPACE_WIDTH + BOARD_SHIFT + 15, temp.getRow()*SPACE_HEIGHT + BOARD_SHIFT + 15);
+		toAdd.setSize(SPACE_WIDTH-30, SPACE_HEIGHT-30);
+	}
+	else {
+		toAdd = new GImage(filePath, temp.getCol()*SPACE_WIDTH + BOARD_SHIFT + 10, temp.getRow()*SPACE_HEIGHT + BOARD_SHIFT + 10);
+		toAdd.setSize(SPACE_WIDTH-20, SPACE_HEIGHT-20);
+	}
 	program.add(toAdd);
 	}
 	

@@ -13,7 +13,6 @@ import acm.graphics.GRect;
 
 public class ChessboardPane extends GraphicsPane implements ActionListener {
 private MainApplication program;
-private Board board;
 public static final int SPACE_WIDTH = 40;
 public static final int SPACE_HEIGHT = 40;
 	
@@ -124,7 +123,7 @@ public void printBoard() {
 		}
 	
 
-for (Piece temp : board.getPieces()) {
+for (Piece temp : program.getBoard().getPieces()) {
 	GImage toAdd;
 	String filePath;
 	if (temp.getColor()) {

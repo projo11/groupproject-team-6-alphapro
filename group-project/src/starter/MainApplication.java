@@ -5,7 +5,7 @@ public class MainApplication extends GraphicsApplication{
 	public static final String MUSIC_FOLDER = "sounds";
 	//private static final String [] SOUND_FILES = {"chessgamemusic.mp3"};
 	
-	private Board board;
+	private Board board = new Board();
 	private ChessboardPane chessPane;
 	private MainMenuPane menu;
 	private PieceShopPane piecePane;
@@ -23,7 +23,8 @@ public class MainApplication extends GraphicsApplication{
 		piecePane = new PieceShopPane(this);
 		rules = new RulesPane(this);
 		victory = new VictoryPane(this);
-		switchToMenu();
+		//switchToMenu();
+		switchToGame();
 	}
 
 	public void switchToMenu() {

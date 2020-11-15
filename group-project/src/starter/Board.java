@@ -4,12 +4,12 @@ import java.util.*;
 import javafx.util.Pair;
 
 public class Board {
-private Piece board[][];
+private Piece board[][] = new Piece[8][8];
 private Piece temp[][];
 
-private boolean attackedByWhite[][];
-private boolean attackedByBlack[][];
-private ArrayList<Piece> pieces;
+private boolean attackedByWhite[][] = new boolean[8][8];
+private boolean attackedByBlack[][] = new boolean[8][8];
+private ArrayList<Piece> pieces = new ArrayList<Piece>();
 private boolean isBoardFlipped = false;
 //NOTE: Flipped means playing from black's perspective instead of white.
 
@@ -51,6 +51,7 @@ public void addPiece(int r, int c, PieceType type, boolean isWhite) {
 	board[r][c] = piece;
 	pieces.add(piece);
 	updateAttackLists();
+	System.out.println("Added piece!");
 }
 
 public boolean canMoveNumSpaces(Space start, int r, int c) {

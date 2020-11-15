@@ -44,6 +44,7 @@ public VictoryPane(MainApplication app) {
 			public void actionPerformed(ActionEvent e){  
 				MainMenuPane m = null;
 	            m.showContents();
+	            
 			}
 		});
 		program.add(rematch);

@@ -23,23 +23,23 @@ public VictoryPane(MainApplication app) {
 	public void showContents() {
 		// TODO Auto-generated method stub
 		program.setSize(450, 450);
-		GLabel v = new GLabel("Victory", 155, 0);
-		v.setFont(new Font("TimesNewRoman", Font.BOLD, 20));
+		GLabel v = new GLabel("Victory", 145, 100);
+		v.setFont(new Font("TimesNewRoman", Font.BOLD, 30));
 		v.setColor(Color.red);
-		GButton rematch = new GButton("Rematch", 135, 180, 100, 50);
+		GButton rematch = new GButton("Rematch", 95, 180, 200, 50);
 		rematch.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e){ //one click, reprint board
 	            //printBoard();
 			}
 		});
-		GButton repay = new GButton("Recreate your chess Group on the board", 85, 240, 200, 50);
+		GButton repay = new GButton("Recreate your chess Group on the board", 95, 260, 200, 50);
 		repay.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e){ //one click, go back to piece shop
 	            PieceShopPane p = null;
 				p.showContents();
 			}
 		});
-		GButton Return = new GButton("Return to the main Screen",85, 300, 200, 50);
+		GButton Return = new GButton("Return to the main Screen",95, 340, 200, 50);
 		Return.addActionListener(new ActionListener() {//one click, go back to main screen
 			public void actionPerformed(ActionEvent e){  
 				MainMenuPane m = null;

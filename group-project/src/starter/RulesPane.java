@@ -4,15 +4,19 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import acm.graphics.GLabel;
+import acm.graphics.GObject;
 
-public class RulesPane extends GraphicsPane implements ActionListener {
+public class RulesPane extends GraphicsPane{
 private MainApplication program;
+
+private GButton exit = new GButton("EXIT",800,800,200,100);
 	
 public RulesPane(MainApplication app) {
 		program = app;
@@ -118,13 +122,7 @@ public RulesPane(MainApplication app) {
 		GLabel Text30 = new GLabel("Thus its theoretically possible having up to nine queens or up to ten rooks, bishops, or knights if all pawns are promoted.",0,640);
 		Text30.setColor(Color.black);
 		Text30.setFont(new Font("TimesNewRoman", 15, 15));
-		GButton exit = new GButton("EXIT",800,800,200,100);
-		exit.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e){  
-	           MainMenuPane m = null;
-	            m.showContents();
-			}
-		});
+
 		program.add(Title1);
 		program.add(Title2);
 		program.add(Text1);
@@ -165,11 +163,13 @@ public RulesPane(MainApplication app) {
 		program.removeAll();
 		
 	}
-
+	
 	@Override
-	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
-		
+	public void mousePressed(MouseEvent e) {
+		GObject obj = program.getElementAt(e.getX(), e.getY());
+		if(obj == exit)
+		{
+			program.switchToMenu();
+		}
 	}
-
 }

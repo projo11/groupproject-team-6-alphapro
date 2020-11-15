@@ -24,8 +24,8 @@ public class MainApplication extends GraphicsApplication{
 		piecePane = new PieceShopPane(this);
 		rules = new RulesPane(this);
 		victory = new VictoryPane(this);
-		//switchToMenu();
-		switchToGame();
+		switchToMenu();
+		//switchToGame();
 	}
 
 	public void switchToMenu() {

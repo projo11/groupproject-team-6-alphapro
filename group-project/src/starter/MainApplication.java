@@ -1,4 +1,52 @@
 package starter;
+public class MainApplication extends GraphicsApplication{
+	public static final int WINDOW_WIDTH = 900;
+	public static final int WINDOW_HEIGHT = 900;
+	public static final String MUSIC_FOLDER = "sounds";
+	//private static final String [] SOUND_FILES = {"chessgamemusic.mp3"};
+
+	private ChessboardPane chessPane;
+	private MenuPane menu;
+	private PieceShopPane piecePane;
+	private RulesPane rules;
+	private VictoryPane victory;
+
+	public void init(){
+		setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
+	}
+	
+	public void run() {
+		System.out.println("Welcome to the Custom Chess Game!");
+		chessPane = new ChessboardPane(this);
+		menu = new MenuPane(this);
+		piecePane = new PieceShopPane(this);
+		rules = new RulesPane(this);
+		victory = new VictoryPane(this);
+		switchToMenu();
+	}
+
+	public void switchToMenu() {
+		switchToScreen(menu);
+	}
+	public void switchToGame(){
+		switchToScreen(chessPane);
+	}
+	
+	public void switchToPieceShop() {
+		switchToScreen(piecePane);
+	}
+	
+	public void switchToRules() {
+		switchToScreen(rules);
+	}
+	
+	public void switchToVic() {
+		switchToScreen(victory);
+	}
+}
+
+
+/*
 public class MainApplication extends GraphicsApplication {
 	public static final int WINDOW_WIDTH = 800; //This is where you define the window with and height for the application. For our app we'll probably make it a bit bigger.
 	public static final int WINDOW_HEIGHT = 600;
@@ -35,44 +83,5 @@ public class MainApplication extends GraphicsApplication {
 		AudioPlayer audio = AudioPlayer.getInstance();
 		audio.playSound(MUSIC_FOLDER, SOUND_FILES[count % SOUND_FILES.length]);
 	}
-}
+} */
 
-/*
-public class MainApplication extends GraphicsApplication{
-	public static final int WINDOW_WIDTH = 900;
-	public static final int WINDOW_HEIGHT = 900;
-	public static final String MUSIC_FOLDER = "sounds";
-	private static final String [] SOUND_FILES = {"chessgamemusic.mp3"};
-
-	private GamePane gamePane;
-	private MenuPane menu;
-	private int count;
-
-	public void init(){
-		setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
-	}
-	
-	public void run() {
-		System.out.println("Welcome to the Custom Chess Game!");
-		gamePane = new GamePane(this);
-		menu = new MenuPane(this);
-		switchToMenu();
-	}
-
-	public void switchToMenu() {
-		playSoundf();
-		switchToScreen(menu);
-	}
-	public void switchToGame(){
-		playSoundf();
-		switchToScreen(gamePane);
-	}
-	private void playSoundf();{
-		AudioPlayer audio = AudioPlayer.getInstance();
-		audio.playSound(MUSIC_FOLDER, FILENAME);
-	}
-
-}
-
-
-*/

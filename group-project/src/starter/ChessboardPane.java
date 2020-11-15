@@ -97,7 +97,6 @@ public void printBoard() {
 					x = x + 100;
 					
 				}
-					
 			}
 	x = 50;
 	y = y + 100;
@@ -121,6 +120,7 @@ public void printBoard() {
 			GLabel alabel = new GLabel("A", 850, 850);
 			program.add(alabel);
 		}
+	}
 	
 
 for (Piece temp : program.getBoard().getPieces()) {
@@ -136,7 +136,7 @@ for (Piece temp : program.getBoard().getPieces()) {
 	toAdd.setSize(40, 40);
 	program.add(toAdd);
 	}
-	}
+	
 }
 
 

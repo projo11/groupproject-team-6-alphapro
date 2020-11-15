@@ -16,7 +16,7 @@ import acm.graphics.GObject;
 public class RulesPane extends GraphicsPane{
 private MainApplication program;
 
-private GButton exit = new GButton("EXIT",800,800,200,100);
+private GButton exit = new GButton("EXIT",660,660,200,100);
 	
 public RulesPane(MainApplication app) {
 		program = app;
@@ -161,7 +161,6 @@ public RulesPane(MainApplication app) {
 	@Override
 	public void hideContents() {
 		program.removeAll();
-		
 	}
 	
 	@Override

@@ -26,7 +26,7 @@ public void printBoard() {
 	for (int i = 0; i < pboard.length; i++) {//print the board
 		if(i < 9) {
 		for (int j = 0; j < pboard[i].length; j++) {
-			if(i != 0) {
+			if(j != 0) {
 		GRect block = new GRect(x, y, 100, 100);
 		program.add(block);
 		if(i%2 == 0) {

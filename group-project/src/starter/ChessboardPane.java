@@ -57,45 +57,45 @@ public void printBoard() {
 					GLabel eight = new GLabel("8", x, y);
 					program.add(eight);
 					x = x + 100;
-					break;
+					
 				case 1: 
 					GLabel seven = new GLabel("7", x, y);
 					program.add(seven);
 					x = x + 100;
-					break;
+					
 				case 2: 
 					GLabel six = new GLabel("6", x, y);
 					program.add(six);
 					x = x + 100;
-					break;
+					
 				case 3: 
 					GLabel five = new GLabel("5", x, y);
 					program.add(five);
 					x = x + 100;
-					break;
+					
 				case 4: 
 					GLabel four = new GLabel("4", x, y);
 					program.add(four);
 					x = x + 100;
-					break;
+					
 				case 5: 
 					GLabel three = new GLabel("3", x, y);
 					program.add(three);
 					x = x + 100;
-					break;
+					
 				case 6: 
 					GLabel two = new GLabel("2", x, y);
 					program.add(two);
 					x = x + 100;
-					break;
+					
 				case 7: 
 					GLabel one = new GLabel("1", x, y);
 					program.add(one);
 					x = x + 100;
-					break;
+					
 				case 8: 
 					x = x + 100;
-					break;
+					
 				}
 					
 			}

@@ -31,9 +31,9 @@ public MainMenuPane(MainApplication app) {
 		// TODO Auto-generated method stub
 		GImage image = new GImage("Background.png");
 		program.add(image,0,0);
-		GLabel Title = new GLabel("Custom Chess",335, 450);
-		Title.setColor(Color.red);
-		Title.setFont("TimesNewRoman-24");
+		GLabel Title = new GLabel("Custom Chess",305, 400);
+		Title.setColor(Color.white);
+		Title.setFont("TimesNewRoman-48");
 		program.add(Title);
 		program.add(start);
 		program.add(rules);

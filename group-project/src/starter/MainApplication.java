@@ -2,6 +2,8 @@ package starter;
 public class MainApplication extends GraphicsApplication {
 	public static final int WINDOW_WIDTH = 800; //This is where you define the window with and height for the application. For our app we'll probably make it a bit bigger.
 	public static final int WINDOW_HEIGHT = 600;
+	public static final int BUTTON_HEIGHT = 120;
+	public static final int BUTTON_WIDTH = 50;
 	public static final String MUSIC_FOLDER = "sounds"; //Basically "sounds" is the name of the folder that you put the .mp3 files into. We can name our folder something else but sounds makes the most sense
 	private static final String[] SOUND_FILES = { "r2d2.mp3", "somethinlikethis.mp3" }; //These are just the sound files in the sounds folder, in our case we would have a sound for the menu, game screen, and end screen.
 

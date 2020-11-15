@@ -16,6 +16,9 @@ import acm.graphics.GLabel;
 
 public class MainMenuPane extends GraphicsPane implements ActionListener {
 private MainApplication program;
+
+//private GButton start = new GButton("Start Battle", 335, 450, MainApplication.BUTTON_HEIGHT , MainApplication.BUTTON_WIDTH);
+//private GButton rules = new GButton("View Rules",335, 600, MainApplication.BUTTON_HEIGHT, MainApplication.BUTTON_WIDTH);
 	
 public MainMenuPane(MainApplication app) {
 		program = app;

@@ -21,13 +21,12 @@ public ChessboardPane(MainApplication app) {
 		program = app;
 	}
 public void printBoard() {
-	int[][] pboard= new int[9][9];
+	int[][] pboard= new int[8][8];
 	int x = 50;
 	int y = 50;
 	for (int i = 0; i < pboard.length; i++) {//print the board
-		if(i < 8) {
+		if(i < 7) {
 		for (int j = 0; j < pboard[i].length; j++) {
-			
 				GRect block = new GRect(x, y, 100, 100);
 				program.add(block);
 				if(i%2 == 0) {

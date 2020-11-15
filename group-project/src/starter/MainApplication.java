@@ -6,7 +6,7 @@ public class MainApplication extends GraphicsApplication{
 	//private static final String [] SOUND_FILES = {"chessgamemusic.mp3"};
 
 	private ChessboardPane chessPane;
-	private MenuPane menu;
+	private MainMenuPane menu;
 	private PieceShopPane piecePane;
 	private RulesPane rules;
 	private VictoryPane victory;
@@ -18,7 +18,7 @@ public class MainApplication extends GraphicsApplication{
 	public void run() {
 		System.out.println("Welcome to the Custom Chess Game!");
 		chessPane = new ChessboardPane(this);
-		menu = new MenuPane(this);
+		menu = new MainMenuPane(this);
 		piecePane = new PieceShopPane(this);
 		rules = new RulesPane(this);
 		victory = new VictoryPane(this);

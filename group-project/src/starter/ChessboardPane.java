@@ -26,7 +26,7 @@ public void printBoard() {
 	for (int i = 0; i < pboard.length; i++) {//print the board
 		if(i < 9) {
 		for (int j = 0; j < pboard[i].length; j++) {
-			if(i != 0) {
+			if(j != 0) {
 		GRect block = new GRect(x, y, 100, 100);
 		program.add(block);
 		if(i%2 == 0) {
@@ -97,7 +97,6 @@ public void printBoard() {
 					x = x + 100;
 					
 				}
-					
 			}
 	x = 50;
 	y = y + 100;
@@ -121,6 +120,7 @@ public void printBoard() {
 			GLabel alabel = new GLabel("A", 850, 850);
 			program.add(alabel);
 		}
+	}
 	
 
 for (Piece temp : program.getBoard().getPieces()) {
@@ -136,7 +136,7 @@ for (Piece temp : program.getBoard().getPieces()) {
 	toAdd.setSize(40, 40);
 	program.add(toAdd);
 	}
-	}
+	
 }
 
 

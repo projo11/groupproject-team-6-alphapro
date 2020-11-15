@@ -143,7 +143,7 @@ for (Piece temp : board.getPieces()) {
 
 	@Override
 	public void showContents() {
-		// TODO Auto-generated method stub
+		printBoard();
 		
 	}
 

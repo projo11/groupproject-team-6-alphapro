@@ -44,6 +44,7 @@ public void addPiece(int r, int c, PieceType type, boolean isWhite) {
 	//Be careful calling this function, because it will override any piece that is currently at that location.
 	//If desired, could be modified to return false if the location given is not null.
 	if (board[r][c] != null) {
+		System.out.println("ERROR: Could not add piece.");
 		return;
 	}
 	Piece piece = new Piece(r, c, type, isWhite);

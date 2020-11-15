@@ -4,7 +4,8 @@ public class MainApplication extends GraphicsApplication{
 	public static final int WINDOW_HEIGHT = 900;
 	public static final String MUSIC_FOLDER = "sounds";
 	//private static final String [] SOUND_FILES = {"chessgamemusic.mp3"};
-
+	
+	private Board board;
 	private ChessboardPane chessPane;
 	private MainMenuPane menu;
 	private PieceShopPane piecePane;
@@ -42,6 +43,10 @@ public class MainApplication extends GraphicsApplication{
 	
 	public void switchToVic() {
 		switchToScreen(victory);
+	}
+	
+	public Board getBoard() {
+		return board;
 	}
 }
 

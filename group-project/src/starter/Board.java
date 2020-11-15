@@ -5,7 +5,7 @@ import javafx.util.Pair;
 
 public class Board {
 private Piece board[][] = new Piece[8][8];
-private Piece temp[][];
+private Piece temp[][] = new Piece[8][8];
 
 private boolean attackedByWhite[][] = new boolean[8][8];
 private boolean attackedByBlack[][] = new boolean[8][8];
@@ -16,6 +16,16 @@ private boolean isBoardFlipped = false;
 public Board() {
 	addPiece(7, 4, PieceType.KING, true);
 	addPiece(0, 4, PieceType.KING, false);
+	addPiece(6, 4, PieceType.PAWN, true);
+	addPiece(1, 4, PieceType.PAWN, false);
+	addPiece(7, 3, PieceType.QUEEN, true);
+	addPiece(0, 3, PieceType.QUEEN, false);
+	addPiece(7, 2, PieceType.BISHOP, true);
+	addPiece(0, 2, PieceType.BISHOP, false);
+	addPiece(7, 1, PieceType.KNIGHT, true);
+	addPiece(0, 1, PieceType.KNIGHT, false);
+	addPiece(7, 0, PieceType.ROOK, true);
+	addPiece(0, 0, PieceType.ROOK, false);
 }
 
 
@@ -31,9 +41,12 @@ public boolean moveNumSpaces(Space start, int r, int c) {
 	//Moves the piece at the given space down by r and to the right by c. Returns false if the space given is null.
 	if (canMoveNumSpaces(start, r, c)) {
 		getPiece(start).setHasMoved(true);
+		getPiece(start).setRow(getPiece(start).getRow()+r);
+		getPiece(start).setCol(getPiece(start).getCol()+c);
 		removePiece(new Space(start.getRow()+r, start.getCol()+c));
 		board[start.getRow()+r][start.getCol()+c] = getPiece(start);
 		board[start.getRow()][start.getCol()] = null;
+		//TODO: Update location of piece internally
 		return true;
 	}
 	return false;
@@ -51,7 +64,6 @@ public void addPiece(int r, int c, PieceType type, boolean isWhite) {
 	board[r][c] = piece;
 	pieces.add(piece);
 	updateAttackLists();
-	System.out.println("Added piece!");
 }
 
 public boolean canMoveNumSpaces(Space start, int r, int c) {
@@ -125,9 +137,15 @@ public void flipBoard() {
 	for (int i = 0; i < 8; i++) {
 		for(int j = 0; j < 8; j++) {
 			temp[i][j] = board[7-i][7-j];
+			temp[i][j].setRow(i);
+			temp[i][j].setCol(j);
 		}
 	}
-	board = temp;
+	for (int i = 0; i < 8; i++) {
+		for(int j = 0; j < 8; j++) {
+			 board[i][j] = temp[i][j];
+		}
+	}
 	if (isBoardFlipped) {
 		isBoardFlipped = false;
 	}

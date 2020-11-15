@@ -44,13 +44,13 @@ public VictoryPane(MainApplication app) {
 			public void actionPerformed(ActionEvent e){  
 				MainMenuPane m = null;
 	            m.showContents();
-	            
 			}
 		});
 		program.add(rematch);
 	    program.add(repay);
 		program.add(Return);
 		program.add(v);
+		
 	}
 
 	@Override

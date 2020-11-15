@@ -16,6 +16,16 @@ private boolean isBoardFlipped = false;
 public Board() {
 	addPiece(7, 4, PieceType.KING, true);
 	addPiece(0, 4, PieceType.KING, false);
+	addPiece(6, 4, PieceType.PAWN, true);
+	addPiece(1, 4, PieceType.PAWN, false);
+	addPiece(7, 3, PieceType.QUEEN, true);
+	addPiece(0, 3, PieceType.QUEEN, false);
+	addPiece(7, 2, PieceType.BISHOP, true);
+	addPiece(0, 2, PieceType.BISHOP, false);
+	addPiece(7, 1, PieceType.KNIGHT, true);
+	addPiece(0, 1, PieceType.KNIGHT, false);
+	addPiece(7, 0, PieceType.ROOK, true);
+	addPiece(7, 0, PieceType.ROOK, false);
 }
 
 

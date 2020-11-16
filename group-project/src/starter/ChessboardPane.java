@@ -12,9 +12,12 @@ import java.awt.event.MouseEvent;
 public class ChessboardPane extends GraphicsPane implements ActionListener {
 private MainApplication program;
 
-public static final int SPACE_WIDTH = 40;
-public static final int SPACE_HEIGHT = 40;
-public static final int BOARD_SHIFT = 100;
+public static final int SPACE_SIZE = 100;
+public static final int BOARD_SHIFT = 50;
+public static final double SIZE_MOD = 0.75;
+public static final double PAWN_SIZE_MOD = 0.55;
+public static final String LABEL_FONT = "Arial-Bold-22";
+public static final Color LABEL_COLOR = Color.red;
 private int clickX, clickY, lastX, lastY;
 private GObject toDrag;
 	
@@ -22,13 +25,11 @@ public ChessboardPane(MainApplication app) {
 		program = app;
 	}
 public void printBoard() {
-	int[][] pboard= new int[8][8];
-	int x = 50;
-	int y = 50;
-	for (int i = 0; i < pboard.length; i++) {//print the board
-		if(i < 7) {
-		for (int j = 0; j < pboard[i].length; j++) {
-				GRect block = new GRect(x, y, 100, 100);
+	int x = BOARD_SHIFT;
+	int y = BOARD_SHIFT;
+	for (int i = 0; i < 8; i++) {//print the board
+		for (int j = 0; j < 8; j++) {
+				GRect block = new GRect(x, y, SPACE_SIZE, SPACE_SIZE);
 				program.add(block);
 				if(i%2 == 0) {
 					if(j%2 == 0) {
@@ -39,7 +40,7 @@ public void printBoard() {
 						block.setFillColor(Color.white);
 						block.setFilled(true);
 					}
-					x = x + 100;
+					x += SPACE_SIZE;
 				}
 				else {
 					if(j%2 == 0) {
@@ -50,69 +51,71 @@ public void printBoard() {
 						block.setFillColor(Color.black);
 						block.setFilled(true);
 					}
-					x = x + 100;
+					x += SPACE_SIZE;
 				}
 			}
-		x = 50; 
-		y = y + 100;
+		x = BOARD_SHIFT; 
+		y += SPACE_SIZE;
 		}
-		else {//print the alphabet label at the bottom of the board
-			GLabel hlabel = new GLabel("A", 150, 850);
-			program.add(hlabel);
-			GLabel glabel = new GLabel("B", 250, 850);
-			program.add(glabel);
-			GLabel flabel = new GLabel("C", 350, 850);
-			program.add(flabel);
-			GLabel elabel = new GLabel("D", 450, 850);
-			program.add(elabel);
-			GLabel dlabel = new GLabel("E", 550, 850);
-			program.add(dlabel);
-			GLabel clabel = new GLabel("F", 650, 850);
-			program.add(clabel);
-			GLabel blabel = new GLabel("G", 750, 850);
-			program.add(blabel);
-			GLabel alabel = new GLabel("H", 850, 850);
-			program.add(alabel);
-			GLabel eight = new GLabel("8", 50, 50);
-			program.add(eight);
-			GLabel seven = new GLabel("7", 50, 150);
-			program.add(seven);
-			GLabel six = new GLabel("6", 50, 250);
-			program.add(six);
-			GLabel five = new GLabel("5", 50, 350);
-			program.add(five);
-			GLabel four = new GLabel("4", 50, 450);
-			program.add(four);
-			GLabel three = new GLabel("3", 50, 550);
-			program.add(three);
-			GLabel two = new GLabel("2", 50, 650);
-			program.add(two);
-			GLabel one = new GLabel("1", 50, 750);
-			program.add(one);
+	for (Piece temp : program.getBoard().getPieces()) {
+		GImage toAdd;
+		String filePath;
+		if (temp.getColor()) {
+			filePath = new String("White_" + temp.getType().toString() + ".png");
 		}
+		else {
+			filePath = new String("Black_" + temp.getType().toString() + ".png");
+		}
+		if (temp.getType() == PieceType.PAWN) {
+			toAdd = new GImage(filePath, temp.getCol()*SPACE_SIZE + BOARD_SHIFT + (((1-PAWN_SIZE_MOD)*SPACE_SIZE)/2), temp.getRow()*SPACE_SIZE + BOARD_SHIFT + (((1-PAWN_SIZE_MOD)*SPACE_SIZE)/2));
+			toAdd.setSize(SPACE_SIZE * PAWN_SIZE_MOD, SPACE_SIZE * PAWN_SIZE_MOD);
+		}
+		else {
+			toAdd = new GImage(filePath, temp.getCol()*SPACE_SIZE + BOARD_SHIFT + (((1-SIZE_MOD)*SPACE_SIZE)/2), temp.getRow()*SPACE_SIZE + BOARD_SHIFT + (((1-SIZE_MOD)*SPACE_SIZE)/2));
+			toAdd.setSize(SPACE_SIZE*SIZE_MOD, SPACE_SIZE*SIZE_MOD);
+		}
+		program.add(toAdd);
+		}
+	String labelName = new String();
+	GLabel toAdd;
+	for (int i = 0; i < 8; i++) {
+		switch(i) {
+		case 0: 
+			labelName = "A";
+			break;
+		case 1: 
+			labelName = "B";
+			break;
+		case 2: 
+			labelName = "C";
+			break;
+		case 3: 
+			labelName = "D";
+			break;
+		case 4: 
+			labelName = "E";
+			break;
+		case 5: 
+			labelName = "F";
+			break;
+		case 6: 
+			labelName = "G";
+			break;
+		case 7: 
+			labelName = "H";
+			break;
+		}
+		toAdd = new GLabel(labelName, BOARD_SHIFT+(i+1)*SPACE_SIZE-15, BOARD_SHIFT+8*SPACE_SIZE);
+		toAdd.setFont(LABEL_FONT);
+		toAdd.setColor(LABEL_COLOR);
+		program.add(toAdd);
 	}
-	
-
-for (Piece temp : program.getBoard().getPieces()) {
-	GImage toAdd;
-	String filePath;
-	if (temp.getColor()) {
-		filePath = new String("White_" + temp.getType().toString() + ".png");
+	for (int i = 0; i < 8; i++) {
+		toAdd = new GLabel(Integer.toString(8-i), BOARD_SHIFT, BOARD_SHIFT+i*SPACE_SIZE+18);
+		toAdd.setFont(LABEL_FONT);
+		toAdd.setColor(LABEL_COLOR);
+		program.add(toAdd);
 	}
-	else {
-		filePath = new String("Black_" + temp.getType().toString() + ".png");
-	}
-	if (temp.getType() == PieceType.PAWN) {
-		toAdd = new GImage(filePath, temp.getCol()*SPACE_WIDTH + BOARD_SHIFT + 15, temp.getRow()*SPACE_HEIGHT + BOARD_SHIFT + 15);
-		toAdd.setSize(SPACE_WIDTH-30, SPACE_HEIGHT-30);
-	}
-	else {
-		toAdd = new GImage(filePath, temp.getCol()*SPACE_WIDTH + BOARD_SHIFT + 10, temp.getRow()*SPACE_HEIGHT + BOARD_SHIFT + 10);
-		toAdd.setSize(SPACE_WIDTH-20, SPACE_HEIGHT-20);
-	}
-	program.add(toAdd);
-	}
-	
 }
 
 
@@ -180,7 +183,7 @@ for (Piece temp : program.getBoard().getPieces()) {
 	    //Code that converts XY coordinates into a Space
 	    private Space convertXYToSpace(double x, double y)
 	    {
-	    	Space space = new Space((int)(y/SPACE_HEIGHT), (int)(x/SPACE_WIDTH)); 
+	    	Space space = new Space((int)(y/SPACE_SIZE), (int)(x/SPACE_SIZE)); 
 	    	return space;
 	    }
 	    

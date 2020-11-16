@@ -4,8 +4,8 @@ import javafx.util.Pair;
 
 public class Piece {
 	
-	private int row;
-	private int col;
+	private int row = 0;
+	private int col = 0;
 	private PieceType type;
 	private boolean color; //1 = White, 0 = Black
 	private int cost;

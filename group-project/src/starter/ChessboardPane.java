@@ -127,13 +127,11 @@ public void printBoard() {
 	@Override
 	public void hideContents() {
 		program.removeAll();
-		
 	}
 	
 	@Override
     public void mousePressed(MouseEvent e) {
-		//TODO FIX THIS BELOW!!
-	    //toDrag = getElementAt(e.getX(), e.getY());
+	    toDrag = program.getElementAt(e.getX(), e.getY());
 	    lastX = e.getX();
 	    lastY = e.getY();
 	    clickX = e.getX();
@@ -150,11 +148,15 @@ public void printBoard() {
 	    lastY = e.getY();
     }
 	
+	//TODO: Fix up the code so that when it reprint the board it doesn't go back to the original;
+	//		try using the addPiece() function in Board.java for this.
+	//		Fix up the check to see if the piece moves out of bounds; the movement check is also
+	//		not working properly and needs to be fixed.
     @Override
 	public void mouseReleased(MouseEvent e) {
     	Space space = convertXYToSpace(clickX, clickY);
     	Piece piece = getPieceFromXY(clickX, clickY);
-    	//TODO: Figure out where to make it so that isPlayingMatch becomes true
+
    		if(piece != null)
        	{
        		program.getBoard().moveNumSpaces(space, calculateRowsMoved(), calculateColsMoved());

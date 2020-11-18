@@ -5,7 +5,6 @@ import javafx.util.Pair;
 
 public class Board {
 private Piece board[][] = new Piece[8][8];
-private Piece temp[][] = new Piece[8][8];
 
 private boolean attackedByWhite[][] = new boolean[8][8];
 private boolean attackedByBlack[][] = new boolean[8][8];
@@ -134,11 +133,14 @@ public void promotePawn(Space s, PieceType type) {
 public void flipBoard() {
 	//Reverses the 2-d array board. Used to simulate looking at the board from the opposite perspective.
 	//NOTE: Flipped means playing from black's perspective instead of white.
+	Piece temp[][] = new Piece[8][8];
 	for (int i = 0; i < 8; i++) {
 		for(int j = 0; j < 8; j++) {
 			temp[i][j] = board[7-i][7-j];
-			temp[i][j].setRow(i);
-			temp[i][j].setCol(j);
+			if (temp[i][j] != null) {
+				temp[i][j].setRow(i);
+				temp[i][j].setCol(j);
+			}
 		}
 	}
 	for (int i = 0; i < 8; i++) {

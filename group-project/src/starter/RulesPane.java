@@ -25,43 +25,43 @@ public RulesPane(MainApplication app) {
 	@Override
 	public void showContents() {
 		// TODO Auto-generated method stub
-		GLabel Title1 = new GLabel("Basic Rules:", 0, 0);
+		GLabel Title1 = new GLabel("Basic Rules:", 0, 20);
 		Title1.setColor(Color.red);
 		Title1.setFont(new Font("TimesNewRoman", Font.BOLD, 20));
-		GLabel Text1 = new GLabel("The player with the white pieces always moves first.",0, 20);
+		GLabel Text1 = new GLabel("The player with the white pieces always moves first.",0, 40);
 		Text1.setColor(Color.black);
 		Text1.setFont(new Font("TimesNewRoman", 15, 15));
-		GLabel Text2 = new GLabel("Players take turns alternately moving one piece at a time.",0 , 40);
+		GLabel Text2 = new GLabel("Players take turns alternately moving one piece at a time.",0 , 60);
 		Text2.setColor(Color.black);
 		Text2.setFont(new Font("TimesNewRoman", 15, 15));
-		GLabel Text3 = new GLabel("Movement is required. If a player's turn is to move, he is not in check but has no legal moves", 0, 60);
+		GLabel Text3 = new GLabel("Movement is required. If a player's turn is to move, he is not in check but has no legal moves", 0, 80);
 		Text3.setColor(Color.black);
 		Text3.setFont(new Font("TimesNewRoman", 15, 15));
-		GLabel Text4 = new GLabel("this situation is called 'Stalemate' and it ends the game in a draw.",0,80);
+		GLabel Text4 = new GLabel("this situation is called 'Stalemate' and it ends the game in a draw.",0,100);
 		Text4.setColor(Color.black);
 		Text4.setFont(new Font("TimesNewRoman", 15, 15));
-		GLabel Text5 = new GLabel("Each type of piece has its own method of movement.",0,100);
+		GLabel Text5 = new GLabel("Each type of piece has its own method of movement.",0,120);
 		Text5.setColor(Color.black);
 		Text5.setFont(new Font("TimesNewRoman", 15, 15));
-		GLabel Text6 = new GLabel("A piece may be moved to another position or may capture an opponent's piece,",0,120);
+		GLabel Text6 = new GLabel("A piece may be moved to another position or may capture an opponent's piece,",0,140);
 		Text6.setColor(Color.black);
 		Text6.setFont(new Font("TimesNewRoman", 15, 15));
-		GLabel Text7 = new GLabel("replacing on its square (en passant being the only exception).",0,140);
+		GLabel Text7 = new GLabel("replacing on its square (en passant being the only exception).",0,160);
 		Text7.setColor(Color.black);
 		Text7.setFont(new Font("TimesNewRoman", 15, 15));
-		GLabel Text8 = new GLabel("With the exception of the knight, a piece may not move over or through any of the other pieces.",0,160);
+		GLabel Text8 = new GLabel("With the exception of the knight, a piece may not move over or through any of the other pieces.",0,180);
 		Text8.setColor(Color.black);
 		Text8.setFont(new Font("TimesNewRoman", 15, 15));
-		GLabel Text9 = new GLabel("When a king is threatened with capture (but can protect himself or escape), it's called check.",0,180);
+		GLabel Text9 = new GLabel("When a king is threatened with capture (but can protect himself or escape), it's called check.",0,200);
 		Text9.setColor(Color.black);
 		Text9.setFont(new Font("TimesNewRoman", 15, 15));
-		GLabel Text10 = new GLabel("If a king is in check, then the player must make a move that eliminates the threat of capture and cannot",0,200); 
+		GLabel Text10 = new GLabel("If a king is in check, then the player must make a move that eliminates the threat of capture and cannot",0,220); 
 		Text10.setColor(Color.black);
 		Text10.setFont(new Font("TimesNewRoman", 15, 15));
-		GLabel Text11 = new GLabel("leave the king in check. Checkmate happens when a king is placed in check and there is no legal move to escape.",0,220); 
+		GLabel Text11 = new GLabel("leave the king in check. Checkmate happens when a king is placed in check and there is no legal move to escape.",0,240); 
 		Text11.setColor(Color.black);
 		Text11.setFont(new Font("TimesNewRoman", 15, 15));
-		GLabel Text12 = new GLabel("Checkmate ends the game and the side whose king was checkmated looses.",0,240); 
+		GLabel Text12 = new GLabel("Checkmate ends the game and the side whose king was checkmated looses.",0,260); 
 		Text12.setColor(Color.black);
 		Text12.setFont(new Font("TimesNewRoman", 15, 15));
 		

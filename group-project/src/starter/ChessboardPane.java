@@ -152,18 +152,26 @@ public void printBoard() {
 	//		try using the addPiece() function in Board.java for this.
 	//		Fix up the check to see if the piece moves out of bounds; the movement check is also
 	//		not working properly and needs to be fixed.
+	//		Fix the the board so you can't drag around the square tiles
     @Override
 	public void mouseReleased(MouseEvent e) {
     	Space space = convertXYToSpace(clickX, clickY);
-    	Piece piece = getPieceFromXY(clickX, clickY);
-
-   		if(piece != null)
-       	{
-       		program.getBoard().moveNumSpaces(space, calculateRowsMoved(), calculateColsMoved());
-       		hideContents();
-       		printBoard(); 
-       	}
-       	if(piece.getColor() == true) //true = white -> piece is white
+    	Piece piece;
+    	
+    	if(space.getRow() != -1 && space.getCol() != -1)
+    	{
+    		piece = getPieceFromXY(clickX, clickY);
+    		if(piece != null)
+           	{
+           		program.getBoard().moveNumSpaces(space, calculateRowsMoved(), calculateColsMoved());
+           		hideContents();
+           		printBoard(); 
+           	}
+    	}
+   		
+   		//Insert a check to see if it's a GImage
+   		/*
+       	if(piece.getColor()) //true = white -> piece is white
        	{
     		if(program.getBoard().checkmate(piece.getColor()) == true) //if a white piece puts the opponent in checkmate
        		{
@@ -177,17 +185,25 @@ public void printBoard() {
        		{
        			hideContents();
        			program.switchToVic();
-        		}
         	}
-	    }
+        }
+        */
+    }
 	    
 	    //Below are functions used to help with the mouse listener functions
 	    //Code that converts XY coordinates into a Space
-	    private Space convertXYToSpace(double x, double y)
-	    {
-	    	Space space = new Space((int)(y/SPACE_SIZE), (int)(x/SPACE_SIZE)); 
-	    	return space;
-	    }
+    private Space convertXYToSpace(double x, double y)
+    {
+    	if(x < BOARD_SHIFT || x > BOARD_SHIFT+(SPACE_SIZE*8) || y < BOARD_SHIFT || y > BOARD_SHIFT+(SPACE_SIZE*8))
+    	{
+    		return new Space(-1, -1);
+    	}
+    	else
+    	{
+        	Space space = new Space((int)((y-BOARD_SHIFT)/SPACE_SIZE), (int)((x-BOARD_SHIFT)/SPACE_SIZE)); 
+        	return space;
+    	}
+    }
 	    
     //Code that returns the Piece in a given space with the provided XY coordinates
     private Piece getPieceFromXY(double x, double y)
@@ -210,11 +226,6 @@ public void printBoard() {
     	{
     		rowsMoved = end.getRow() - start.getRow();
     	}
-    	else if(lastX <= BOARD_SHIFT) //If the place the player moved the chess piece is out of bounds, then the move is invalid the the rows moved is 0
-    	{
-    		//TODO: Fix code
-    		rowsMoved = 0;
-    	}
     	else //If no piece was selected, the amount of rows moved is 0
     	{
     		rowsMoved = 0;
@@ -232,11 +243,6 @@ public void printBoard() {
     	if(piece != null)
     	{
     		colsMoved = end.getCol() - start.getCol();
-    	}
-    	else if(lastY <= BOARD_SHIFT) //If the place the player moved the chess piece is out of bounds, then the move is invalid the the cols moved is 0
-    	{
-    		//TODO: Fix code
-    		colsMoved = 0;
     	}
     	else //If no piece was selected, the amount of cols moved is 0
     	{

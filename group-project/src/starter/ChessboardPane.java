@@ -226,11 +226,6 @@ public void printBoard() {
     	{
     		rowsMoved = end.getRow() - start.getRow();
     	}
-    	else if(lastX <= BOARD_SHIFT) //If the place the player moved the chess piece is out of bounds, then the move is invalid the the rows moved is 0
-    	{
-    		//TODO: Fix code
-    		rowsMoved = 0;
-    	}
     	else //If no piece was selected, the amount of rows moved is 0
     	{
     		rowsMoved = 0;
@@ -248,11 +243,6 @@ public void printBoard() {
     	if(piece != null)
     	{
     		colsMoved = end.getCol() - start.getCol();
-    	}
-    	else if(lastY <= BOARD_SHIFT) //If the place the player moved the chess piece is out of bounds, then the move is invalid the the cols moved is 0
-    	{
-    		//TODO: Fix code
-    		colsMoved = 0;
     	}
     	else //If no piece was selected, the amount of cols moved is 0
     	{

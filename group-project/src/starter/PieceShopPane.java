@@ -207,6 +207,7 @@ public PieceShopPane(MainApplication app) {
 	@Override
 	public void hideContents() {
 		program.removeAll();
+		
 	}
 	
 	@Override

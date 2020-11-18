@@ -203,7 +203,7 @@ public PieceShopPane(MainApplication app) {
 		program.add(Bb);
 		program.add(Bq);
 	}
-
+	
 	@Override
 	public void hideContents() {
 		program.removeAll();

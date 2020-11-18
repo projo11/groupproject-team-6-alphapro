@@ -45,7 +45,6 @@ public boolean moveNumSpaces(Space start, int r, int c) {
 		removePiece(new Space(start.getRow()+r, start.getCol()+c));
 		board[start.getRow()+r][start.getCol()+c] = getPiece(start);
 		board[start.getRow()][start.getCol()] = null;
-		//TODO: Update location of piece internally
 		return true;
 	}
 	return false;
@@ -69,9 +68,12 @@ public boolean canMoveNumSpaces(Space start, int r, int c) {
 	//Returns true if the location at start, translated down by r and to the right by c, is null, or an enemy piece.
 	//Contains special instructions for the movement of pawns.
 	boolean moveValid = false;
+	Pair<Integer, Integer> desiredMove = new Pair<Integer, Integer>(r, c);
 	for (Pair<Integer, Integer> temp : getPiece(start).getPossibleMoves()) {
-		if (temp == new Pair<Integer, Integer>(r, c)) {
-			moveValid = true;
+		if (temp.getKey() == desiredMove.getKey()) {
+			if (temp.getValue() == desiredMove.getValue()) {
+				moveValid = true;
+			}
 		}
 	}
 	if (!moveValid) {
@@ -98,7 +100,13 @@ public boolean canMoveNumSpaces(Space start, int r, int c) {
 		}
 	}
 	if (getPiece(start).getType() == PieceType.KNIGHT) {
+		if (isOutOfBounds(new Space(start.getCol()+r, start.getRow()+c))) {
+			return false;
+		}
 		return (board[start.getCol()+r][start.getRow()+c] == null) || (isOppositeTeam(start, new Space(start.getCol()+r, start.getRow()+c)));
+	}
+	if (isOutOfBounds(new Space(start.getCol()+r, start.getRow()+c))) {
+		return false;
 	}
 	return (hasLineOfSight(start, r, c) && ((board[start.getCol()+r][start.getRow()+c] == null) || (isOppositeTeam(start, new Space(start.getCol()+r, start.getRow()+c)))));
 }
@@ -277,8 +285,10 @@ public boolean hasLineOfSight(Space start, int r, int c) {
 		greater = c;
 	}
 	for (int i = 0; i < Math.abs(greater)-1; i++) {//TODO: Determine if greater-1 is working as intended
-		if (board[start.getRow()+((i+1)*Integer.signum(r))][start.getCol()+((i+1)*Integer.signum(c))] != null) {
-			return false;
+		if (start.getRow()+((i+1)*Integer.signum(r)) < 7 && start.getCol()+((i+1)*Integer.signum(c)) < 7 && start.getRow()+((i+1)*Integer.signum(r)) > 0 && start.getCol()+((i+1)*Integer.signum(c)) > 0) {
+			if (board[start.getRow()+((i+1)*Integer.signum(r))][start.getCol()+((i+1)*Integer.signum(c))] != null) {
+				return false;
+			}
 		}
 	}
 	return true;

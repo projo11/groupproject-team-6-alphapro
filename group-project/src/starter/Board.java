@@ -281,10 +281,14 @@ public void removePiece(Space s) {
 	if (board[s.getRow()][s.getCol()] != null) {
 		for (Piece temp : pieces) {
 			if (temp == board[s.getRow()][s.getCol()]) {
-				//String pop = "takepiecesoundeffect.wav";
-				//Media hit = new Media(new File(pop).toURI().toString());
-				//MediaPlayer mediaPlayer = new MediaPlayer(hit);
-				//mediaPlayer.play();
+				try{
+				      AudioInputStream removepiece =AudioSystem.getAudioInputStream(this.getClass().getResource("takepiecesoundeffect.wav"));
+				     Clip clip = AudioSystem.getClip();
+				     clip.open(removepiece);
+				     clip.start( );
+				    }
+				   catch(Exception ex)
+				   {  }
 				pieces.remove(temp);
 				break;
 			}

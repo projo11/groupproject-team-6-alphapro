@@ -2,6 +2,9 @@ package starter;
 
 import java.util.*;
 import javafx.util.Pair;
+import java.io.File;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 
 public class Board {
 private Piece board[][] = new Piece[8][8];
@@ -31,6 +34,10 @@ public Board() {
 public boolean isOutOfBounds(Space s) {
 	//Returns true if the Space given has coordinates that are not on the board.
 	if (s.getRow() < 0 || s.getRow() > 7 || s.getCol() < 0 || s.getCol() > 7) {
+		String movepiece = "piecemovesoundeffect.wav";
+		Media hit = new Media(new File(movepiece).toURI().toString());
+		MediaPlayer mediaPlayer = new MediaPlayer(hit);
+		mediaPlayer.play();
 		return true;
 	}
 	return false;
@@ -270,6 +277,10 @@ public void removePiece(Space s) {
 	if (board[s.getRow()][s.getCol()] != null) {
 		for (Piece temp : pieces) {
 			if (temp == board[s.getRow()][s.getCol()]) {
+				String pop = "takepiecesoundeffect.wav";
+				Media hit = new Media(new File(pop).toURI().toString());
+				MediaPlayer mediaPlayer = new MediaPlayer(hit);
+				mediaPlayer.play();
 				pieces.remove(temp);
 				break;
 			}

@@ -92,11 +92,16 @@ public boolean canMoveNumSpaces(Space start, int r, int c) {
 		return false;
 	}
 	if (getPiece(start).getType() == PieceType.KING) {
-		if (getPiece(start).getColor()) {
-			return !attackedByBlack[r][c];
+		if (board[start.getCol()+r][start.getCol()+c] == null || board[start.getCol()+r][start.getCol()+c].getColor() != getPiece(start).getColor()) {
+			if (getPiece(start).getColor()) {
+				return !attackedByBlack[start.getCol()+r][start.getCol()+c];
+			}
+			else {
+				return !attackedByWhite[start.getCol()+r][start.getCol()+c];
+			}
 		}
 		else {
-			return !attackedByWhite[r][c];
+			return false;
 		}
 	}
 	if (getPiece(start).getType() == PieceType.KNIGHT) {
@@ -266,6 +271,7 @@ public void removePiece(Space s) {
 		for (Piece temp : pieces) {
 			if (temp == board[s.getRow()][s.getCol()]) {
 				pieces.remove(temp);
+				break;
 			}
 		}
 		board[s.getRow()][s.getCol()] = null;

@@ -28,14 +28,18 @@ private GButton BK = new GButton("Buy", 820, 120, 70, 30);
 private GButton Br = new GButton("Buy", 820, 160, 70, 30);
 private GButton Bb = new GButton("Buy", 820, 200, 70, 30);
 private GButton Bq = new GButton("Buy", 820, 240, 70, 30);
-
+//detect player 1 or 2
+private int player = 1;
 public static final int SPACE_SIZE = 77;
 public static final int BOARD_SHIFT = 50;
 public static final double SIZE_MOD = 0.75;
 public static final double PAWN_SIZE_MOD = 0.55;
 public static final String LABEL_FONT = "Arial-Bold-22";
 public static final Color LABEL_COLOR = Color.red;
-	
+
+private int clickX, clickY, lastX, lastY;
+private GObject toDrag;
+
 public PieceShopPane(MainApplication app) {
 		program = app;
 	}
@@ -219,6 +223,7 @@ public PieceShopPane(MainApplication app) {
 			program.getBoard().flipBoard();
 			showContents();
 			program.add(P2);
+			player++;
 		}
 		if(obj == P2) //After Player 2 is done setting up their board, game goes into a Chess match
 		{
@@ -226,7 +231,28 @@ public PieceShopPane(MainApplication app) {
 			program.switchToGame();
 		}
 		if(obj == Bp) {//add pawn
-			
+			GImage toAdd;
+			String filePath;
+			System.out.print("Enter the location of the Piece():");
+			toDrag = program.getElementAt(e.getX(), e.getY());
+			toDrag = program.getElementAt(e.getX(), e.getY());
+			lastX = e.getX();
+			lastY = e.getY();
+			System.out.println("X:" + lastX + " Y:"+lastY);
+			if(player == 2) {
+				Piece p = new Piece(lastX,lastX,PieceType.PAWN, false);
+				filePath = new String("Black_P.png");
+				toAdd = new GImage(filePath);
+				toAdd.setBounds(lastX, lastY, SPACE_SIZE*SIZE_MOD, SPACE_SIZE*SIZE_MOD);
+			}
+			else {
+				Piece p = new Piece(lastX,lastX,PieceType.PAWN, true);
+				filePath = new String("White_P.png");
+				toAdd = new GImage(filePath);
+				toAdd.setBounds(lastX, lastY, SPACE_SIZE*SIZE_MOD, SPACE_SIZE*SIZE_MOD);
+			}
+			program.add(toAdd);
+				
 		}
 		if(obj == BK) {//add knight
 			

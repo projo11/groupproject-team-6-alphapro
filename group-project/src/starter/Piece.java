@@ -91,6 +91,7 @@ public class Piece {
 			PossibleMoves.add(pmove6);
 			PossibleMoves.add(pmove7);
 			PossibleMoves.add(pmove8);
+			break;
 		case KNIGHT:
 			//Total Number of moves: 8; Range: 1 space
 			Pair<Integer, Integer> kmove1 = new Pair<Integer, Integer> (-2, -1); //Going forward 2 spaces, 1 right
@@ -109,6 +110,7 @@ public class Piece {
 			PossibleMoves.add(kmove6);
 			PossibleMoves.add(kmove7);
 			PossibleMoves.add(kmove8);
+			break;
 		case BISHOP:
 			//Total number of moves: 28; Range: 1-7 spaces
 			for(int i = 1; i <= 7; i++) //Longest possible movement range is 7 in a straight line
@@ -122,6 +124,7 @@ public class Piece {
 				PossibleMoves.add(bmove3);
 				PossibleMoves.add(bmove4);
 			}
+			break;
 		case ROOK:
 			//Total number of moves: 28; Range: 1-7 spaces
 			for(int i = 1; i <= 7; i++) //Longest possible movement range is 7 in a straight line
@@ -135,6 +138,7 @@ public class Piece {
 				PossibleMoves.add(rmove3);
 				PossibleMoves.add(rmove4);
 			}
+			break;
 		case QUEEN:
 			//Total Number of moves: 56; Range: 1-7 spaces
 			for(int i = 1; i <= 7; i++) //Longest possible movement range is 7 in a straight line
@@ -159,6 +163,7 @@ public class Piece {
 				PossibleMoves.add(qmove7);
 				PossibleMoves.add(qmove8);
 			}
+			break;
 		case KING:
 			//Total Number of moves: 8; Range: 1 space
 			Pair<Integer, Integer> move1 = new Pair<Integer, Integer> (-1, 0); //Going forward 1 space

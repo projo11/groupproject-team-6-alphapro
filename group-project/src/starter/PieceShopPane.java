@@ -215,11 +215,14 @@ public PieceShopPane(MainApplication app) {
 		GObject obj = program.getElementAt(e.getX(), e.getY());
 		if(obj == P1) //After Player 1 is done setting up their board, screen changes so that Player 2 now gets to set up the board
 		{
-			program.remove(P1);
+			program.removeAll();
+			program.getBoard().flipBoard();
+			showContents();
 			program.add(P2);
 		}
 		if(obj == P2) //After Player 2 is done setting up their board, game goes into a Chess match
 		{
+			program.getBoard().flipBoard();
 			program.switchToGame();
 		}
 		if(obj == Bp) {//add pawn

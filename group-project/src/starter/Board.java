@@ -105,7 +105,7 @@ public boolean canMoveNumSpaces(Space start, int r, int c) {
 		}
 	}
 	if (getPiece(start).getType() == PieceType.KNIGHT) {
-		if (isOutOfBounds(new Space(start.getCol()+r, start.getRow()+c))) {
+		if (isOutOfBounds(new Space(start.getRow()+r, start.getCol()+c))) {
 			return false;
 		}
 		return (board[start.getCol()+r][start.getRow()+c] == null) || (isOppositeTeam(start, new Space(start.getCol()+r, start.getRow()+c)));

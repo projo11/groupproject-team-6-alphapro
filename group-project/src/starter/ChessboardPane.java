@@ -131,7 +131,13 @@ public void printBoard() {
 	
 	@Override
     public void mousePressed(MouseEvent e) {
-	    toDrag = program.getElementAt(e.getX(), e.getY());
+		GRect block = new GRect(0, 0);
+		toDrag = program.getElementAt(e.getX(), e.getY());
+		if(toDrag != block)
+		{
+			toDrag = null;
+		}
+		
 	    lastX = e.getX();
 	    lastY = e.getY();
 	    clickX = e.getX();
@@ -148,11 +154,6 @@ public void printBoard() {
 	    lastY = e.getY();
     }
 	
-	//TODO: Fix up the code so that when it reprint the board it doesn't go back to the original;
-	//		try using the addPiece() function in Board.java for this.
-	//		Fix up the check to see if the piece moves out of bounds; the movement check is also
-	//		not working properly and needs to be fixed.
-	//		Fix the the board so you can't drag around the square tiles
     @Override
 	public void mouseReleased(MouseEvent e) {
     	Space space = convertXYToSpace(clickX, clickY);
@@ -190,8 +191,8 @@ public void printBoard() {
         */
     }
 	    
-	    //Below are functions used to help with the mouse listener functions
-	    //Code that converts XY coordinates into a Space
+    //Below are functions used to help with the mouse listener functions
+    //Code that converts XY coordinates into a Space
     private Space convertXYToSpace(double x, double y)
     {
     	if(x < BOARD_SHIFT || x > BOARD_SHIFT+(SPACE_SIZE*8) || y < BOARD_SHIFT || y > BOARD_SHIFT+(SPACE_SIZE*8))
@@ -212,10 +213,6 @@ public void printBoard() {
     	return program.getBoard().getPiece(space);
     }
 	    
-    //TODO: When calculating calculating rows moved and cols moved, must change it to account
-    //		for the BOARD_SHIFT of 100 pixels; ANY pieces that are moved outside of the board
-    //		is not allowed
-    //Code that returns how many rows a piece has moved
     private int calculateRowsMoved()
     {
     	int rowsMoved = 0;

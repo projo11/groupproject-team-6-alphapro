@@ -235,10 +235,9 @@ public PieceShopPane(MainApplication app) {
 			String filePath;
 			System.out.print("Enter the location of the Piece():");
 			toDrag = program.getElementAt(e.getX(), e.getY());
-			toDrag = program.getElementAt(e.getX(), e.getY());
 			lastX = e.getX();
 			lastY = e.getY();
-			System.out.println("X:" + lastX + " Y:"+lastY);
+			//System.out.println("X:" + lastX + " Y:"+lastY);
 			if(player == 2) {
 				Piece p = new Piece(lastX,lastX,PieceType.PAWN, false);
 				filePath = new String("Black_P.png");

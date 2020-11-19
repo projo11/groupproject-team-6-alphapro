@@ -95,20 +95,22 @@ public boolean canMoveNumSpaces(Space start, int r, int c) {
 			return (board[start.getRow()-1][start.getCol()] == null) && (board[start.getRow()-2][start.getCol()] == null) && (getPiece(start).getHasMoved() == false);
 		}
 		else if (r == -1 && c == 0) {
-			return (board[start.getCol()+r][start.getRow()+c] == null);
+			return (board[start.getRow()+r][start.getCol()+c] == null);
 		}
 		else if (c == 1 || c == -1 && r == -1) {
-			return isOppositeTeam(start, new Space(start.getCol()+r, start.getRow()+c));
+			if (new Space(start.getRow()+r, start.getCol()+c) != null) {
+				return isOppositeTeam(start, new Space(start.getRow()+r, start.getCol()+c));
+			}
 		}
 		return false;
 	}
 	if (getPiece(start).getType() == PieceType.KING) {
-		if (board[start.getCol()+r][start.getCol()+c] == null || board[start.getCol()+r][start.getCol()+c].getColor() != getPiece(start).getColor()) {
+		if (board[start.getRow()+r][start.getCol()+c] == null || board[start.getRow()+r][start.getCol()+c].getColor() != getPiece(start).getColor()) {
 			if (getPiece(start).getColor()) {
-				return !attackedByBlack[start.getCol()+r][start.getCol()+c];
+				return !attackedByBlack[start.getRow()+r][start.getCol()+c];
 			}
 			else {
-				return !attackedByWhite[start.getCol()+r][start.getCol()+c];
+				return !attackedByWhite[start.getRow()+r][start.getCol()+c];
 			}
 		}
 		else {
@@ -116,15 +118,15 @@ public boolean canMoveNumSpaces(Space start, int r, int c) {
 		}
 	}
 	if (getPiece(start).getType() == PieceType.KNIGHT) {
-		if (isOutOfBounds(new Space(start.getCol()+r, start.getRow()+c))) {
+		if (isOutOfBounds(new Space(start.getRow()+r, start.getCol()+c))) {
 			return false;
 		}
-		return (board[start.getCol()+r][start.getRow()+c] == null) || (isOppositeTeam(start, new Space(start.getCol()+r, start.getRow()+c)));
+		return (board[start.getRow()+r][start.getCol()+c] == null) || (isOppositeTeam(start, new Space(start.getRow()+r, start.getCol()+c)));
 	}
-	if (isOutOfBounds(new Space(start.getCol()+r, start.getRow()+c))) {
+	if (isOutOfBounds(new Space(start.getRow()+r, start.getCol()+c))) {
 		return false;
 	}
-	return (hasLineOfSight(start, r, c) && ((board[start.getCol()+r][start.getRow()+c] == null) || (isOppositeTeam(start, new Space(start.getCol()+r, start.getRow()+c)))));
+	return (hasLineOfSight(start, r, c) && ((board[start.getRow()+r][start.getCol()+c] == null) || (isOppositeTeam(start, new Space(start.getRow()+r, start.getCol()+c)))));
 }
 
 public Piece getPiece(Space s) {
@@ -281,10 +283,14 @@ public void removePiece(Space s) {
 	if (board[s.getRow()][s.getCol()] != null) {
 		for (Piece temp : pieces) {
 			if (temp == board[s.getRow()][s.getCol()]) {
-				//String pop = "takepiecesoundeffect.wav";
-				//Media hit = new Media(new File(pop).toURI().toString());
-				//MediaPlayer mediaPlayer = new MediaPlayer(hit);
-				//mediaPlayer.play();
+				try{
+				      AudioInputStream removepiece =AudioSystem.getAudioInputStream(this.getClass().getResource("takepiecesoundeffect.wav"));
+				     Clip clip = AudioSystem.getClip();
+				     clip.open(removepiece);
+				     clip.start( );
+				    }
+				   catch(Exception ex)
+				   {  }
 				pieces.remove(temp);
 				break;
 			}

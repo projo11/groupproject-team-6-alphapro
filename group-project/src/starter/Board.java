@@ -2,6 +2,9 @@ package starter;
 
 import java.util.*;
 import javafx.util.Pair;
+import java.io.File;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 
 public class Board {
 private Piece board[][] = new Piece[8][8];
@@ -270,6 +273,10 @@ public void removePiece(Space s) {
 	if (board[s.getRow()][s.getCol()] != null) {
 		for (Piece temp : pieces) {
 			if (temp == board[s.getRow()][s.getCol()]) {
+				String pop = "takepiecesoundefect.wav";
+				Media hit = new Media(new File(pop).toURI().toString());
+				MediaPlayer mediaPlayer = new MediaPlayer(hit);
+				mediaPlayer.play();
 				pieces.remove(temp);
 				break;
 			}

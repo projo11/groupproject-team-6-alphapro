@@ -2,9 +2,9 @@ package starter;
 
 import java.util.*;
 import javafx.util.Pair;
-import java.io.File;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+ import javax.sound.sampled.Clip;
 
 public class Board {
 private Piece board[][] = new Piece[8][8];
@@ -34,10 +34,14 @@ public Board() {
 public boolean isOutOfBounds(Space s) {
 	//Returns true if the Space given has coordinates that are not on the board.
 	if (s.getRow() < 0 || s.getRow() > 7 || s.getCol() < 0 || s.getCol() > 7) {
-		String movepiece = "checksoundeffect.mp3";
-		Media hit = new Media(new File(movepiece).toURI().toString());
-		MediaPlayer mediaPlayer = new MediaPlayer(hit);
-		mediaPlayer.play();
+		try{
+		      AudioInputStream movepiece =AudioSystem.getAudioInputStream(this.getClass().getResource("piecemovesoundeffect.wav"));
+		     Clip clip = AudioSystem.getClip();
+		     clip.open(movepiece);
+		     clip.start( );
+		    }
+		   catch(Exception ex)
+		   {  }
 		return true;
 	}
 	return false;

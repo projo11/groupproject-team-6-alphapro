@@ -16,6 +16,7 @@ private boolean isBoardFlipped = false;
 //NOTE: Flipped means playing from black's perspective instead of white.
 
 public Board() {
+	/*
 	addPiece(7, 4, PieceType.KING, true);
 	addPiece(0, 4, PieceType.KING, false);
 	addPiece(6, 4, PieceType.PAWN, true);
@@ -28,6 +29,14 @@ public Board() {
 	addPiece(0, 1, PieceType.KNIGHT, false);
 	addPiece(7, 0, PieceType.ROOK, true);
 	addPiece(0, 0, PieceType.ROOK, false);
+	*/
+	addPiece(6, 1, PieceType.PAWN, true);
+	addPiece(7, 0, PieceType.KING, true);
+	addPiece(7, 1, PieceType.ROOK, true);
+	addPiece(1, 6, PieceType.PAWN, false);
+	addPiece(0, 7, PieceType.KING, false);
+	addPiece(0, 6, PieceType.ROOK, false);
+	addPiece(7, 7, PieceType.PAWN, true);
 }
 
 
@@ -56,6 +65,7 @@ public boolean moveNumSpaces(Space start, int r, int c) {
 		removePiece(new Space(start.getRow()+r, start.getCol()+c));
 		board[start.getRow()+r][start.getCol()+c] = getPiece(start);
 		board[start.getRow()][start.getCol()] = null;
+		updateAttackLists();
 		return true;
 	}
 	return false;
@@ -180,6 +190,7 @@ public void flipBoard() {
 	else {
 		isBoardFlipped = true;
 	}
+	updateAttackLists();
 }
 
 public void updateAttackLists() {
@@ -196,12 +207,20 @@ public void updateAttackLists() {
 			switch(temp.getType()) {
 			case PAWN: 
 				if (!isBoardFlipped) {
-					attackedByWhite[temp.getRow()-1][temp.getCol()+1] = true;
-					attackedByWhite[temp.getRow()-1][temp.getCol()-1] = true;
+					if (temp.getCol() < 7) {
+						attackedByWhite[temp.getRow()-1][temp.getCol()+1] = true;
+					}
+					if (temp.getCol() > 0) {
+						attackedByWhite[temp.getRow()-1][temp.getCol()-1] = true;
+					}
 				}
 				else {
-					attackedByWhite[temp.getRow()+1][temp.getCol()+1] = true;
-					attackedByWhite[temp.getRow()+1][temp.getCol()-1] = true;
+					if (temp.getCol() < 7) {
+						attackedByWhite[temp.getRow()+1][temp.getCol()+1] = true;
+					}
+					if (temp.getCol() > 0) {
+						attackedByWhite[temp.getRow()+1][temp.getCol()-1] = true;
+					}
 				}
 				break;
 			case KNIGHT:
@@ -373,7 +392,12 @@ public boolean checkmate(boolean isTeamWhite) {
 			for (int j = -1; j < 2; j++) {
 				if (!isOutOfBounds(new Space(kingLoc.getRow()+i, kingLoc.getCol()+i))) {
 					if (!getAttackList(oppositeTeam)[kingLoc.getRow()+i][kingLoc.getCol()+i]) {
-						return false;
+						if (getPiece(new Space(kingLoc.getRow()+i, kingLoc.getCol()+i)) == null) {
+							return false;
+						}
+						else if (getPiece(new Space(kingLoc.getRow()+i, kingLoc.getCol()+i)).getColor() == oppositeTeam) {
+							return false;
+						}
 					}
 				}
 			}
@@ -383,8 +407,8 @@ public boolean checkmate(boolean isTeamWhite) {
 		for (int i = -1; i < 2; i+=2) {
 			for (int j = -1; j < 2; j+=2) {
 				toCheck = new Space(kingLoc.getRow()+(2*i), kingLoc.getCol()+j);
-				if (!isOutOfBounds(toCheck)) {
-					if (getPiece(toCheck).getType() == PieceType.KNIGHT && !getPiece(toCheck).getColor()) {
+				if (!isOutOfBounds(toCheck) && getPiece(toCheck) != null) {
+					if (getPiece(toCheck).getType() == PieceType.KNIGHT && getPiece(toCheck).getColor() == oppositeTeam) {
 						if (attacker != null) {
 							return true;
 						}
@@ -394,8 +418,8 @@ public boolean checkmate(boolean isTeamWhite) {
 					}
 				}
 				toCheck = new Space(kingLoc.getRow()+i, kingLoc.getCol()+(2*j));
-				if (!isOutOfBounds(toCheck)) {
-					if (getPiece(toCheck).getType() == PieceType.KNIGHT && !getPiece(toCheck).getColor()) {
+				if (!isOutOfBounds(toCheck) && getPiece(toCheck) != null) {
+					if (getPiece(toCheck).getType() == PieceType.KNIGHT && getPiece(toCheck).getColor() == oppositeTeam) {
 						if (attacker != null) {
 							return true;
 						}
@@ -452,7 +476,7 @@ public boolean checkmate(boolean isTeamWhite) {
 					toCheck = new Space(kingLoc.getRow()-i, kingLoc.getCol());//Up
 					break;
 				}
-				if (!isOutOfBounds(toCheck)) {
+				if (!isOutOfBounds(toCheck) && getPiece(toCheck) != null) {
 					if ((getPiece(toCheck).getType() == PieceType.ROOK || getPiece(toCheck).getType() == PieceType.QUEEN) && !getPiece(toCheck).getColor()) {
 						if (attacker != null) {
 							return true;
@@ -465,6 +489,9 @@ public boolean checkmate(boolean isTeamWhite) {
 			}
 		}
 		//STEP 4
+		if (attacker == null) {
+			return false;
+		}
 		if (getAttackList(isTeamWhite)[attacker.getRow()][attacker.getCol()]) { 
 			return false;
 		}
@@ -500,6 +527,10 @@ public boolean checkmate(boolean isTeamWhite) {
 
 public ArrayList<Piece>getPieces() {
 	return pieces;
+}
+
+public boolean isBoardFlipped() {
+	return this.isBoardFlipped;
 }
 
 

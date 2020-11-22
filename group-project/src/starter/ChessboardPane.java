@@ -186,9 +186,20 @@ public void printBoard() {
     		piece = getPieceFromXY(clickX, clickY);
     		if(piece != null)
            	{
-           		program.getBoard().moveNumSpaces(space, calculateRowsMoved(), calculateColsMoved());
-           		hideContents();
-           		printBoard(); 
+    			if (program.getBoard().moveNumSpaces(space, calculateRowsMoved(), calculateColsMoved())) {
+    				if (program.getBoard().checkmate(!program.getBoard().isBoardFlipped())) {
+    					program.switchToVic();
+    				}
+    				else {
+    					program.getBoard().flipBoard();
+    					hideContents();
+                   		printBoard(); 
+    				}
+    			}
+    			else {
+    				hideContents();
+               		printBoard(); 
+    			}
            	}
     	}
    		

@@ -39,18 +39,32 @@ public Board() {
 	addPiece(7, 7, PieceType.PAWN, true);
 }
 
+public void playpiecemoveSound() {
+	try{
+	      AudioInputStream audioInputStream =AudioSystem.getAudioInputStream(this.getClass().getResource("piecemovesoundeffect.wav"));
+	     Clip clip = AudioSystem.getClip();
+	     clip.open(audioInputStream);
+	     clip.start( );
+	    }
+	   catch(Exception ex)
+	   {  }
+}
+
+public void playpieceremoveSound() {
+	try{
+	      AudioInputStream audioInputStream =AudioSystem.getAudioInputStream(this.getClass().getResource("takepiecesoundeffect.wav"));
+	     Clip clip = AudioSystem.getClip();
+	     clip.open(audioInputStream);
+	     clip.start( );
+	    }
+	   catch(Exception ex)
+	   {  }
+}
 
 public boolean isOutOfBounds(Space s) {
 	//Returns true if the Space given has coordinates that are not on the board.
 	if (s.getRow() < 0 || s.getRow() > 7 || s.getCol() < 0 || s.getCol() > 7) {
-		try{
-		      AudioInputStream movepiece =AudioSystem.getAudioInputStream(this.getClass().getResource("piecemovesoundeffect.wav"));
-		     Clip clip = AudioSystem.getClip();
-		     clip.open(movepiece);
-		     clip.start( );
-		    }
-		   catch(Exception ex)
-		   {  }
+		playpiecemoveSound();
 		return true;
 	}
 	return false;
@@ -302,14 +316,7 @@ public void removePiece(Space s) {
 	if (board[s.getRow()][s.getCol()] != null) {
 		for (Piece temp : pieces) {
 			if (temp == board[s.getRow()][s.getCol()]) {
-				try{
-				      AudioInputStream removepiece =AudioSystem.getAudioInputStream(this.getClass().getResource("takepiecesoundeffect.wav"));
-				     Clip clip = AudioSystem.getClip();
-				     clip.open(removepiece);
-				     clip.start( );
-				    }
-				   catch(Exception ex)
-				   {  }
+				playpieceremoveSound();
 				pieces.remove(temp);
 				break;
 			}

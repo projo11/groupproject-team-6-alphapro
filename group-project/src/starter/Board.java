@@ -454,7 +454,7 @@ public boolean checkmate(boolean isTeamWhite) {
 					toCheck = new Space(kingLoc.getRow()-i, kingLoc.getCol()-i);//Up-left
 					break;
 				}
-				if (!isOutOfBounds(toCheck)) {
+				if (!isOutOfBounds(toCheck) && getPiece(toCheck) != null) {
 					if ((getPiece(toCheck).getType() == PieceType.BISHOP || getPiece(toCheck).getType() == PieceType.QUEEN) && !getPiece(toCheck).getColor()) {
 						if (attacker != null) {
 							return true;

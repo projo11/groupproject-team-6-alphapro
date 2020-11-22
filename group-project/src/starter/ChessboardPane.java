@@ -187,7 +187,7 @@ public void printBoard() {
     		if(piece != null)
            	{
     			if (program.getBoard().moveNumSpaces(space, calculateRowsMoved(), calculateColsMoved())) {
-    				if (program.getBoard().checkmate(!program.getBoard().isBoardFlipped())) {
+    				if (program.getBoard().checkmate(program.getBoard().isBoardFlipped())) {
     					program.switchToVic();
     				}
     				else {

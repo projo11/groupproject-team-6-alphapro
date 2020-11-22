@@ -145,7 +145,7 @@ public void swapPieces(Space s1, Space s2) {
 public boolean isOppositeTeam(Space s1, Space s2) {
 	//returns true if the pieces at the spaces given are of opposite color.
 	//returns false if one or more of the given spaces are null.
-	if (s1 != null && s2 != null) {
+	if (getPiece(s1) != null && getPiece(s2) != null) {
 		return (getPiece(s1).getColor() != getPiece(s2).getColor());
 	}
 	return false;
@@ -239,8 +239,8 @@ public void updateAttackLists() {
 				break;
 			case KNIGHT:
 				for (Pair<Integer, Integer> pair : temp.getPossibleMoves()) {
-					if(!isOutOfBounds(new Space(temp.getRow()+pair.getKey(), temp.getRow()+pair.getKey()))) {
-						attackedByBlack[temp.getRow()+pair.getKey()][temp.getRow()+pair.getKey()] = true;
+					if(!isOutOfBounds(new Space(temp.getRow()+pair.getKey(), temp.getCol()+pair.getValue()))) {
+						attackedByBlack[temp.getRow()+pair.getKey()][temp.getCol()+pair.getValue()] = true;
 					}
 				}
 				break;
@@ -251,8 +251,8 @@ public void updateAttackLists() {
 				break;
 				default:
 					for (Pair<Integer, Integer> pair : temp.getPossibleMoves()) {
-						if(!isOutOfBounds(new Space(temp.getRow()+pair.getKey(), temp.getRow()+pair.getKey())) && hasLineOfSight(new Space(temp.getRow(), temp.getCol()), pair.getKey(), pair.getValue())) { 
-							attackedByBlack[temp.getRow()+pair.getKey()][temp.getRow()+pair.getKey()] = true; //TODO: Could be severly optimised
+						if(!isOutOfBounds(new Space(temp.getRow()+pair.getKey(), temp.getCol()+pair.getValue())) && hasLineOfSight(new Space(temp.getRow(), temp.getCol()), pair.getKey(), pair.getValue())) { 
+							attackedByBlack[temp.getRow()+pair.getKey()][temp.getCol()+pair.getValue()] = true; //TODO: Could be severly optimised
 					}
 				}
 			}
@@ -301,18 +301,18 @@ public void removePiece(Space s) {
 
 public boolean hasLineOfSight(Space start, int r, int c) {
 	//returns true if the piece at start has line of sight to the space translated by r and c.
-	if ((Math.abs(r) != Math.abs(c) && r != 0 && c != 0) || isOutOfBounds(new Space(r, c))) {
+	if ((Math.abs(r) != Math.abs(c) && r != 0 && c != 0) || isOutOfBounds(new Space(start.getRow()+r, start.getCol()+c))) {
 		return false;
 	}
 	int greater;
-	if (r > c) {
+	if (Math.abs(r) > Math.abs(c)) {
 		greater = r;
 	}
 	else {
 		greater = c;
 	}
 	for (int i = 0; i < Math.abs(greater)-1; i++) {//TODO: Determine if greater-1 is working as intended
-		if (start.getRow()+((i+1)*Integer.signum(r)) < 7 && start.getCol()+((i+1)*Integer.signum(c)) < 7 && start.getRow()+((i+1)*Integer.signum(r)) > 0 && start.getCol()+((i+1)*Integer.signum(c)) > 0) {
+		if (start.getRow()+((i+1)*Integer.signum(r)) < 8 && start.getCol()+((i+1)*Integer.signum(c)) < 8 && start.getRow()+((i+1)*Integer.signum(r)) >= 0 && start.getCol()+((i+1)*Integer.signum(c)) >= 0) {
 			if (board[start.getRow()+((i+1)*Integer.signum(r))][start.getCol()+((i+1)*Integer.signum(c))] != null) {
 				return false;
 			}

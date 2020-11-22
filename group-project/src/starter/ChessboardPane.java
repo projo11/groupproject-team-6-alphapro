@@ -57,6 +57,29 @@ public void printBoard() {
 		x = BOARD_SHIFT; 
 		y += SPACE_SIZE;
 		}
+	
+	/*TESTER CODE FOR VISUALIZING ATTACKED SQUARES
+	x = BOARD_SHIFT;
+	y = BOARD_SHIFT;
+	for (int i = 0; i < 8; i++) {//print the board
+		for (int j = 0; j < 8; j++) {
+				GRect block = new GRect(x, y, SPACE_SIZE, SPACE_SIZE);
+				program.add(block);
+					if(program.getBoard().getAttackList(true)[i][j]) {
+						block.setFillColor(Color.green);
+						block.setFilled(true);
+					}
+					else if (program.getBoard().getAttackList(false)[i][j]) {
+						block.setFillColor(Color.blue);
+						block.setFilled(true);
+					}
+					x += SPACE_SIZE;
+				}
+		x = BOARD_SHIFT; 
+		y += SPACE_SIZE;
+			}
+	
+	*/
 	for (Piece temp : program.getBoard().getPieces()) {
 		GImage toAdd;
 		String filePath;

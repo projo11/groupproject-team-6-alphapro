@@ -10,6 +10,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import acm.graphics.GImage;
 import acm.graphics.GLabel;
 import acm.graphics.GObject;
 
@@ -24,6 +25,12 @@ public RulesPane(MainApplication app) {
 
 	@Override
 	public void showContents() {
+		
+		GImage rulesim = new GImage("Rules_Image.png", 660,0); //adds rules image
+		rulesim.setSize(150, 150);
+		program.add(rulesim);
+		
+		
 		// TODO Auto-generated method stub
 		GLabel Title1 = new GLabel("Basic Rules:", 0, 20);
 		Title1.setColor(Color.red);
@@ -156,6 +163,11 @@ public RulesPane(MainApplication app) {
 		program.add(Text29);
 		program.add(Text30);
 		program.add(exit);
+	}
+
+	private void add(GImage rulesim) {
+		// TODO Auto-generated method stub
+		
 	}
 
 	@Override

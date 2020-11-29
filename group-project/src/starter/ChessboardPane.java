@@ -131,12 +131,7 @@ public void printBoard() {
 	
 	@Override
     public void mousePressed(MouseEvent e) {
-		GRect block = new GRect(0, 0);
 		toDrag = program.getElementAt(e.getX(), e.getY());
-		if(toDrag != block)
-		{
-			toDrag = null;
-		}
 		
 	    lastX = e.getX();
 	    lastY = e.getY();

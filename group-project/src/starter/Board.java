@@ -177,6 +177,7 @@ public void swapPieces(Space s1, Space s2) {
 	Piece temp = board[s1.getRow()][s1.getCol()];
 	board[s1.getRow()][s1.getCol()] = board[s2.getRow()][s2.getCol()];
 	board[s2.getRow()][s2.getCol()] = temp;
+	//TODO
 }
 
 public boolean isOppositeTeam(Space s1, Space s2) {

@@ -183,7 +183,6 @@ public void swapPieces(Space s1, Space s2) {
 	Piece temp = board[s1.getRow()][s1.getCol()];
 	board[s1.getRow()][s1.getCol()] = board[s2.getRow()][s2.getCol()];
 	board[s2.getRow()][s2.getCol()] = temp;
-	//TODO
 }
 
 public boolean isOppositeTeam(Space s1, Space s2) {
@@ -411,7 +410,6 @@ public boolean checkmate(boolean isTeamWhite) {
 			kingLoc = new Space(temp.getRow(), temp.getCol());
 		}
 	}
-		//WHITE TEAM
 		//STEP 1
 		if (!getAttackList(oppositeTeam)[kingLoc.getRow()][kingLoc.getCol()]) {
 			return false;
@@ -477,7 +475,7 @@ public boolean checkmate(boolean isTeamWhite) {
 					break;
 				}
 				if (!isOutOfBounds(toCheck) && getPiece(toCheck) != null) {
-					if ((getPiece(toCheck).getType() == PieceType.BISHOP || getPiece(toCheck).getType() == PieceType.QUEEN) && !getPiece(toCheck).getColor()) {
+					if ((getPiece(toCheck).getType() == PieceType.BISHOP || getPiece(toCheck).getType() == PieceType.QUEEN) && getPiece(toCheck).getColor() == oppositeTeam) {
 						if (attacker != null) {
 							return true;
 						}
@@ -506,7 +504,7 @@ public boolean checkmate(boolean isTeamWhite) {
 					break;
 				}
 				if (!isOutOfBounds(toCheck) && getPiece(toCheck) != null) {
-					if ((getPiece(toCheck).getType() == PieceType.ROOK || getPiece(toCheck).getType() == PieceType.QUEEN) && !getPiece(toCheck).getColor()) {
+					if ((getPiece(toCheck).getType() == PieceType.ROOK || getPiece(toCheck).getType() == PieceType.QUEEN) && getPiece(toCheck).getColor() == oppositeTeam) {
 						if (attacker != null) {
 							return true;
 						}
@@ -544,7 +542,7 @@ public boolean checkmate(boolean isTeamWhite) {
 			distance = Math.abs(c);
 		}
 		for (int i = 0; i < distance; i++) {
-			blockLocations.add(new Space (kingLoc.getRow()+(i*Integer.signum(r)), kingLoc.getCol()+(i*Integer.signum(c))));
+			blockLocations.add(new Space (kingLoc.getRow()+((i+1)*Integer.signum(r)), kingLoc.getCol()+((i+1)*Integer.signum(c))));
 		}
 		for (Space temp : blockLocations) {
 			if (getAttackList(isTeamWhite)[temp.getRow()][temp.getCol()]) {

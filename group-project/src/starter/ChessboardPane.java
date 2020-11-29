@@ -157,6 +157,7 @@ public void printBoard() {
     public void mousePressed(MouseEvent e) {
 		Piece piece;
 		GObject object = program.getElementAt(e.getX(), e.getY());
+
 		if(object.getWidth() != SPACE_SIZE) //If the object you clicked on is a space on the chess board, you cannot drag it
 		{
 			piece = getPieceFromXY(e.getX(), e.getY());
@@ -164,6 +165,10 @@ public void printBoard() {
 			{
 				toDrag = program.getElementAt(e.getX(), e.getY());
 			}
+		}
+		else
+		{
+			toDrag = null;
 		}
 
 	    lastX = e.getX();
@@ -184,46 +189,49 @@ public void printBoard() {
 	
     @Override
 	public void mouseReleased(MouseEvent e) {
-    	Space space = convertXYToSpace(clickX, clickY);
-    	Piece piece;
-    	
-    	if(space.getRow() != -1 && space.getCol() != -1)
+    	if(toDrag != null) //If the object you initially clicked and dragged was a piece, continue to the piece movement code below
     	{
-    		piece = getPieceFromXY(clickX, clickY);
-    		if(piece != null)
-           	{
-    			
-    			if(isWhiteTurn != piece.getColor())
-    			{
-    				hideContents();
-               		printBoard(); 
-    			}
-    			else if (program.getBoard().moveNumSpaces(space, calculateRowsMoved(), calculateColsMoved())) {
-    					if (program.getBoard().checkmate(program.getBoard().isBoardFlipped())) 
-    					{
-    							program.switchToVic();
-    					}
-    			else {
-    					if(isWhiteTurn)
-    					{
-    						isWhiteTurn = false;
-    					}
-    					else
-    					{
-    						isWhiteTurn = true;
-    					}
-
-    					program.getBoard().flipBoard();
-    					hideContents();
+        	Space space = convertXYToSpace(clickX, clickY);
+        	Piece piece;
+    		if(space.getRow() != -1 && space.getCol() != -1)
+        	{
+        		piece = getPieceFromXY(clickX, clickY);
+        		if(piece != null)
+               	{
+        			
+        			if(isWhiteTurn != piece.getColor())
+        			{
+        				hideContents();
                    		printBoard(); 
-    				}
-    			}
-    			else {
-    				hideContents();
-               		printBoard(); 
-    			}
-           	}
+        			}
+        			else if (program.getBoard().moveNumSpaces(space, calculateRowsMoved(), calculateColsMoved())) {
+        					if (program.getBoard().checkmate(program.getBoard().isBoardFlipped())) 
+        					{
+        							program.switchToVic();
+        					}
+        			else {
+        					if(isWhiteTurn)
+        					{
+        						isWhiteTurn = false;
+        					}
+        					else
+        					{
+        						isWhiteTurn = true;
+        					}
+
+        					program.getBoard().flipBoard();
+        					hideContents();
+                       		printBoard(); 
+        				}
+        			}
+        			else {
+        				hideContents();
+                   		printBoard(); 
+        			}
+               	}
+        	}
     	}
+    	
     }
 	    
     //Below are functions used to help with the mouse listener functions

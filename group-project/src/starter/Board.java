@@ -174,6 +174,12 @@ public Piece getPiece(Space s) {
 public void swapPieces(Space s1, Space s2) {
 	//Switches the location of the two pieces given. Should only be called when setting up the board pre-game, 
 	// and only if both spaces contain pieces of the same color.
+	int tempRow = s1.getRow();
+	int tempCol = s1.getCol();
+	board[s1.getRow()][s1.getCol()].setRow(s2.getRow());
+	board[s1.getRow()][s1.getCol()].setCol(s2.getCol());
+	board[s2.getRow()][s2.getCol()].setRow(tempRow);
+	board[s2.getRow()][s2.getCol()].setCol(tempCol);
 	Piece temp = board[s1.getRow()][s1.getCol()];
 	board[s1.getRow()][s1.getCol()] = board[s2.getRow()][s2.getCol()];
 	board[s2.getRow()][s2.getCol()] = temp;
@@ -399,13 +405,7 @@ public boolean checkmate(boolean isTeamWhite) {
 	Space kingLoc = null;
 	Piece attacker = null;
 	Space toCheck = null;
-	boolean oppositeTeam;
-	if (isTeamWhite) {
-		oppositeTeam = false;
-	}
-	else {
-		oppositeTeam = true;
-	}
+	boolean oppositeTeam = !isTeamWhite;
 	for (Piece temp : pieces) {
 		if (temp.getColor() == isTeamWhite && temp.getType() == PieceType.KING) {
 			kingLoc = new Space(temp.getRow(), temp.getCol());
@@ -419,12 +419,12 @@ public boolean checkmate(boolean isTeamWhite) {
 		//STEP 2
 		for (int i = -1; i < 2; i++) {
 			for (int j = -1; j < 2; j++) {
-				if (!isOutOfBounds(new Space(kingLoc.getRow()+i, kingLoc.getCol()+i))) {
-					if (!getAttackList(oppositeTeam)[kingLoc.getRow()+i][kingLoc.getCol()+i]) {
-						if (getPiece(new Space(kingLoc.getRow()+i, kingLoc.getCol()+i)) == null) {
+				if (!isOutOfBounds(new Space(kingLoc.getRow()+i, kingLoc.getCol()+j))) {
+					if (!getAttackList(oppositeTeam)[kingLoc.getRow()+i][kingLoc.getCol()+j]) {
+						if (getPiece(new Space(kingLoc.getRow()+i, kingLoc.getCol()+j)) == null) {
 							return false;
 						}
-						else if (getPiece(new Space(kingLoc.getRow()+i, kingLoc.getCol()+i)).getColor() == oppositeTeam) {
+						else if (getPiece(new Space(kingLoc.getRow()+i, kingLoc.getCol()+j)).getColor() == oppositeTeam) {
 							return false;
 						}
 					}

@@ -156,14 +156,21 @@ public void printBoard() {
 	@Override
     public void mousePressed(MouseEvent e) {
 		Piece piece;
-		GObject object = program.getElementAt(e.getX(), e.getY());
-
-		if(object.getWidth() != SPACE_SIZE) //If the object you clicked on is a space on the chess board, you cannot drag it
+		if(program.getElementAt(e.getX(), e.getY()) != null) //If you did not click out of bounds, continue to the code below
 		{
-			piece = getPieceFromXY(e.getX(), e.getY());
-			if(isWhiteTurn == piece.getColor())
+			GObject object = program.getElementAt(e.getX(), e.getY());
+
+			if(object.getWidth() != SPACE_SIZE) //If the object you clicked on is a space on the chess board, you cannot drag it
 			{
-				toDrag = program.getElementAt(e.getX(), e.getY());
+				piece = getPieceFromXY(e.getX(), e.getY());
+				if(isWhiteTurn == piece.getColor())
+				{
+					toDrag = program.getElementAt(e.getX(), e.getY());
+				}
+			}
+			else
+			{
+				toDrag = null;
 			}
 		}
 		else

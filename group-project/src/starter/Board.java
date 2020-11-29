@@ -77,7 +77,6 @@ public void playpieceremoveSound() {
 public boolean isOutOfBounds(Space s) {
 	//Returns true if the Space given has coordinates that are not on the board.
 	if (s.getRow() < 0 || s.getRow() > 7 || s.getCol() < 0 || s.getCol() > 7) {
-		playpiecemoveSound();
 		return true;
 	}
 	return false;
@@ -92,6 +91,7 @@ public boolean moveNumSpaces(Space start, int r, int c) {
 		removePiece(new Space(start.getRow()+r, start.getCol()+c));
 		board[start.getRow()+r][start.getCol()+c] = getPiece(start);
 		board[start.getRow()][start.getCol()] = null;
+		playpiecemoveSound();
 		updateAttackLists();
 		return true;
 	}

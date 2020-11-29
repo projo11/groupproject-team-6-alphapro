@@ -20,6 +20,7 @@ public static final String LABEL_FONT = "Arial-Bold-22";
 public static final Color LABEL_COLOR = Color.red;
 private int clickX, clickY, lastX, lastY;
 private GObject toDrag;
+private boolean isWhiteTurn = true; //Checks to see who's turn it is and which pieces can be moved; White ALWAYS moves first
 	
 public ChessboardPane(MainApplication app) {
 		program = app;
@@ -154,8 +155,17 @@ public void printBoard() {
 	
 	@Override
     public void mousePressed(MouseEvent e) {
-		toDrag = program.getElementAt(e.getX(), e.getY());
-		
+		Piece piece;
+		GObject object = program.getElementAt(e.getX(), e.getY());
+		if(object.getWidth() != SPACE_SIZE) //If the object you clicked on is a space on the chess board, you cannot drag it
+		{
+			piece = getPieceFromXY(e.getX(), e.getY());
+			if(isWhiteTurn == piece.getColor())
+			{
+				toDrag = program.getElementAt(e.getX(), e.getY());
+			}
+		}
+
 	    lastX = e.getX();
 	    lastY = e.getY();
 	    clickX = e.getX();
@@ -182,11 +192,27 @@ public void printBoard() {
     		piece = getPieceFromXY(clickX, clickY);
     		if(piece != null)
            	{
-    			if (program.getBoard().moveNumSpaces(space, calculateRowsMoved(), calculateColsMoved())) {
-    				if (program.getBoard().checkmate(program.getBoard().isBoardFlipped())) {
-    					program.switchToVic();
-    				}
-    				else {
+    			
+    			if(isWhiteTurn != piece.getColor())
+    			{
+    				hideContents();
+               		printBoard(); 
+    			}
+    			else if (program.getBoard().moveNumSpaces(space, calculateRowsMoved(), calculateColsMoved())) {
+    					if (program.getBoard().checkmate(program.getBoard().isBoardFlipped())) 
+    					{
+    							program.switchToVic();
+    					}
+    			else {
+    					if(isWhiteTurn)
+    					{
+    						isWhiteTurn = false;
+    					}
+    					else
+    					{
+    						isWhiteTurn = true;
+    					}
+
     					program.getBoard().flipBoard();
     					hideContents();
                    		printBoard(); 
@@ -198,26 +224,6 @@ public void printBoard() {
     			}
            	}
     	}
-   		
-   		//Insert a check to see if it's a GImage
-   		/*
-       	if(piece.getColor()) //true = white -> piece is white
-       	{
-    		if(program.getBoard().checkmate(piece.getColor()) == true) //if a white piece puts the opponent in checkmate
-       		{
-       			hideContents();
-       			program.switchToVic();
-       		}
-       	}
-       	else //false = black -> piece is black
-       	{
-      		if(program.getBoard().checkmate(piece.getColor()) == true) //if a black piece puts the opponent in checkmate
-       		{
-       			hideContents();
-       			program.switchToVic();
-        	}
-        }
-        */
     }
 	    
     //Below are functions used to help with the mouse listener functions

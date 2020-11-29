@@ -16,6 +16,7 @@ private boolean isBoardFlipped = false;
 //NOTE: Flipped means playing from black's perspective instead of white.
 
 public Board() {
+	/*
 	addPiece(7, 4, PieceType.KING, true);
 	addPiece(0, 4, PieceType.KING, false);
 	addPiece(6, 4, PieceType.PAWN, true);
@@ -28,20 +29,55 @@ public Board() {
 	addPiece(0, 1, PieceType.KNIGHT, false);
 	addPiece(7, 0, PieceType.ROOK, true);
 	addPiece(0, 0, PieceType.ROOK, false);
+	*/
+	for (int i = 0; i < 8; i++) {
+		addPiece(6, i, PieceType.PAWN, true);
+		addPiece(1, i, PieceType.PAWN, false);
+	}
+	addPiece(7, 4, PieceType.KING, true);
+	addPiece(0, 4, PieceType.KING, false);
+	addPiece(7, 3, PieceType.QUEEN, true);
+	addPiece(0, 3, PieceType.QUEEN, false);
+	addPiece(7, 2, PieceType.BISHOP, true);
+	addPiece(0, 2, PieceType.BISHOP, false);
+	addPiece(7, 5, PieceType.BISHOP, true);
+	addPiece(0, 5, PieceType.BISHOP, false);
+	addPiece(7, 1, PieceType.KNIGHT, true);
+	addPiece(0, 1, PieceType.KNIGHT, false);
+	addPiece(7, 6, PieceType.KNIGHT, true);
+	addPiece(0, 6, PieceType.KNIGHT, false);
+	addPiece(7, 0, PieceType.ROOK, true);
+	addPiece(0, 0, PieceType.ROOK, false);
+	addPiece(7, 7, PieceType.ROOK, true);
+	addPiece(0, 7, PieceType.ROOK, false);
 }
 
+public void playpiecemoveSound() {
+	try{
+	      AudioInputStream audioInputStream =AudioSystem.getAudioInputStream(this.getClass().getResource("piecemovesoundeffect.wav"));
+	     Clip clip = AudioSystem.getClip();
+	     clip.open(audioInputStream);
+	     clip.start( );
+	    }
+	   catch(Exception ex)
+	   {  }
+}
+
+public void playpieceremoveSound() {
+	try{
+	      AudioInputStream audioInputStream =AudioSystem.getAudioInputStream(this.getClass().getResource("takepiecesoundeffect.wav"));
+	     Clip clip = AudioSystem.getClip();
+	     clip.open(audioInputStream);
+	     clip.start( );
+	    }
+	   catch(Exception ex)
+	   {  }
+}
 
 public boolean isOutOfBounds(Space s) {
 	//Returns true if the Space given has coordinates that are not on the board.
 	if (s.getRow() < 0 || s.getRow() > 7 || s.getCol() < 0 || s.getCol() > 7) {
-		try{
-		      AudioInputStream movepiece =AudioSystem.getAudioInputStream(this.getClass().getResource("piecemovesoundeffect.wav"));
-		     Clip clip = AudioSystem.getClip();
-		     clip.open(movepiece);
-		     clip.start( );
-		    }
-		   catch(Exception ex)
-		   {  }
+		playpiecemoveSound();
 		return true;
 	}
 	return false;
@@ -56,6 +92,7 @@ public boolean moveNumSpaces(Space start, int r, int c) {
 		removePiece(new Space(start.getRow()+r, start.getCol()+c));
 		board[start.getRow()+r][start.getCol()+c] = getPiece(start);
 		board[start.getRow()][start.getCol()] = null;
+		updateAttackLists();
 		return true;
 	}
 	return false;
@@ -95,20 +132,22 @@ public boolean canMoveNumSpaces(Space start, int r, int c) {
 			return (board[start.getRow()-1][start.getCol()] == null) && (board[start.getRow()-2][start.getCol()] == null) && (getPiece(start).getHasMoved() == false);
 		}
 		else if (r == -1 && c == 0) {
-			return (board[start.getCol()+r][start.getRow()+c] == null);
+			return (board[start.getRow()+r][start.getCol()+c] == null);
 		}
 		else if (c == 1 || c == -1 && r == -1) {
-			return isOppositeTeam(start, new Space(start.getCol()+r, start.getRow()+c));
+			if (new Space(start.getRow()+r, start.getCol()+c) != null) {
+				return isOppositeTeam(start, new Space(start.getRow()+r, start.getCol()+c));
+			}
 		}
 		return false;
 	}
 	if (getPiece(start).getType() == PieceType.KING) {
-		if (board[start.getCol()+r][start.getCol()+c] == null || board[start.getCol()+r][start.getCol()+c].getColor() != getPiece(start).getColor()) {
+		if (board[start.getRow()+r][start.getCol()+c] == null || board[start.getRow()+r][start.getCol()+c].getColor() != getPiece(start).getColor()) {
 			if (getPiece(start).getColor()) {
-				return !attackedByBlack[start.getCol()+r][start.getCol()+c];
+				return !attackedByBlack[start.getRow()+r][start.getCol()+c];
 			}
 			else {
-				return !attackedByWhite[start.getCol()+r][start.getCol()+c];
+				return !attackedByWhite[start.getRow()+r][start.getCol()+c];
 			}
 		}
 		else {
@@ -116,15 +155,15 @@ public boolean canMoveNumSpaces(Space start, int r, int c) {
 		}
 	}
 	if (getPiece(start).getType() == PieceType.KNIGHT) {
-		if (isOutOfBounds(new Space(start.getCol()+r, start.getRow()+c))) {
+		if (isOutOfBounds(new Space(start.getRow()+r, start.getCol()+c))) {
 			return false;
 		}
-		return (board[start.getCol()+r][start.getRow()+c] == null) || (isOppositeTeam(start, new Space(start.getCol()+r, start.getRow()+c)));
+		return (board[start.getRow()+r][start.getCol()+c] == null) || (isOppositeTeam(start, new Space(start.getRow()+r, start.getCol()+c)));
 	}
-	if (isOutOfBounds(new Space(start.getCol()+r, start.getRow()+c))) {
+	if (isOutOfBounds(new Space(start.getRow()+r, start.getCol()+c))) {
 		return false;
 	}
-	return (hasLineOfSight(start, r, c) && ((board[start.getCol()+r][start.getRow()+c] == null) || (isOppositeTeam(start, new Space(start.getCol()+r, start.getRow()+c)))));
+	return (hasLineOfSight(start, r, c) && ((board[start.getRow()+r][start.getCol()+c] == null) || (isOppositeTeam(start, new Space(start.getRow()+r, start.getCol()+c)))));
 }
 
 public Piece getPiece(Space s) {
@@ -138,12 +177,13 @@ public void swapPieces(Space s1, Space s2) {
 	Piece temp = board[s1.getRow()][s1.getCol()];
 	board[s1.getRow()][s1.getCol()] = board[s2.getRow()][s2.getCol()];
 	board[s2.getRow()][s2.getCol()] = temp;
+	//TODO
 }
 
 public boolean isOppositeTeam(Space s1, Space s2) {
 	//returns true if the pieces at the spaces given are of opposite color.
 	//returns false if one or more of the given spaces are null.
-	if (s1 != null && s2 != null) {
+	if (getPiece(s1) != null && getPiece(s2) != null) {
 		return (getPiece(s1).getColor() != getPiece(s2).getColor());
 	}
 	return false;
@@ -178,6 +218,7 @@ public void flipBoard() {
 	else {
 		isBoardFlipped = true;
 	}
+	updateAttackLists();
 }
 
 public void updateAttackLists() {
@@ -194,12 +235,20 @@ public void updateAttackLists() {
 			switch(temp.getType()) {
 			case PAWN: 
 				if (!isBoardFlipped) {
-					attackedByWhite[temp.getRow()-1][temp.getCol()+1] = true;
-					attackedByWhite[temp.getRow()-1][temp.getCol()-1] = true;
+					if (temp.getCol() < 7 && temp.getRow() > 0) {
+						attackedByWhite[temp.getRow()-1][temp.getCol()+1] = true;
+					}
+					if (temp.getCol() > 0 && temp.getRow() > 0) {
+						attackedByWhite[temp.getRow()-1][temp.getCol()-1] = true;
+					}
 				}
 				else {
-					attackedByWhite[temp.getRow()+1][temp.getCol()+1] = true;
-					attackedByWhite[temp.getRow()+1][temp.getCol()-1] = true;
+					if (temp.getCol() < 7 && temp.getRow() < 7) {
+						attackedByWhite[temp.getRow()+1][temp.getCol()+1] = true;
+					}
+					if (temp.getCol() > 0 && temp.getRow() < 7) {
+						attackedByWhite[temp.getRow()+1][temp.getCol()-1] = true;
+					}
 				}
 				break;
 			case KNIGHT:
@@ -227,18 +276,26 @@ public void updateAttackLists() {
 			switch(temp.getType()) {
 			case PAWN: 
 				if (!isBoardFlipped) {
-					attackedByBlack[temp.getRow()+1][temp.getCol()+1] = true;
-					attackedByBlack[temp.getRow()+1][temp.getCol()-1] = true;
+					if (temp.getCol() < 7 && temp.getRow() < 7) {
+						attackedByBlack[temp.getRow()+1][temp.getCol()+1] = true;
+					}
+					if (temp.getCol() > 0 && temp.getRow() < 7) {
+						attackedByBlack[temp.getRow()+1][temp.getCol()-1] = true;
+					}
 				}
 				else {
-					attackedByBlack[temp.getRow()-1][temp.getCol()+1] = true;
-					attackedByBlack[temp.getRow()-1][temp.getCol()-1] = true;
+					if (temp.getCol() < 7 && temp.getRow() > 0) {
+						attackedByBlack[temp.getRow()-1][temp.getCol()+1] = true;
+					}
+					if (temp.getCol() > 0 && temp.getRow() > 0) {
+						attackedByBlack[temp.getRow()-1][temp.getCol()-1] = true;
+					}
 				}
 				break;
 			case KNIGHT:
 				for (Pair<Integer, Integer> pair : temp.getPossibleMoves()) {
-					if(!isOutOfBounds(new Space(temp.getRow()+pair.getKey(), temp.getRow()+pair.getKey()))) {
-						attackedByBlack[temp.getRow()+pair.getKey()][temp.getRow()+pair.getKey()] = true;
+					if(!isOutOfBounds(new Space(temp.getRow()+pair.getKey(), temp.getCol()+pair.getValue()))) {
+						attackedByBlack[temp.getRow()+pair.getKey()][temp.getCol()+pair.getValue()] = true;
 					}
 				}
 				break;
@@ -249,8 +306,8 @@ public void updateAttackLists() {
 				break;
 				default:
 					for (Pair<Integer, Integer> pair : temp.getPossibleMoves()) {
-						if(!isOutOfBounds(new Space(temp.getRow()+pair.getKey(), temp.getRow()+pair.getKey())) && hasLineOfSight(new Space(temp.getRow(), temp.getCol()), pair.getKey(), pair.getValue())) { 
-							attackedByBlack[temp.getRow()+pair.getKey()][temp.getRow()+pair.getKey()] = true; //TODO: Could be severly optimised
+						if(!isOutOfBounds(new Space(temp.getRow()+pair.getKey(), temp.getCol()+pair.getValue())) && hasLineOfSight(new Space(temp.getRow(), temp.getCol()), pair.getKey(), pair.getValue())) { 
+							attackedByBlack[temp.getRow()+pair.getKey()][temp.getCol()+pair.getValue()] = true; //TODO: Could be severly optimised
 					}
 				}
 			}
@@ -281,14 +338,7 @@ public void removePiece(Space s) {
 	if (board[s.getRow()][s.getCol()] != null) {
 		for (Piece temp : pieces) {
 			if (temp == board[s.getRow()][s.getCol()]) {
-				try{
-				      AudioInputStream removepiece =AudioSystem.getAudioInputStream(this.getClass().getResource("takepiecesoundeffect.wav"));
-				     Clip clip = AudioSystem.getClip();
-				     clip.open(removepiece);
-				     clip.start( );
-				    }
-				   catch(Exception ex)
-				   {  }
+				playpieceremoveSound();
 				pieces.remove(temp);
 				break;
 			}
@@ -299,18 +349,18 @@ public void removePiece(Space s) {
 
 public boolean hasLineOfSight(Space start, int r, int c) {
 	//returns true if the piece at start has line of sight to the space translated by r and c.
-	if ((Math.abs(r) != Math.abs(c) && r != 0 && c != 0) || isOutOfBounds(new Space(r, c))) {
+	if ((Math.abs(r) != Math.abs(c) && r != 0 && c != 0) || isOutOfBounds(new Space(start.getRow()+r, start.getCol()+c))) {
 		return false;
 	}
 	int greater;
-	if (r > c) {
+	if (Math.abs(r) > Math.abs(c)) {
 		greater = r;
 	}
 	else {
 		greater = c;
 	}
 	for (int i = 0; i < Math.abs(greater)-1; i++) {//TODO: Determine if greater-1 is working as intended
-		if (start.getRow()+((i+1)*Integer.signum(r)) < 7 && start.getCol()+((i+1)*Integer.signum(c)) < 7 && start.getRow()+((i+1)*Integer.signum(r)) > 0 && start.getCol()+((i+1)*Integer.signum(c)) > 0) {
+		if (start.getRow()+((i+1)*Integer.signum(r)) < 8 && start.getCol()+((i+1)*Integer.signum(c)) < 8 && start.getRow()+((i+1)*Integer.signum(r)) >= 0 && start.getCol()+((i+1)*Integer.signum(c)) >= 0) {
 			if (board[start.getRow()+((i+1)*Integer.signum(r))][start.getCol()+((i+1)*Integer.signum(c))] != null) {
 				return false;
 			}
@@ -371,7 +421,12 @@ public boolean checkmate(boolean isTeamWhite) {
 			for (int j = -1; j < 2; j++) {
 				if (!isOutOfBounds(new Space(kingLoc.getRow()+i, kingLoc.getCol()+i))) {
 					if (!getAttackList(oppositeTeam)[kingLoc.getRow()+i][kingLoc.getCol()+i]) {
-						return false;
+						if (getPiece(new Space(kingLoc.getRow()+i, kingLoc.getCol()+i)) == null) {
+							return false;
+						}
+						else if (getPiece(new Space(kingLoc.getRow()+i, kingLoc.getCol()+i)).getColor() == oppositeTeam) {
+							return false;
+						}
 					}
 				}
 			}
@@ -381,8 +436,8 @@ public boolean checkmate(boolean isTeamWhite) {
 		for (int i = -1; i < 2; i+=2) {
 			for (int j = -1; j < 2; j+=2) {
 				toCheck = new Space(kingLoc.getRow()+(2*i), kingLoc.getCol()+j);
-				if (!isOutOfBounds(toCheck)) {
-					if (getPiece(toCheck).getType() == PieceType.KNIGHT && !getPiece(toCheck).getColor()) {
+				if (!isOutOfBounds(toCheck) && getPiece(toCheck) != null) {
+					if (getPiece(toCheck).getType() == PieceType.KNIGHT && getPiece(toCheck).getColor() == oppositeTeam) {
 						if (attacker != null) {
 							return true;
 						}
@@ -392,8 +447,8 @@ public boolean checkmate(boolean isTeamWhite) {
 					}
 				}
 				toCheck = new Space(kingLoc.getRow()+i, kingLoc.getCol()+(2*j));
-				if (!isOutOfBounds(toCheck)) {
-					if (getPiece(toCheck).getType() == PieceType.KNIGHT && !getPiece(toCheck).getColor()) {
+				if (!isOutOfBounds(toCheck) && getPiece(toCheck) != null) {
+					if (getPiece(toCheck).getType() == PieceType.KNIGHT && getPiece(toCheck).getColor() == oppositeTeam) {
 						if (attacker != null) {
 							return true;
 						}
@@ -406,22 +461,22 @@ public boolean checkmate(boolean isTeamWhite) {
 		}
 		//check diagonals
 		for (int i = 0; i < 4; i++) {
-			for (int j = 1; j < 9; j++) {
+			for (int j = 1; j < 8; j++) {
 				switch(i) {
 				case 0: 
-					toCheck = new Space(kingLoc.getRow()-i, kingLoc.getCol()+i);//Up-right
+					toCheck = new Space(kingLoc.getRow()-j, kingLoc.getCol()+j);//Up-right
 					break;
 				case 1: 
-					toCheck = new Space(kingLoc.getRow()+i, kingLoc.getCol()+i);//Down-right
+					toCheck = new Space(kingLoc.getRow()+j, kingLoc.getCol()+j);//Down-right
 					break;
 				case 2: 
-					toCheck = new Space(kingLoc.getRow()+i, kingLoc.getCol()-i);//Down-left
+					toCheck = new Space(kingLoc.getRow()+j, kingLoc.getCol()-j);//Down-left
 					break;
 				case 3:
-					toCheck = new Space(kingLoc.getRow()-i, kingLoc.getCol()-i);//Up-left
+					toCheck = new Space(kingLoc.getRow()-j, kingLoc.getCol()-j);//Up-left
 					break;
 				}
-				if (!isOutOfBounds(toCheck)) {
+				if (!isOutOfBounds(toCheck) && getPiece(toCheck) != null) {
 					if ((getPiece(toCheck).getType() == PieceType.BISHOP || getPiece(toCheck).getType() == PieceType.QUEEN) && !getPiece(toCheck).getColor()) {
 						if (attacker != null) {
 							return true;
@@ -435,22 +490,22 @@ public boolean checkmate(boolean isTeamWhite) {
 		}
 		//check straights
 		for (int i = 0; i < 4; i++) {
-			for (int j = 1; j < 9; j++) {
+			for (int j = 1; j < 8; j++) {
 				switch(i) {
 				case 0: 
-					toCheck = new Space(kingLoc.getRow(), kingLoc.getCol()+i);//Right
+					toCheck = new Space(kingLoc.getRow(), kingLoc.getCol()+j);//Right
 					break;
 				case 1: 
-					toCheck = new Space(kingLoc.getRow()+i, kingLoc.getCol());//Down
+					toCheck = new Space(kingLoc.getRow()+j, kingLoc.getCol());//Down
 					break;
 				case 2: 
-					toCheck = new Space(kingLoc.getRow(), kingLoc.getCol()-i);//Left
+					toCheck = new Space(kingLoc.getRow(), kingLoc.getCol()-j);//Left
 					break;
 				case 3:
-					toCheck = new Space(kingLoc.getRow()-i, kingLoc.getCol());//Up
+					toCheck = new Space(kingLoc.getRow()-j, kingLoc.getCol());//Up
 					break;
 				}
-				if (!isOutOfBounds(toCheck)) {
+				if (!isOutOfBounds(toCheck) && getPiece(toCheck) != null) {
 					if ((getPiece(toCheck).getType() == PieceType.ROOK || getPiece(toCheck).getType() == PieceType.QUEEN) && !getPiece(toCheck).getColor()) {
 						if (attacker != null) {
 							return true;
@@ -463,6 +518,9 @@ public boolean checkmate(boolean isTeamWhite) {
 			}
 		}
 		//STEP 4
+		if (attacker == null) {
+			return false;
+		}
 		if (getAttackList(isTeamWhite)[attacker.getRow()][attacker.getCol()]) { 
 			return false;
 		}
@@ -490,7 +548,13 @@ public boolean checkmate(boolean isTeamWhite) {
 		}
 		for (Space temp : blockLocations) {
 			if (getAttackList(isTeamWhite)[temp.getRow()][temp.getCol()]) {
-				return false;
+				for (Piece piece : pieces) {
+					if (piece.getColor() == isTeamWhite) {
+						if (canMoveNumSpaces(new Space(piece.getRow(), piece.getCol()), temp.getRow()-piece.getRow(), temp.getCol()-piece.getCol())) {
+							return false;
+						}
+					}
+				}
 			}
 		}
 	return true;
@@ -498,6 +562,10 @@ public boolean checkmate(boolean isTeamWhite) {
 
 public ArrayList<Piece>getPieces() {
 	return pieces;
+}
+
+public boolean isBoardFlipped() {
+	return this.isBoardFlipped;
 }
 
 

@@ -548,7 +548,12 @@ public boolean checkmate(boolean isTeamWhite) {
 			if (getAttackList(isTeamWhite)[temp.getRow()][temp.getCol()]) {
 				for (Piece piece : pieces) {
 					if (piece.getColor() == isTeamWhite) {
-						if (canMoveNumSpaces(new Space(piece.getRow(), piece.getCol()), temp.getRow()-piece.getRow(), temp.getCol()-piece.getCol())) {
+						if (piece.getType() == PieceType.PAWN) {
+							if (temp.getRow()-1 == piece.getRow() || (temp.getRow()-2 == piece.getRow() && !piece.getHasMoved())) {
+								return false;
+							}
+						}
+						else if (canMoveNumSpaces(new Space(piece.getRow(), piece.getCol()), temp.getRow()-piece.getRow(), temp.getCol()-piece.getCol())) {
 							return false;
 						}
 					}

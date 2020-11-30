@@ -3,6 +3,7 @@ package starter;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Point;
+import java.lang.Math;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -42,11 +43,13 @@ public static final Color LABEL_COLOR = Color.red;
 
 private Board p = new Board();
 
-private int clickX, clickY, lastX, lastY;
+private double clickX, clickY;
+private double lastX= 0;
+private double lastY= 0;
 private int startX;
 private int startY;
 private GObject toDrag;
-private int pieceT;
+private int pieceT = 0;
 GImage toAdd;
 String filePath;
 
@@ -313,43 +316,6 @@ public PieceShopPane(MainApplication app) {
 		}
 		if(obj == toAdd) {
 				toDrag = program.getElementAt(e.getX(), e.getY());
-			    //lastX = e.getX();
-			    //lastY = e.getY();
-			    //add pawn
-			    /*if(pieceT == 0 && player == 2){
-			    	piece.addPiece(lastX,lastY,PieceType.PAWN, false);
-			    }
-			    if(pieceT == 0 && player == 1){
-			    	piece.addPiece(lastX,lastY,PieceType.PAWN, true);
-			    }
-			    //add knight
-			    if(pieceT == 1 && player == 2){
-			    	piece.addPiece(lastX,lastY,PieceType.KNIGHT, false);
-			    }
-			    if(pieceT == 1 && player == 1){
-			    	piece.addPiece(lastX,lastY,PieceType.KNIGHT, true);
-			    }
-			    //add rook
-			    if(pieceT == 2 && player == 2){
-			    	piece.addPiece(lastX,lastY,PieceType.ROOK, false);
-			    }
-			    if(pieceT == 2 && player == 1){
-			    	piece.addPiece(lastX,lastY,PieceType.ROOK, true);
-			    }
-			    //add bishop
-			    if(pieceT == 3 && player == 2){
-			    	piece.addPiece(lastX,lastY,PieceType.BISHOP, false);
-			    }
-			    if(pieceT == 3 && player == 1){
-			    	piece.addPiece(lastX,lastY,PieceType.PAWN, true);
-			    }
-			    //add queen
-			    if(pieceT == 4 && player == 2){
-			    	piece.addPiece(lastX,lastY,PieceType.QUEEN, false);
-			    }
-			    if(pieceT == 4 && player == 1){
-			    	piece.addPiece(lastX,lastY,PieceType.QUEEN, true);
-			    }*/
 		}
 	}
 	
@@ -360,117 +326,67 @@ public PieceShopPane(MainApplication app) {
 	    {
 	    	toDrag.move(e.getX()-lastX, e.getY()-lastY);
 	    }
-	    lastX = e.getX();
+		lastX = e.getX();
 	    lastY = e.getY();
     }
-	
-	//TODO: Fix up the code so that when it reprint the board it doesn't go back to the original;
-	//		try using the addPiece() function in Board.java for this.
-	//		Fix up the check to see if the piece moves out of bounds; the movement check is also
-	//		not working properly and needs to be fixed.
-	//		Fix the the board so you can't drag around the square tiles
 
     @Override
   	public void mouseReleased(MouseEvent e) {
-      	Space space = convertXYToSpace(clickX, clickY);
-      	Piece piece;
-      	
-      	if(space.getRow() != -1 && space.getCol() != -1)
-      	{
-      		piece = getPieceFromXY(clickX, clickY);
-      	}
-      	lastX = space.getRow();
-      	lastY = space.getCol();
+    	
+      System.out.println( lastY+" "+lastX);
+      double nx = Math.round(((lastY - 60) / 80));
+      double ny = Math.round(((lastX - 60) / 80));
+      int x = (int)nx;
+      int y = (int)ny;
+      System.out.println(x+" "+y);
       //add pawn
-	    /*if(pieceT == 0 && player == 2){
-	    	piece.addPiece(lastX,lastY,PieceType.PAWN, false);
-	    }
+      
+	  if(pieceT == 0 && player == 2){
+	    	p.addPiece(x, y, PieceType.PAWN, false);
+	  }
 	    if(pieceT == 0 && player == 1){
-	    	piece.addPiece(lastX,lastY,PieceType.PAWN, true);
+	    	p.addPiece(x, y, PieceType.PAWN, true);
 	    }
 	    //add knight
+	    
 	    if(pieceT == 1 && player == 2){
-	    	piece.addPiece(lastX,lastY,PieceType.KNIGHT, false);
+	    	p.addPiece(x, y, PieceType.KNIGHT, false);
 	    }
 	    if(pieceT == 1 && player == 1){
-	    	piece.addPiece(lastX,lastY,PieceType.KNIGHT, true);
+	    	p.addPiece(x, y, PieceType.KNIGHT, true);
 	    }
 	    //add rook
 	    if(pieceT == 2 && player == 2){
-	    	piece.addPiece(lastX,lastY,PieceType.ROOK, false);
+	    	p.addPiece(x, y, PieceType.ROOK, false);
 	    }
 	    if(pieceT == 2 && player == 1){
-	    	piece.addPiece(lastX,lastY,PieceType.ROOK, true);
+	    	p.addPiece(x, y, PieceType.ROOK, true);
 	    }
 	    //add bishop
 	    if(pieceT == 3 && player == 2){
-	    	piece.addPiece(lastX,lastY,PieceType.BISHOP, false);
+	    	p.addPiece(x, y, PieceType.BISHOP, false);
 	    }
 	    if(pieceT == 3 && player == 1){
-	    	piece.addPiece(lastX,lastY,PieceType.PAWN, true);
+	    	p.addPiece(x, y, PieceType.BISHOP, true);
 	    }
 	    //add queen
 	    if(pieceT == 4 && player == 2){
-	    	piece.addPiece(lastX,lastY,PieceType.QUEEN, false);
+	    	p.addPiece(x, y, PieceType.QUEEN, false);
 	    }
 	    if(pieceT == 4 && player == 1){
-	    	piece.addPiece(lastX,lastY,PieceType.QUEEN, true);
-	    }*/
+	    	p.addPiece(x, y, PieceType.QUEEN, true);
+	    }
     }
-    private Space convertXYToSpace(double x, double y)
-    {
-    	if(x < BOARD_SHIFT || x > BOARD_SHIFT+(100*8) || y < BOARD_SHIFT || y > BOARD_SHIFT+(100*8))
-    	{
-    		return new Space(-1, -1);
-    	}
-    	else
-    	{
-        	Space space = new Space((int)((y-BOARD_SHIFT)/100), (int)((x-BOARD_SHIFT)/100)); 
+    private Space convertXYToSpace(int x, int y){
+    	
+        	Space space = new Space((int)((y-BOARD_SHIFT)/SPACE_SIZE), (int)((x-BOARD_SHIFT)/SPACE_SIZE)); 
         	return space;
-    	}
     }
     
-    private Piece getPieceFromXY(double x, double y)
-    {
+    private Piece getPieceFromXY(int x, int y){
     	Space space = convertXYToSpace(x, y);
     	return program.getBoard().getPiece(space);
     }
-    
-    private int calculateRowsMoved()
-    {
-    	int rowsMoved = 0;
-    	Space start = convertXYToSpace(clickX, clickY); 
-    	Space end = convertXYToSpace(lastX, lastY); 
-    	Piece piece = getPieceFromXY(clickX, clickY);
-    	if(piece != null)
-    	{
-    		rowsMoved = end.getRow() - start.getRow();
-    	}
-    	else //If no piece was selected, the amount of rows moved is 0
-    	{
-    		rowsMoved = 0;
-    	}
-    	return rowsMoved;
-    }
-	    
-    //Code that returns how many cols a piece has moved
-    private int calculateColsMoved()
-    {
-    	int colsMoved = 0;
-    	Space start = convertXYToSpace(clickX, clickY);
-    	Space end = convertXYToSpace(lastX, lastY);
-    	Piece piece = getPieceFromXY(clickX, clickY);
-    	if(piece != null)
-    	{
-    		colsMoved = end.getCol() - start.getCol();
-    	}
-    	else //If no piece was selected, the amount of cols moved is 0
-    	{
-    		colsMoved = 0;
-    	}
-    	return colsMoved;
-    }
-    
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub

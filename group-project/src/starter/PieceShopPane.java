@@ -92,7 +92,7 @@ public PieceShopPane(MainApplication app) {
 				}
 			x = BOARD_SHIFT; 
 			y += SPACE_SIZE;
-			}
+		}
 		for (Piece temp : program.getBoard().getPieces()) {
 			GImage toAdd;
 			String filePath;
@@ -111,7 +111,7 @@ public PieceShopPane(MainApplication app) {
 				toAdd.setSize(SPACE_SIZE * PAWN_SIZE_MOD, SPACE_SIZE * PAWN_SIZE_MOD);
 			}
 			program.add(toAdd);
-			}
+		}
 		String labelName = new String();
 		GLabel toAdd;
 		for (int i = 0; i < 8; i++) {

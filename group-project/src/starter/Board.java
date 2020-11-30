@@ -558,7 +558,7 @@ public boolean checkmate(boolean isTeamWhite) {
 				for (Piece piece : pieces) {
 					if (piece.getColor() == isTeamWhite) {
 						if (piece.getType() == PieceType.PAWN) {
-							if (temp.getRow()-1 == piece.getRow() || (temp.getRow()-2 == piece.getRow() && !piece.getHasMoved())) {
+							if ((temp.getRow()-1 == piece.getRow() && temp.getCol() == piece.getCol()) || (temp.getRow()-2 == piece.getRow() && !piece.getHasMoved() && temp.getCol() == piece.getCol())) {
 								return false;
 							}
 						}
@@ -586,5 +586,18 @@ public boolean isBoardFlipped() {
 	return this.isBoardFlipped;
 }
 
+public boolean isKingInCheck(boolean isTeamWhite) {
+	for (Piece temp : pieces) {
+		if (temp.getColor() == isTeamWhite && temp.getType() == PieceType.KING) {
+			if (getAttackList(!isTeamWhite)[temp.getRow()][temp.getCol()]) {
+				return true;
+			}
+			else {
+				return false;
+			}
+		}
+	}
+	return false;
+}
 
 }

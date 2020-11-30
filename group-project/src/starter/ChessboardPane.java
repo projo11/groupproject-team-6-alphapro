@@ -217,15 +217,7 @@ public void printBoard() {
         							program.switchToVic();
         					}
         			else {
-        					if(isWhiteTurn)
-        					{
-        						isWhiteTurn = false;
-        					}
-        					else
-        					{
-        						isWhiteTurn = true;
-        					}
-
+        					isWhiteTurn = !isWhiteTurn;
         					program.getBoard().flipBoard();
         					hideContents();
                        		printBoard(); 

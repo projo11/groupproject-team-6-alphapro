@@ -7,6 +7,7 @@ import java.lang.Math;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 import javax.swing.JButton;
@@ -21,44 +22,51 @@ import acm.graphics.GPoint;
 import acm.graphics.GRect;
 
 public class PieceShopPane extends GraphicsPane implements ActionListener {
-private MainApplication program;
+	private MainApplication program;
 
-//Location and size of buttons are currently just a placeholder; fix later
-private GButton P1 = new GButton("P1 Done", 700, 700, 150 , 80);
-private GButton P2 = new GButton("P2 Done", 700, 700, 150 , 80);
-//buy pieces button
-private final GButton Bp = new GButton("Buy", 820, 80, 70, 30);
-private final GButton BK = new GButton("Buy", 820, 120, 70, 30);
-private final GButton Br = new GButton("Buy", 820, 160, 70, 30);
-private final GButton Bb = new GButton("Buy", 820, 200, 70, 30);
-private final GButton Bq = new GButton("Buy", 820, 240, 70, 30);
-//detect player 1 or 2
-private int player = 1;
-public static final int SPACE_SIZE = 77;
-public static final int BOARD_SHIFT = 50;
-public static final double SIZE_MOD = 0.75;
-public static final double PAWN_SIZE_MOD = 0.55;
-public static final String LABEL_FONT = "Arial-Bold-22";
-public static final Color LABEL_COLOR = Color.red;
-private int i, j;
-Board p = new Board();
-private double lastX= 0;
-private double lastY= 0;
-private GObject toDrag;
-private int pieceT = 0;
-GImage toAdd;
-String filePath;
+	//Location and size of buttons are currently just a placeholder; fix later
+	private GButton P1 = new GButton("P1 Done", 700, 700, 150 , 80);
+	private GButton P2 = new GButton("P2 Done", 700, 700, 150 , 80);
+	//buy pieces button
+	private final GButton Bp = new GButton("Buy", 820, 80, 70, 30);
+	private final GButton BK = new GButton("Buy", 820, 120, 70, 30);
+	private final GButton Br = new GButton("Buy", 820, 160, 70, 30);
+	private final GButton Bb = new GButton("Buy", 820, 200, 70, 30);
+	private final GButton Bq = new GButton("Buy", 820, 240, 70, 30);
+	//detect player 1 or 2
+	private int player = 1;
+	public static final int SPACE_SIZE = 77;
+	public static final int BOARD_SHIFT = 50;
+	public static final double SIZE_MOD = 0.75;
+	public static final double PAWN_SIZE_MOD = 0.55;
+	public static final String LABEL_FONT = "Arial-Bold-22";
+	public static final Color LABEL_COLOR = Color.red;
+	
+	private ArrayList<Piece> pieces = new ArrayList<Piece>();
+	Point point = null;
+	Board p = new Board();
+	int tf = 1;
 
-public PieceShopPane(MainApplication app) {
-		program = app;
+	private double lastX= 0;
+	private double lastY= 0;
+	private GObject toDrag;
+	private int pieceT = 0;
+	GImage toAdd;
+	String filePath;
+
+	public PieceShopPane(MainApplication app) {
+			program = app;
+			
 	}
-
-	@Override
-	public void showContents() {
-		// TODO Auto-generated method stub
-		//Board
+	public void printBoard() {
 		int x = BOARD_SHIFT;
 		int y = BOARD_SHIFT;
+		pieces = program.getBoard().getPieces();//need update the new pieces
+		/*int term = 1;
+		for (Piece temp : pieces) {
+			System.out.println(term);
+			term++;
+		}*/
 		for (int i = 0; i < 8; i++) {//print the board
 			for (int j = 0; j < 8; j++) {
 					GRect block = new GRect(x, y, SPACE_SIZE, SPACE_SIZE);
@@ -89,7 +97,9 @@ public PieceShopPane(MainApplication app) {
 			x = BOARD_SHIFT; 
 			y += SPACE_SIZE;
 		}
-		for (Piece temp : program.getBoard().getPieces()) {
+		
+		for (Piece temp : pieces) {
+			String filePath;
 			if (temp.getColor()) {
 				filePath = new String("White_" + temp.getType().toString() + ".png");
 			}
@@ -102,12 +112,12 @@ public PieceShopPane(MainApplication app) {
 			}
 			else {
 				toAdd = new GImage(filePath, temp.getCol()*SPACE_SIZE + BOARD_SHIFT + (((1-SIZE_MOD)*SPACE_SIZE)/2), temp.getRow()*SPACE_SIZE + BOARD_SHIFT + (((1-SIZE_MOD)*SPACE_SIZE)/2));
-				toAdd.setSize(SPACE_SIZE * PAWN_SIZE_MOD, SPACE_SIZE * PAWN_SIZE_MOD);
+				toAdd.setSize(SPACE_SIZE*SIZE_MOD, SPACE_SIZE*SIZE_MOD);
 			}
 			program.add(toAdd);
 		}
-		String labelName = new String();
 		GLabel toAdd;
+		String labelName = new String();
 		for (int i = 0; i < 8; i++) {
 			switch(i) {
 			case 0: 
@@ -146,7 +156,15 @@ public PieceShopPane(MainApplication app) {
 			toAdd.setColor(LABEL_COLOR);
 			program.add(toAdd);
 		}
-		
+	}
+	
+	@Override
+	public void showContents() {
+		// TODO Auto-generated method stub
+		//Board
+		if(player == 1) {
+			printBoard();
+		}
 		GRect bag = new GRect(0, 0, 43,43);
 		bag.setColor(Color.red);
 		//Shop
@@ -230,7 +248,7 @@ public PieceShopPane(MainApplication app) {
 		GObject obj = program.getElementAt(e.getX(), e.getY());
 		if(obj == P1) //After Player 1 is done setting up their board, screen changes so that Player 2 now gets to set up the board
 		{
-			//program.removeAll();
+			program.removeAll();
 			program.getBoard().flipBoard();
 			showContents();
 			program.add(P2);
@@ -313,78 +331,117 @@ public PieceShopPane(MainApplication app) {
 		}
 		if(obj == toAdd) {
 				toDrag = program.getElementAt(e.getX(), e.getY());
+				point = e.getPoint();
 		}
 	}
 	
 
 	@Override
     public void mouseDragged(MouseEvent e) {
+		
 		if(toDrag != null)
 	    {
-	    	toDrag.move(e.getX()-lastX, e.getY()-lastY);
+			//toDrag.move(e.getX()-lastX, e.getY()-lastY);
+			double x = toDrag.getX();
+			double y = toDrag.getY();
+			if(point != null) {
+				toDrag.setLocation(x + (e.getX()-point.getX()), y + (e.getY()-point.getY()));
+			}	
 	    }
+		point = e.getPoint();
 		lastX = e.getX();
 	    lastY = e.getY();
     }
 
     @Override
   	public void mouseReleased(MouseEvent e) {
+    	toDrag = null;
     	double nx = Math.round(((lastY - 60) / 80));
     	double ny = Math.round(((lastX - 60) / 80));
     	int x = (int)nx;
     	int y = (int)ny;
     	if(x > -1 && y > -1) {
     		if(x < 8 && y < 8) {
-    			setI(x);
-    			setJ(y);
-    			addP(x,y,pieceT, player);
+    			addP(x,y,pieceT, player);  	    	
     		}
     	}
-
-    }
-    public int setI(int x) {
-    	i = x;
-    	return i;
-    }
-    public int setJ(int y) {
-    	j = y;
-    	return j;
     }
     public void addP(int x, int y, int pieceT, int Color) {
     	//add pawn
+    	
     	if(pieceT == 0 && player == 2){
     		p.addPiece(7-x, 7-y, PieceType.PAWN, false);
+    		tf = p.a;
+	    	if (tf == 0) {
+	    		program.remove(toAdd);
+	    	}
     	}
 	    if(pieceT == 0 && player == 1){
 	    	p.addPiece(x, y, PieceType.PAWN, true);
+	    	tf = p.a;
+	    	if (tf == 0) {
+	    		program.remove(toAdd);
+	    	}
 	    }
 	    //add knight
 	    if(pieceT == 1 && player == 2){
 	    	p.addPiece(7-x, 7-y, PieceType.KNIGHT, false);
+	    	tf = p.a;
+	    	if (tf == 0) {
+	    		program.remove(toAdd);
+	    	}
 	    }
 	    if(pieceT == 1 && player == 1){
 	    	p.addPiece(x, y, PieceType.KNIGHT, true);
+	    	tf = p.a;
+	    	if (tf == 0) {
+	    		program.remove(toAdd);
+	    	}
 	    }
 	    //add rook
 	    if(pieceT == 2 && player == 2){
 	    	p.addPiece(7-x, 7-y, PieceType.ROOK, false);
+	    	tf = p.a;
+	    	if (tf == 0) {
+	    		program.remove(toAdd);
+	    	}
 	    }
 	    if(pieceT == 2 && player == 1){
 	    	p.addPiece(x, y, PieceType.ROOK, true);
+	    	tf = p.a;
+	    	if (tf == 0) {
+	    		program.remove(toAdd);
+	    	}
 	    }
 	    //add bishop
 	    if(pieceT == 3 && player == 2){
 	    	p.addPiece(7-x, 7-y, PieceType.BISHOP, false);
+	    	tf = p.a;
+	    	if (tf == 0) {
+	    		program.remove(toAdd);
+	    	}
 	    }
 	    if(pieceT == 3 && player == 1){
 	    	p.addPiece(x, y, PieceType.BISHOP, true);
+	    	tf = p.a;
+	    	if (tf == 0) {
+	    		program.remove(toAdd);
+	    	}
 	    }
 	    //add queen
 	    if(pieceT == 4 && player == 2){
 	    	p.addPiece(7-x, 7-y, PieceType.QUEEN, false);
+	    	tf = p.a;
+	    	if (tf == 0) {
+	    		program.remove(toAdd);
+	    	}
 	    }
 	    if(pieceT == 4 && player == 1){
 	    	p.addPiece(x, y, PieceType.QUEEN, true);
+	    	tf = p.a;
+	    	if (tf == 0) {
+	    		program.remove(toAdd);
+	    	}
 	    }
     }
 	@Override

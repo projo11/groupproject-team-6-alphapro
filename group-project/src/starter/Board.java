@@ -13,6 +13,8 @@ private boolean attackedByWhite[][] = new boolean[8][8];
 private boolean attackedByBlack[][] = new boolean[8][8];
 private ArrayList<Piece> pieces = new ArrayList<Piece>();
 private boolean isBoardFlipped = false;
+
+int a = 1;
 //NOTE: Flipped means playing from black's perspective instead of white.
 
 public Board() {
@@ -97,18 +99,25 @@ public boolean moveNumSpaces(Space start, int r, int c) {
 	}
 	return false;
 }
-
 public void addPiece(int r, int c, PieceType type, boolean isWhite) {
+	a = 1;
 	//Creates a Piece object using the arguments and adds it to the board at the coordinates given.
 	//Be careful calling this function, because it will override any piece that is currently at that location.
-	//If desired, could be modified to return false if the location given is not null.
+	//If desired, could be modified to return false if the location given is not null
 	if (board[r][c] != null) {
 		System.out.println("ERROR: Could not add piece.");
+		a = 0;
 		return;
 	}
+	
 	Piece piece = new Piece(r, c, type, isWhite);
 	board[r][c] = piece;
 	pieces.add(piece);
+	/*int term = 1;
+	  for (Piece temp : pieces) {
+		System.out.println(term);
+		term++;
+	}*/
 	updateAttackLists();
 }
 
@@ -564,6 +573,12 @@ public boolean checkmate(boolean isTeamWhite) {
 }
 
 public ArrayList<Piece>getPieces() {
+	
+	/*int term = 1;
+	  for (Piece temp : pieces) {
+		System.out.println(term);
+		term++;
+	}*/
 	return pieces;
 }
 

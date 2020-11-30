@@ -40,14 +40,10 @@ public static final double SIZE_MOD = 0.75;
 public static final double PAWN_SIZE_MOD = 0.55;
 public static final String LABEL_FONT = "Arial-Bold-22";
 public static final Color LABEL_COLOR = Color.red;
-
-private Board p = new Board();
-
-private double clickX, clickY;
+private int i, j;
+Board p = new Board();
 private double lastX= 0;
 private double lastY= 0;
-private int startX;
-private int startY;
 private GObject toDrag;
 private int pieceT = 0;
 GImage toAdd;
@@ -94,8 +90,6 @@ public PieceShopPane(MainApplication app) {
 			y += SPACE_SIZE;
 		}
 		for (Piece temp : program.getBoard().getPieces()) {
-			GImage toAdd;
-			String filePath;
 			if (temp.getColor()) {
 				filePath = new String("White_" + temp.getType().toString() + ".png");
 			}
@@ -153,6 +147,8 @@ public PieceShopPane(MainApplication app) {
 			program.add(toAdd);
 		}
 		
+		GRect bag = new GRect(0, 0, 43,43);
+		bag.setColor(Color.red);
 		//Shop
 		GLabel tital = new GLabel("Piece Shop:",680, 20);
 		tital.setFont(new Font("TimesNewRoman", Font.BOLD, 20));
@@ -200,6 +196,7 @@ public PieceShopPane(MainApplication app) {
 		
 		
 		program.add(tital);
+		program.add(bag);
 		program.add(Name);
 		program.add(Cost);
 		program.add(pawn);
@@ -229,10 +226,11 @@ public PieceShopPane(MainApplication app) {
 	
 	@Override
 	public void mousePressed(MouseEvent e) {
+		lastX = lastY = 0;
 		GObject obj = program.getElementAt(e.getX(), e.getY());
 		if(obj == P1) //After Player 1 is done setting up their board, screen changes so that Player 2 now gets to set up the board
 		{
-			program.removeAll();
+			//program.removeAll();
 			program.getBoard().flipBoard();
 			showContents();
 			program.add(P2);
@@ -256,7 +254,6 @@ public PieceShopPane(MainApplication app) {
 				toAdd.setBounds(lastX, lastY, 42,42);
 			}
 			program.add(toAdd);
-				
 		}
 		if(obj == BK) {//add knight
 			pieceT = 1;
@@ -332,60 +329,63 @@ public PieceShopPane(MainApplication app) {
 
     @Override
   	public void mouseReleased(MouseEvent e) {
-    	
-      System.out.println( lastY+" "+lastX);
-      double nx = Math.round(((lastY - 60) / 80));
-      double ny = Math.round(((lastX - 60) / 80));
-      int x = (int)nx;
-      int y = (int)ny;
-      System.out.println(x+" "+y);
-      //add pawn
-      
-	  if(pieceT == 0 && player == 2){
-	    	p.addPiece(x, y, PieceType.PAWN, false);
-	  }
+    	double nx = Math.round(((lastY - 60) / 80));
+    	double ny = Math.round(((lastX - 60) / 80));
+    	int x = (int)nx;
+    	int y = (int)ny;
+    	if(x > -1 && y > -1) {
+    		if(x < 8 && y < 8) {
+    			setI(x);
+    			setJ(y);
+    			addP(x,y,pieceT, player);
+    		}
+    	}
+
+    }
+    public int setI(int x) {
+    	i = x;
+    	return i;
+    }
+    public int setJ(int y) {
+    	j = y;
+    	return j;
+    }
+    public void addP(int x, int y, int pieceT, int Color) {
+    	//add pawn
+    	if(pieceT == 0 && player == 2){
+    		p.addPiece(7-x, 7-y, PieceType.PAWN, false);
+    	}
 	    if(pieceT == 0 && player == 1){
 	    	p.addPiece(x, y, PieceType.PAWN, true);
 	    }
 	    //add knight
-	    
 	    if(pieceT == 1 && player == 2){
-	    	p.addPiece(x, y, PieceType.KNIGHT, false);
+	    	p.addPiece(7-x, 7-y, PieceType.KNIGHT, false);
 	    }
 	    if(pieceT == 1 && player == 1){
 	    	p.addPiece(x, y, PieceType.KNIGHT, true);
 	    }
 	    //add rook
 	    if(pieceT == 2 && player == 2){
-	    	p.addPiece(x, y, PieceType.ROOK, false);
+	    	p.addPiece(7-x, 7-y, PieceType.ROOK, false);
 	    }
 	    if(pieceT == 2 && player == 1){
 	    	p.addPiece(x, y, PieceType.ROOK, true);
 	    }
 	    //add bishop
 	    if(pieceT == 3 && player == 2){
-	    	p.addPiece(x, y, PieceType.BISHOP, false);
+	    	p.addPiece(7-x, 7-y, PieceType.BISHOP, false);
 	    }
 	    if(pieceT == 3 && player == 1){
 	    	p.addPiece(x, y, PieceType.BISHOP, true);
 	    }
 	    //add queen
 	    if(pieceT == 4 && player == 2){
-	    	p.addPiece(x, y, PieceType.QUEEN, false);
+	    	p.addPiece(7-x, 7-y, PieceType.QUEEN, false);
 	    }
 	    if(pieceT == 4 && player == 1){
 	    	p.addPiece(x, y, PieceType.QUEEN, true);
 	    }
-    }
-    private Space convertXYToSpace(int x, int y){
-    	
-        	Space space = new Space((int)((y-BOARD_SHIFT)/SPACE_SIZE), (int)((x-BOARD_SHIFT)/SPACE_SIZE)); 
-        	return space;
-    }
-    
-    private Piece getPieceFromXY(int x, int y){
-    	Space space = convertXYToSpace(x, y);
-    	return program.getBoard().getPiece(space);
     }
 	@Override
 	public void actionPerformed(ActionEvent e) {

@@ -12,6 +12,7 @@ public class MainApplication extends GraphicsApplication{
 	private PieceShopPane piecePane;
 	private RulesPane rules;
 	private VictoryPane victory;
+	private Board originalBoard = new Board();
 
 	public void init(){
 		setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
@@ -49,6 +50,26 @@ public class MainApplication extends GraphicsApplication{
 	
 	public Board getBoard() {
 		return board;
+	}
+	
+	public void saveBoard() {
+		if (originalBoard.getPieces().size() > 0) {
+			for (Piece temp : originalBoard.getPieces()) {
+				originalBoard.removePiece(new Space(temp.getRow(), temp.getCol()));
+			}
+		}
+		for (Piece temp : board.getPieces()) {
+			originalBoard.addPiece(temp.getRow(), temp.getCol(), temp.getType(), temp.getColor());
+		}
+	}
+	
+	public void loadBoard() {
+		for (Piece temp : board.getPieces()) {
+			board.removePiece(new Space(temp.getRow(), temp.getCol()));
+		}
+		for (Piece temp : originalBoard.getPieces()) {
+			board.addPiece(temp.getRow(), temp.getCol(), temp.getType(), temp.getColor());
+		}
 	}
 }
 

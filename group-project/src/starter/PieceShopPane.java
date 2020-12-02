@@ -57,8 +57,8 @@ public class PieceShopPane extends GraphicsPane implements ActionListener {
 	int tf = 1;
 	int pieceIcon = 0;
 	
-	private double lastX= 0;
-	private double lastY= 0;
+	private double lastX = 0;
+	private double lastY = 0;
 	private GObject toDrag;
 	private int pieceT = 0;
 	GImage toAdd;
@@ -382,7 +382,6 @@ public class PieceShopPane extends GraphicsPane implements ActionListener {
 
 	@Override
     public void mouseDragged(MouseEvent e) {
-		
 		if(toDrag != null)
 	    {
 			//toDrag.move(e.getX()-lastX, e.getY()-lastY);
@@ -399,19 +398,29 @@ public class PieceShopPane extends GraphicsPane implements ActionListener {
 
     @Override
   	public void mouseReleased(MouseEvent e) {
-    	toDrag = null;
+    	
     	double nx = Math.round(((lastY - 60) / 80));
     	double ny = Math.round(((lastX - 60) / 80));
     	int x = (int)nx;
     	int y = (int)ny;
-    	if(x > -1 && y > -1) {
-    		if(x < 8 && y < 8) {
-    			if(pieceIcon == 1) {
-    				addP(x,y,pieceT, player);  	    
-    			}
-    		}
+    	if(lastY <= 60 || lastX <= 60 ||x > 7 || y > 7) {
+    		if(pieceIcon == 1) {
+				toAdd.setLocation(0,0);
+			}
+    	}
+    	else {
+	    	if(x > -1 && y > -1) {
+	    		if(x < 8 && y < 8) {
+	    			if(pieceIcon == 1) {
+	    				System.out.println(lastX+" "+lastY);
+	    				System.out.println(x+" "+y);
+	    				addP(x,y,pieceT, player);
+	    			}
+	    		}
+	    	}
     	}
     }
+    
     public void addP(int x, int y, int pieceT, int Color) {
     	//add pawn
     	if(pieceT == 0 && player == 2){

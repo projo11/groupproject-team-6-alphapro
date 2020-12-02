@@ -72,11 +72,6 @@ public class PieceShopPane extends GraphicsPane implements ActionListener {
 		int x = BOARD_SHIFT;
 		int y = BOARD_SHIFT;
 		pieces = program.getBoard().getPieces();//need update the new pieces
-		/*int term = 1;
-		for (Piece temp : pieces) {
-			System.out.println(term);
-			term++;
-		}*/
 		for (int i = 0; i < 8; i++) {//print the board
 			for (int j = 0; j < 8; j++) {
 					GRect block = new GRect(x, y, SPACE_SIZE, SPACE_SIZE);
@@ -420,212 +415,214 @@ public class PieceShopPane extends GraphicsPane implements ActionListener {
     public void addP(int x, int y, int pieceT, int Color) {
     	//add pawn
     	if(pieceT == 0 && player == 2){
-    		p.addPiece(x, y, PieceType.PAWN, false);
-    		tf = p.a;
-	    	if (tf == 0) {
-	    		program.remove(toAdd);
-	    	}
-
-	    	else if(tf == 1) {
-	    		int TotalCost = TotalCost_p2 - 1;
-	    		if(TotalCost < 0) {
-	    			System.out.println("Cannot bought this piece.");
+		    int TotalCost = TotalCost_p2 - 1;
+		    if(TotalCost >= 0) {
+		    	p.addPiece(7-x, 7-y, PieceType.PAWN, false);
+		    	tf = p.a;
+		    	if (tf == 0) {
 		    		program.remove(toAdd);
-	    		}
-	    		else {
-	    			TotalCost_p2 = TotalCost_p2 - 1;
-		    		//Print Total Cost
-	    			program.remove(cost2);
-	    			ShowTotalCost();
-	    		}
-	    	}
+		    	}
+		    	else if(tf == 1) {
+		    			TotalCost_p2 = TotalCost_p2 - 1;
+		    	    	//Print Total Cost
+		    			program.remove(cost2);
+		    			ShowTotalCost();
+		    	}
+		    }
+		    else if(TotalCost < 0 ){
+		    	System.out.println("Cannot bought this piece.");
+				program.remove(toAdd);
+			}
+	    	
     	}
+
 	    if(pieceT == 0 && player == 1){
-	    	p.addPiece(x, y, PieceType.PAWN, true);
-	    	tf = p.a;
-	    	if (tf == 0) {
-	    		program.remove(toAdd);
-	    	}
-	    	else if(tf == 1) {
-	    		int TotalCost = TotalCost_p1 - 1;
-	    		if(TotalCost < 0) {
-	    			System.out.println("Cannot bought this piece.");
-		    		program.remove(toAdd);
+	    	int TotalCost = TotalCost_p1 - 1;
+	    	if(TotalCost >= 0) {
+	    		p.addPiece(x, y, PieceType.PAWN, true);
+	    		tf = p.a;
+	    		if (tf == 0) {
+	    			program.remove(toAdd);
 	    		}
-	    		else {
-	    			TotalCost_p1 = TotalCost_p1 - 1;
-		    		//Print Total Cost
-	    			program.remove(cost1);
-	    			ShowTotalCost();
+	    		else if(tf == 1) {
+	    				TotalCost_p1 = TotalCost_p1 - 1;
+	    	    		//Print Total Cost
+	    				program.remove(cost1);
+	    				ShowTotalCost();
 	    		}
 	    	}
+	    	else if(TotalCost < 0 ){
+	    		System.out.println("Cannot bought this piece.");
+				program.remove(toAdd);
+			}
 	    }
 	    //add knight
 	    if(pieceT == 1 && player == 2){
-	    	p.addPiece(7-x, 7-y, PieceType.KNIGHT, false);
-	    	tf = p.a;
-	    	if (tf == 0) {
-	    		program.remove(toAdd);
-	    	}
-	    	else if(tf == 1) {
-	    		int TotalCost = TotalCost_p2 - 3;
-	    		if(TotalCost < 0) {
-	    			System.out.println("Cannot bought this piece.");
-		    		program.remove(toAdd);
+	    	int TotalCost = TotalCost_p2 - 3;
+	    	if(TotalCost >= 0) {
+	    		p.addPiece(7-x, 7-y, PieceType.KNIGHT, false);
+	    		tf = p.a;
+	    		if (tf == 0) {
+	    			program.remove(toAdd);
 	    		}
-	    		else {
-	    			TotalCost_p2 = TotalCost_p2 - 3;
-		    		//Print Total Cost
-	    			program.remove(cost2);
-	    			ShowTotalCost();
+	    		else if(tf == 1) {
+	    				TotalCost_p2 = TotalCost_p2 - 3;
+	    	    		//Print Total Cost
+	    				program.remove(cost2);
+	    				ShowTotalCost();
 	    		}
 	    	}
+	    	else if(TotalCost < 0 ){
+	    		System.out.println("Cannot bought this piece.");
+				program.remove(toAdd);
+			}
 	    }
 	    if(pieceT == 1 && player == 1){
-	    	p.addPiece(x, y, PieceType.KNIGHT, true);
-	    	tf = p.a;
-	    	if (tf == 0) {
-	    		program.remove(toAdd);
-	    	}
-	    	else if(tf == 1) {
-	    		int TotalCost = TotalCost_p1 - 3;
-	    		if(TotalCost < 0) {
-	    			System.out.println("Cannot bought this piece.");
-		    		program.remove(toAdd);
+	    	int TotalCost = TotalCost_p1 - 3;
+	    	if(TotalCost >= 0) {
+	    		p.addPiece(x, y, PieceType.KNIGHT, true);
+	    		tf = p.a;
+	    		if (tf == 0) {
+	    			program.remove(toAdd);
 	    		}
-	    		else {
-	    			TotalCost_p1 = TotalCost_p1 - 3;
-		    		//Print Total Cost
-	    			program.remove(cost1);
-	    			ShowTotalCost();
+	    		else if(tf == 1) {
+	    				TotalCost_p1 = TotalCost_p1 - 3;
+	    	    		//Print Total Cost
+	    				program.remove(cost1);
+	    				ShowTotalCost();
 	    		}
 	    	}
+	    	else if(TotalCost < 0 ){
+	    		System.out.println("Cannot bought this piece.");
+				program.remove(toAdd);
+			}
 	    }
 	    //add rook
 	    if(pieceT == 2 && player == 2){
-	    	p.addPiece(7-x, 7-y, PieceType.ROOK, false);
-	    	tf = p.a;
-	    	if (tf == 0) {
-	    		program.remove(toAdd);
-	    	}
-	    	else if(tf == 1) {
-	    		int TotalCost = TotalCost_p2 - 4;
-	    		if(TotalCost < 0) {
-	    			System.out.println("Cannot bought this piece.");
-		    		program.remove(toAdd);
+	    	int TotalCost = TotalCost_p2 - 4;
+	    	if(TotalCost >= 0) {
+	    		p.addPiece(7-x, 7-y, PieceType.ROOK, false);
+	    		tf = p.a;
+	    		if (tf == 0) {
+	    			program.remove(toAdd);
 	    		}
-	    		else {
-	    			TotalCost_p2 = TotalCost_p2 - 4;
-		    		//Print Total Cost
-	    			program.remove(cost2);
-	    			ShowTotalCost();
+	    		else if(tf == 1) {
+	    				TotalCost_p2 = TotalCost_p2 - 4;
+	    	    		//Print Total Cost
+	    				program.remove(cost2);
+	    				ShowTotalCost();
 	    		}
 	    	}
+	    	else if(TotalCost < 0 ){
+	    		System.out.println("Cannot bought this piece.");
+				program.remove(toAdd);
+			}
 	    }
 	    if(pieceT == 2 && player == 1){
-	    	p.addPiece(x, y, PieceType.ROOK, true);
-	    	tf = p.a;
-	    	if (tf == 0) {
-	    		program.remove(toAdd);
-	    	}
-	    	else if(tf == 1) {
-	    		int TotalCost = TotalCost_p1 - 4;
-	    		if(TotalCost < 0) {
-	    			System.out.println("Cannot bought this piece.");
-		    		program.remove(toAdd);
+	    	int TotalCost = TotalCost_p1 - 4;
+	    	if(TotalCost >= 0) {
+	    		p.addPiece(x, y, PieceType.ROOK, true);
+	    		tf = p.a;
+	    		if (tf == 0) {
+	    			program.remove(toAdd);
 	    		}
-	    		else {
-	    			TotalCost_p1 = TotalCost_p1 - 4;
-		    		//Print Total Cost
-	    			program.remove(cost1);
-	    			ShowTotalCost();
+	    		else if(tf == 1) {
+	    				TotalCost_p1 = TotalCost_p1 - 4;
+	    	    		//Print Total Cost
+	    				program.remove(cost1);
+	    				ShowTotalCost();
 	    		}
 	    	}
+	    	else if(TotalCost < 0 ){
+	    		System.out.println("Cannot bought this piece.");
+				program.remove(toAdd);
+			}
 	    }
 	    //add bishop
 	    if(pieceT == 3 && player == 2){
-	    	p.addPiece(7-x, 7-y, PieceType.BISHOP, false);
-	    	tf = p.a;
-	    	if (tf == 0) {
-	    		program.remove(toAdd);
-	    	}
-	    	else if(tf == 1) {
-	    		int TotalCost = TotalCost_p2 - 3;
-	    		if(TotalCost < 0) {
-	    			System.out.println("Cannot bought this piece.");
-		    		program.remove(toAdd);
+	    	int TotalCost = TotalCost_p2 - 3;
+	    	if(TotalCost >= 0) {
+	    		p.addPiece(7-x, 7-y, PieceType.BISHOP, false);
+	    		tf = p.a;
+	    		if (tf == 0) {
+	    			program.remove(toAdd);
 	    		}
-	    		else {
-	    			TotalCost_p2 = TotalCost_p2 - 3;
-		    		//Print Total Cost
-	    			program.remove(cost2);
-	    			ShowTotalCost();
+	    		else if(tf == 1) {
+	    				TotalCost_p2 = TotalCost_p2 - 3;
+	    	    		//Print Total Cost
+	    				program.remove(cost2);
+	    				ShowTotalCost();
 	    		}
 	    	}
+	    	else if(TotalCost < 0 ){
+	    		System.out.println("Cannot bought this piece.");
+				program.remove(toAdd);
+			}
 	    }
 	    if(pieceT == 3 && player == 1){
-	    	p.addPiece(x, y, PieceType.BISHOP, true);
-	    	tf = p.a;
-	    	if (tf == 0) {
-	    		program.remove(toAdd);
-	    	}
-	    	else if(tf == 1) {
-	    		int TotalCost = TotalCost_p1 - 3;
-	    		if(TotalCost < 0) {
-	    			System.out.println("Cannot bought this piece.");
-		    		program.remove(toAdd);
+	    	int TotalCost = TotalCost_p1 - 3;
+	    	if(TotalCost >= 0) {
+	    		p.addPiece(x, y, PieceType.BISHOP, true);
+	    		tf = p.a;
+	    		if (tf == 0) {
+	    			program.remove(toAdd);
 	    		}
-	    		else {
-	    			TotalCost_p1 = TotalCost_p1 - 3;
-		    		//Print Total Cost
-	    			program.remove(cost1);
-	    			ShowTotalCost();
+	    		else if(tf == 1) {
+	    				TotalCost_p1 = TotalCost_p1 - 3;
+	    	    		//Print Total Cost
+	    				program.remove(cost1);
+	    				ShowTotalCost();
 	    		}
 	    	}
+	    	else if(TotalCost < 0 ){
+	    		System.out.println("Cannot bought this piece.");
+				program.remove(toAdd);
+			}
 	    }
 	    //add queen
 	    if(pieceT == 4 && player == 2){
-	    	p.addPiece(7-x, 7-y, PieceType.QUEEN, false);
-	    	tf = p.a;
-	    	if (tf == 0) {
-	    		program.remove(toAdd);
-	    	}
-	    	else if(tf == 1) {
-	    		int TotalCost = TotalCost_p2 - 7;
-	    		if(TotalCost < 0) {
-	    			System.out.println("Cannot bought this piece.");
-		    		program.remove(toAdd);
+	    	int TotalCost = TotalCost_p2 - 7;
+	    	if(TotalCost >= 0) {
+	    		p.addPiece(7-x, 7-y, PieceType.QUEEN, false);
+	    		tf = p.a;
+	    		if (tf == 0) {
+	    			program.remove(toAdd);
 	    		}
-	    		else {
+	    		else if(tf == 1) {
 	    			TotalCost_p2 = TotalCost_p2 - 7;
-		    		//Print Total Cost
+	    	    	//Print Total Cost
 	    			program.remove(cost2);
 	    			ShowTotalCost();
+	    			}
 	    		}
-	    	}
+	    	else if(TotalCost < 0 ){
+	    		System.out.println("Cannot bought this piece.");
+				program.remove(toAdd);
+			}
 	    	
 	    }
 	    if(pieceT == 4 && player == 1){
-	    	p.addPiece(x, y, PieceType.QUEEN, true);
-	    	tf = p.a;
-	    	if (tf == 0) {
-	    		program.remove(toAdd);
-	    	}
-	    	else if(tf == 1) {
-	    		int TotalCost = TotalCost_p1 - 7;
-	    		if(TotalCost < 0) {
-	    			System.out.println("Cannot bought this piece.");
-		    		program.remove(toAdd);
+	    	int TotalCost = TotalCost_p1 - 7;
+	    	if(TotalCost >= 0) {
+	    		p.addPiece(x, y, PieceType.QUEEN, true);
+	    		tf = p.a;
+	    		if (tf == 0) {
+	    			program.remove(toAdd);
 	    		}
-	    		else {
+	    		else if(tf == 1) {
 	    			TotalCost_p1 = TotalCost_p1 - 7;
-		    		//Print Total Cost
+	    	    	//Print Total Cost
 	    			program.remove(cost1);
 	    			ShowTotalCost();
+	    			}
 	    		}
-	    	}
+	    	else if(TotalCost < 0 ){
+	    		System.out.println("Cannot bought this piece.");
+				program.remove(toAdd);
+			}
 	    }
-    }
+	}
+    
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub

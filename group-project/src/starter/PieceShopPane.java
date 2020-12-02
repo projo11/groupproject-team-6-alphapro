@@ -291,7 +291,6 @@ public class PieceShopPane extends GraphicsPane implements ActionListener {
 			}
 			else if(TotalCost_p1 > 0){
 				if(obj == Bp) {//add pawn
-					moveable = true;
 					pieceT = 0;
 					filePath = new String("White_P.png");
 					toAdd = new GImage(filePath);
@@ -299,7 +298,6 @@ public class PieceShopPane extends GraphicsPane implements ActionListener {
 					program.add(toAdd);
 				}
 				if(obj == BK) {//add knight
-					moveable = true;
 					pieceT = 1;
 					filePath = new String("White_Knight.png");
 					toAdd = new GImage(filePath);
@@ -307,7 +305,6 @@ public class PieceShopPane extends GraphicsPane implements ActionListener {
 					program.add(toAdd);
 				}
 				if(obj == Br) {//add rook
-					moveable = true;
 					pieceT = 2;
 					filePath = new String("White_Rook.png");
 					toAdd = new GImage(filePath);
@@ -315,7 +312,6 @@ public class PieceShopPane extends GraphicsPane implements ActionListener {
 					program.add(toAdd);
 				}
 				if(obj == Bb) {//add bishop
-					moveable = true;
 					pieceT = 3;
 					filePath = new String("White_Bishop.png");
 					toAdd = new GImage(filePath);
@@ -323,7 +319,6 @@ public class PieceShopPane extends GraphicsPane implements ActionListener {
 					program.add(toAdd);
 				}
 				if(obj == Bq) {//add queen
-					moveable = true;
 					pieceT = 4;
 					filePath = new String("White_Queen.png");
 					toAdd = new GImage(filePath);
@@ -331,9 +326,9 @@ public class PieceShopPane extends GraphicsPane implements ActionListener {
 					program.add(toAdd);
 				}
 				if(obj == toAdd) {
-						pieceIcon = 1;
-						toDrag = program.getElementAt(e.getX(), e.getY());
-						point = e.getPoint();
+					pieceIcon = 1;
+					toDrag = program.getElementAt(e.getX(), e.getY());
+					point = e.getPoint();
 				}
 			}
 		}
@@ -343,7 +338,7 @@ public class PieceShopPane extends GraphicsPane implements ActionListener {
 			}
 			else if(TotalCost_p2 > 0){
 				if(obj == Bp) {//add pawn
-					moveable = true;
+					
 					pieceT = 0;
 					filePath = new String("Black_P.png");
 					toAdd = new GImage(filePath);
@@ -351,7 +346,7 @@ public class PieceShopPane extends GraphicsPane implements ActionListener {
 					program.add(toAdd);
 				}
 				if(obj == BK) {//add knight
-					moveable = true;
+					
 					pieceT = 1;
 					filePath = new String("Black_Knight.png");
 					toAdd = new GImage(filePath);
@@ -359,7 +354,7 @@ public class PieceShopPane extends GraphicsPane implements ActionListener {
 					program.add(toAdd);
 				}
 				if(obj == Br) {//add rook
-					moveable = true;
+					
 					pieceT = 2;
 					filePath = new String("Black_Rook.png");
 					toAdd = new GImage(filePath);
@@ -367,7 +362,6 @@ public class PieceShopPane extends GraphicsPane implements ActionListener {
 					program.add(toAdd);
 				}
 				if(obj == Bb) {//add bishop
-					moveable = true;
 					pieceT = 3;
 					filePath = new String("Black_Bishop.png");
 					toAdd = new GImage(filePath);
@@ -375,7 +369,6 @@ public class PieceShopPane extends GraphicsPane implements ActionListener {
 					program.add(toAdd);
 				}
 				if(obj == Bq) {//add queen
-					moveable = true;
 					pieceT = 4;
 					filePath = new String("Black_Queen.png");
 					toAdd = new GImage(filePath);
@@ -383,9 +376,10 @@ public class PieceShopPane extends GraphicsPane implements ActionListener {
 					program.add(toAdd);
 				}
 				if(obj == toAdd) {
-						pieceIcon = 1;
-						toDrag = program.getElementAt(e.getX(), e.getY());
-						point = e.getPoint();
+					pieceIcon = 1;
+					toDrag = program.getElementAt(e.getX(), e.getY());
+					point = e.getPoint();
+					
 						
 				}
 			}
@@ -395,13 +389,17 @@ public class PieceShopPane extends GraphicsPane implements ActionListener {
 
 	@Override
     public void mouseDragged(MouseEvent e) {
-		if(toDrag != null && moveable == true)
-	    {
+		if(toDrag != null )
+		{
+			if(pieceT >= 0 && pieceIcon == 1) {
+				moveable = true;
+			}
 			//toDrag.move(e.getX()-lastX, e.getY()-lastY);
 			double x = toDrag.getX();
 			double y = toDrag.getY();
-			if(point != null) {
+			if(point != null && moveable == true) {
 				toDrag.setLocation(x + (e.getX()-point.getX()), y + (e.getY()-point.getY()));
+				
 			}	
 	    }
 		point = e.getPoint();
@@ -411,7 +409,6 @@ public class PieceShopPane extends GraphicsPane implements ActionListener {
 
     @Override
   	public void mouseReleased(MouseEvent e) {
-    	
     	double nx = Math.round(((lastY - 60) / 80));
     	double ny = Math.round(((lastX - 60) / 80));
     	int x = (int)nx;
@@ -426,6 +423,7 @@ public class PieceShopPane extends GraphicsPane implements ActionListener {
 	    		if(x < 8 && y < 8) {
 	    			if(pieceIcon == 1 && moveable == true) {
 	    				addP(x,y,pieceT, player);
+	    				pieceT = -1;
 	    				moveable = false;
 	    			}
 	    		}

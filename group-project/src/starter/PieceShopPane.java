@@ -412,8 +412,6 @@ public class PieceShopPane extends GraphicsPane implements ActionListener {
 	    	if(x > -1 && y > -1) {
 	    		if(x < 8 && y < 8) {
 	    			if(pieceIcon == 1) {
-	    				System.out.println(lastX+" "+lastY);
-	    				System.out.println(x+" "+y);
 	    				addP(x,y,pieceT, player);
 	    			}
 	    		}

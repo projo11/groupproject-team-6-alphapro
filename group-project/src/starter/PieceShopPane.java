@@ -40,6 +40,8 @@ public class PieceShopPane extends GraphicsPane implements ActionListener {
 	private GLabel cost1 = new GLabel("Player1 Total Cost: " + TotalCost_p1, 0, 750);
 	private GLabel cost2 = new GLabel("Player2 Total Cost: " + TotalCost_p2, 0, 750);
 	
+	boolean moveable = true;
+	
 	//detect player 1 or 2
 	private int player = 1;
 	
@@ -289,6 +291,7 @@ public class PieceShopPane extends GraphicsPane implements ActionListener {
 			}
 			else if(TotalCost_p1 > 0){
 				if(obj == Bp) {//add pawn
+					moveable = true;
 					pieceT = 0;
 					filePath = new String("White_P.png");
 					toAdd = new GImage(filePath);
@@ -296,6 +299,7 @@ public class PieceShopPane extends GraphicsPane implements ActionListener {
 					program.add(toAdd);
 				}
 				if(obj == BK) {//add knight
+					moveable = true;
 					pieceT = 1;
 					filePath = new String("White_Knight.png");
 					toAdd = new GImage(filePath);
@@ -303,6 +307,7 @@ public class PieceShopPane extends GraphicsPane implements ActionListener {
 					program.add(toAdd);
 				}
 				if(obj == Br) {//add rook
+					moveable = true;
 					pieceT = 2;
 					filePath = new String("White_Rook.png");
 					toAdd = new GImage(filePath);
@@ -310,6 +315,7 @@ public class PieceShopPane extends GraphicsPane implements ActionListener {
 					program.add(toAdd);
 				}
 				if(obj == Bb) {//add bishop
+					moveable = true;
 					pieceT = 3;
 					filePath = new String("White_Bishop.png");
 					toAdd = new GImage(filePath);
@@ -317,6 +323,7 @@ public class PieceShopPane extends GraphicsPane implements ActionListener {
 					program.add(toAdd);
 				}
 				if(obj == Bq) {//add queen
+					moveable = true;
 					pieceT = 4;
 					filePath = new String("White_Queen.png");
 					toAdd = new GImage(filePath);
@@ -336,6 +343,7 @@ public class PieceShopPane extends GraphicsPane implements ActionListener {
 			}
 			else if(TotalCost_p2 > 0){
 				if(obj == Bp) {//add pawn
+					moveable = true;
 					pieceT = 0;
 					filePath = new String("Black_P.png");
 					toAdd = new GImage(filePath);
@@ -343,6 +351,7 @@ public class PieceShopPane extends GraphicsPane implements ActionListener {
 					program.add(toAdd);
 				}
 				if(obj == BK) {//add knight
+					moveable = true;
 					pieceT = 1;
 					filePath = new String("Black_Knight.png");
 					toAdd = new GImage(filePath);
@@ -350,6 +359,7 @@ public class PieceShopPane extends GraphicsPane implements ActionListener {
 					program.add(toAdd);
 				}
 				if(obj == Br) {//add rook
+					moveable = true;
 					pieceT = 2;
 					filePath = new String("Black_Rook.png");
 					toAdd = new GImage(filePath);
@@ -357,6 +367,7 @@ public class PieceShopPane extends GraphicsPane implements ActionListener {
 					program.add(toAdd);
 				}
 				if(obj == Bb) {//add bishop
+					moveable = true;
 					pieceT = 3;
 					filePath = new String("Black_Bishop.png");
 					toAdd = new GImage(filePath);
@@ -364,6 +375,7 @@ public class PieceShopPane extends GraphicsPane implements ActionListener {
 					program.add(toAdd);
 				}
 				if(obj == Bq) {//add queen
+					moveable = true;
 					pieceT = 4;
 					filePath = new String("Black_Queen.png");
 					toAdd = new GImage(filePath);
@@ -374,6 +386,7 @@ public class PieceShopPane extends GraphicsPane implements ActionListener {
 						pieceIcon = 1;
 						toDrag = program.getElementAt(e.getX(), e.getY());
 						point = e.getPoint();
+						
 				}
 			}
 		}
@@ -382,7 +395,7 @@ public class PieceShopPane extends GraphicsPane implements ActionListener {
 
 	@Override
     public void mouseDragged(MouseEvent e) {
-		if(toDrag != null)
+		if(toDrag != null && moveable == true)
 	    {
 			//toDrag.move(e.getX()-lastX, e.getY()-lastY);
 			double x = toDrag.getX();
@@ -411,8 +424,9 @@ public class PieceShopPane extends GraphicsPane implements ActionListener {
     	else {
 	    	if(x > -1 && y > -1) {
 	    		if(x < 8 && y < 8) {
-	    			if(pieceIcon == 1) {
+	    			if(pieceIcon == 1 && moveable == true) {
 	    				addP(x,y,pieceT, player);
+	    				moveable = false;
 	    			}
 	    		}
 	    	}

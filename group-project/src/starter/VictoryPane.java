@@ -49,8 +49,8 @@ public VictoryPane(MainApplication app) {
 		GObject obj = program.getElementAt(e.getX(), e.getY());
 		if(obj == rematch)
 		{
+			program.loadBoard();
 			program.setSize(900, 900);
-			//program.loadBoard();
 			program.switchToGame();
 		}
 		if(obj == replay)

@@ -63,6 +63,7 @@ public class MainApplication extends GraphicsApplication{
 			originalBoard.addPiece(temp.getRow(), temp.getCol(), temp.getType(), temp.getColor());
 		}
 		*/
+		originalBoard = board;
 	}
 	
 	public void loadBoard() {
@@ -74,6 +75,7 @@ public class MainApplication extends GraphicsApplication{
 			board.addPiece(temp.getRow(), temp.getCol(), temp.getType(), temp.getColor());
 		}
 		*/
+		board = originalBoard;
 	}
 }
 

@@ -50,14 +50,17 @@ public VictoryPane(MainApplication app) {
 		if(obj == rematch)
 		{
 			program.loadBoard();
+			program.setSize(900, 900);
 			program.switchToGame();
 		}
 		if(obj == replay)
 		{
+			program.setSize(900, 900);
 			program.switchToPieceShop();
 		}
 		if(obj == Return)
 		{
+			program.setSize(900, 900);
 			program.switchToMenu();
 		}
 	}

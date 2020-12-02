@@ -30,11 +30,21 @@ public class PieceShopPane extends GraphicsPane implements ActionListener {
 	//buy pieces button
 	private final GButton Bp = new GButton("Buy", 820, 80, 70, 30);
 	private final GButton BK = new GButton("Buy", 820, 120, 70, 30);
-	private final GButton Br = new GButton("Buy", 820, 160, 70, 30);
-	private final GButton Bb = new GButton("Buy", 820, 200, 70, 30);
+	private final GButton Br = new GButton("Buy", 820, 200, 70, 30);
+	private final GButton Bb = new GButton("Buy", 820, 160, 70, 30);
 	private final GButton Bq = new GButton("Buy", 820, 240, 70, 30);
+	//total cost
+	int TotalCost_p1 = 45;
+	int TotalCost_p2 = 45;
+	//Total cost Label
+	private GLabel cost1 = new GLabel("Player1 Total Cost: " + TotalCost_p1, 0, 750);
+	private GLabel cost2 = new GLabel("Player2 Total Cost: " + TotalCost_p2, 0, 750);
+	
+	boolean moveable = true;
+	
 	//detect player 1 or 2
 	private int player = 1;
+	
 	public static final int SPACE_SIZE = 77;
 	public static final int BOARD_SHIFT = 50;
 	public static final double SIZE_MOD = 0.75;
@@ -43,12 +53,14 @@ public class PieceShopPane extends GraphicsPane implements ActionListener {
 	public static final Color LABEL_COLOR = Color.red;
 	
 	private ArrayList<Piece> pieces = new ArrayList<Piece>();
+	
 	Point point = null;
 	Board p = new Board();
 	int tf = 1;
-
-	private double lastX= 0;
-	private double lastY= 0;
+	int pieceIcon = 0;
+	
+	private double lastX = 0;
+	private double lastY = 0;
 	private GObject toDrag;
 	private int pieceT = 0;
 	GImage toAdd;
@@ -62,11 +74,6 @@ public class PieceShopPane extends GraphicsPane implements ActionListener {
 		int x = BOARD_SHIFT;
 		int y = BOARD_SHIFT;
 		pieces = program.getBoard().getPieces();//need update the new pieces
-		/*int term = 1;
-		for (Piece temp : pieces) {
-			System.out.println(term);
-			term++;
-		}*/
 		for (int i = 0; i < 8; i++) {//print the board
 			for (int j = 0; j < 8; j++) {
 					GRect block = new GRect(x, y, SPACE_SIZE, SPACE_SIZE);
@@ -157,14 +164,28 @@ public class PieceShopPane extends GraphicsPane implements ActionListener {
 			program.add(toAdd);
 		}
 	}
-	
+	public void ShowTotalCost() {
+		cost1 = new GLabel("Player1 Total Cost: " + TotalCost_p1, 0, 750);
+		cost1.setFont(new Font("TimesNewRoman", Font.BOLD, 30));
+		cost1.setColor(Color.red);
+		
+		cost2 = new GLabel("Player2 Total Cost: " + TotalCost_p2, 0, 750);
+		cost2.setFont(new Font("TimesNewRoman", Font.BOLD, 30));
+		cost2.setColor(Color.red);
+		
+		program.add(cost1);
+		if(player == 2) {
+			program.remove(cost1);
+			program.add(cost2);
+		}
+	}
 	@Override
 	public void showContents() {
 		// TODO Auto-generated method stub
 		//Board
-		if(player == 1) {
-			printBoard();
-		}
+		printBoard();
+		//Print Total Cost
+		ShowTotalCost();
 		GRect bag = new GRect(0, 0, 43,43);
 		bag.setColor(Color.red);
 		//Shop
@@ -213,6 +234,7 @@ public class PieceShopPane extends GraphicsPane implements ActionListener {
 		QueenC.setColor(Color.BLACK);
 		
 		
+		
 		program.add(tital);
 		program.add(bag);
 		program.add(Name);
@@ -227,6 +249,7 @@ public class PieceShopPane extends GraphicsPane implements ActionListener {
 		program.add(RookC);
 		program.add(Queen);
 		program.add(QueenC);
+
 		
 		program.add(P1);
 		program.add(Bp);
@@ -245,14 +268,15 @@ public class PieceShopPane extends GraphicsPane implements ActionListener {
 	@Override
 	public void mousePressed(MouseEvent e) {
 		lastX = lastY = 0;
+		pieceIcon = 0;
 		GObject obj = program.getElementAt(e.getX(), e.getY());
 		if(obj == P1) //After Player 1 is done setting up their board, screen changes so that Player 2 now gets to set up the board
 		{
+			player++;
 			program.removeAll();
 			program.getBoard().flipBoard();
 			showContents();
 			program.add(P2);
-			player++;
 		}
 		if(obj == P2) //After Player 2 is done setting up their board, game goes into a Chess match
 		{
@@ -260,93 +284,122 @@ public class PieceShopPane extends GraphicsPane implements ActionListener {
 			program.saveBoard();
 			program.switchToGame();
 		}
-		if(obj == Bp) {//add pawn
-			pieceT = 0;
-			if(player == 2) {
-				filePath = new String("Black_P.png");
-				toAdd = new GImage(filePath);
-				toAdd.setBounds(lastX, lastY, 42,42);
+		if(player == 1) {
+			if(TotalCost_p1 <= 0) {
+				System.out.println("Run out of Cost.");
+				
 			}
-			else {
-				filePath = new String("White_P.png");
-				toAdd = new GImage(filePath);
-				toAdd.setBounds(lastX, lastY, 42,42);
+			else if(TotalCost_p1 > 0){
+				if(obj == Bp) {//add pawn
+					pieceT = 0;
+					filePath = new String("White_P.png");
+					toAdd = new GImage(filePath);
+					toAdd.setBounds(lastX, lastY, 42,42);
+					program.add(toAdd);
+				}
+				if(obj == BK) {//add knight
+					pieceT = 1;
+					filePath = new String("White_Knight.png");
+					toAdd = new GImage(filePath);
+					toAdd.setBounds(lastX, lastY, 42,42);
+					program.add(toAdd);
+				}
+				if(obj == Br) {//add rook
+					pieceT = 2;
+					filePath = new String("White_Rook.png");
+					toAdd = new GImage(filePath);
+					toAdd.setBounds(lastX, lastY, 42,42);
+					program.add(toAdd);
+				}
+				if(obj == Bb) {//add bishop
+					pieceT = 3;
+					filePath = new String("White_Bishop.png");
+					toAdd = new GImage(filePath);
+					toAdd.setBounds(lastX, lastY, 42,42);
+					program.add(toAdd);
+				}
+				if(obj == Bq) {//add queen
+					pieceT = 4;
+					filePath = new String("White_Queen.png");
+					toAdd = new GImage(filePath);
+					toAdd.setBounds(lastX, lastY, 42,42);
+					program.add(toAdd);
+				}
+				if(obj == toAdd) {
+					pieceIcon = 1;
+					toDrag = program.getElementAt(e.getX(), e.getY());
+					point = e.getPoint();
+				}
 			}
-			program.add(toAdd);
 		}
-		if(obj == BK) {//add knight
-			pieceT = 1;
-			if(player == 2) {
-				filePath = new String("Black_Knight.png");
-				toAdd = new GImage(filePath);
-				toAdd.setBounds(lastX, lastY, 42,42);
+		else if(player == 2) {
+			if(TotalCost_p2 <= 0) {
+				System.out.println("Run out of Cost.");
 			}
-			else {
-				filePath = new String("White_Knight.png");
-				toAdd = new GImage(filePath);
-				toAdd.setBounds(lastX, lastY, 42,42);
+			else if(TotalCost_p2 > 0){
+				if(obj == Bp) {//add pawn
+					
+					pieceT = 0;
+					filePath = new String("Black_P.png");
+					toAdd = new GImage(filePath);
+					toAdd.setBounds(lastX, lastY, 42,42);
+					program.add(toAdd);
+				}
+				if(obj == BK) {//add knight
+					
+					pieceT = 1;
+					filePath = new String("Black_Knight.png");
+					toAdd = new GImage(filePath);
+					toAdd.setBounds(lastX, lastY, 42,42);
+					program.add(toAdd);
+				}
+				if(obj == Br) {//add rook
+					
+					pieceT = 2;
+					filePath = new String("Black_Rook.png");
+					toAdd = new GImage(filePath);
+					toAdd.setBounds(lastX, lastY, 42,42);
+					program.add(toAdd);
+				}
+				if(obj == Bb) {//add bishop
+					pieceT = 3;
+					filePath = new String("Black_Bishop.png");
+					toAdd = new GImage(filePath);
+					toAdd.setBounds(lastX, lastY, 42,42);
+					program.add(toAdd);
+				}
+				if(obj == Bq) {//add queen
+					pieceT = 4;
+					filePath = new String("Black_Queen.png");
+					toAdd = new GImage(filePath);
+					toAdd.setBounds(lastX, lastY, 42,42);
+					program.add(toAdd);
+				}
+				if(obj == toAdd) {
+					pieceIcon = 1;
+					toDrag = program.getElementAt(e.getX(), e.getY());
+					point = e.getPoint();
+					
+						
+				}
 			}
-			program.add(toAdd);
-		}
-		if(obj == Br) {//add rook
-			pieceT = 2;
-			if(player == 2) {
-				filePath = new String("Black_Rook.png");
-				toAdd = new GImage(filePath);
-				toAdd.setBounds(lastX, lastY, 42,42);
-			}
-			else {
-				filePath = new String("White_Rook.png");
-				toAdd = new GImage(filePath);
-				toAdd.setBounds(lastX, lastY, 42,42);
-			}
-			program.add(toAdd);
-		}
-		if(obj == Bb) {//add bishop
-			pieceT = 3;
-			if(player == 2) {
-				filePath = new String("Black_Bishop.png");
-				toAdd = new GImage(filePath);
-				toAdd.setBounds(lastX, lastY, 42,42);
-			}
-			else {
-				filePath = new String("White_Bishop.png");
-				toAdd = new GImage(filePath);
-				toAdd.setBounds(lastX, lastY, 42,42);
-			}
-			program.add(toAdd);
-		}
-		if(obj == Bq) {//add queen
-			pieceT = 4;
-			if(player == 2) {
-				filePath = new String("Black_Queen.png");
-				toAdd = new GImage(filePath);
-				toAdd.setBounds(lastX, lastY, 42,42);
-			}
-			else {
-				filePath = new String("White_Queen.png");
-				toAdd = new GImage(filePath);
-				toAdd.setBounds(lastX, lastY, 42,42);
-			}
-			program.add(toAdd);
-		}
-		if(obj == toAdd) {
-				toDrag = program.getElementAt(e.getX(), e.getY());
-				point = e.getPoint();
 		}
 	}
 	
 
 	@Override
     public void mouseDragged(MouseEvent e) {
-		
-		if(toDrag != null)
-	    {
+		if(toDrag != null )
+		{
+			if(pieceT >= 0 && pieceIcon == 1) {
+				moveable = true;
+			}
 			//toDrag.move(e.getX()-lastX, e.getY()-lastY);
 			double x = toDrag.getX();
 			double y = toDrag.getY();
-			if(point != null) {
+			if(point != null && moveable == true) {
 				toDrag.setLocation(x + (e.getX()-point.getX()), y + (e.getY()-point.getY()));
+				
 			}	
 	    }
 		point = e.getPoint();
@@ -356,95 +409,239 @@ public class PieceShopPane extends GraphicsPane implements ActionListener {
 
     @Override
   	public void mouseReleased(MouseEvent e) {
-    	toDrag = null;
     	double nx = Math.round(((lastY - 60) / 80));
     	double ny = Math.round(((lastX - 60) / 80));
     	int x = (int)nx;
     	int y = (int)ny;
-    	if(x > -1 && y > -1) {
-    		if(x < 8 && y < 8) {
-    			addP(x,y,pieceT, player);  	    	
-    		}
+    	if(lastY <= 60 || lastX <= 60 ||x > 7 || y > 7) {
+    		if(pieceIcon == 1) {
+				toAdd.setLocation(0,0);
+			}
+    	}
+    	else {
+	    	if(x > -1 && y > -1) {
+	    		if(x < 8 && y < 8) {
+	    			if(pieceIcon == 1 && moveable == true) {
+	    				addP(x,y,pieceT, player);
+	    				pieceT = -1;
+	    				moveable = false;
+	    			}
+	    		}
+	    	}
     	}
     }
+    
     public void addP(int x, int y, int pieceT, int Color) {
     	//add pawn
-    	
     	if(pieceT == 0 && player == 2){
-    		p.addPiece(7-x, 7-y, PieceType.PAWN, false);
-    		tf = p.a;
-	    	if (tf == 0) {
-	    		program.remove(toAdd);
-	    	}
+		    int TotalCost = TotalCost_p2 - 1;
+		    if(TotalCost >= 0) {
+		    	p.addPiece(7-x, 7-y, PieceType.PAWN, false);
+		    	tf = p.a;
+		    	if (tf == 0) {
+		    		program.remove(toAdd);
+		    	}
+		    	else if(tf == 1) {
+		    			TotalCost_p2 = TotalCost_p2 - 1;
+		    	    	//Print Total Cost
+		    			program.remove(cost2);
+		    			ShowTotalCost();
+		    	}
+		    }
+		    else if(TotalCost < 0 ){
+		    	System.out.println("Cannot bought this piece.");
+				program.remove(toAdd);
+			}
+	    	
     	}
+
 	    if(pieceT == 0 && player == 1){
-	    	p.addPiece(x, y, PieceType.PAWN, true);
-	    	tf = p.a;
-	    	if (tf == 0) {
-	    		program.remove(toAdd);
+	    	int TotalCost = TotalCost_p1 - 1;
+	    	if(TotalCost >= 0) {
+	    		p.addPiece(x, y, PieceType.PAWN, true);
+	    		tf = p.a;
+	    		if (tf == 0) {
+	    			program.remove(toAdd);
+	    		}
+	    		else if(tf == 1) {
+	    				TotalCost_p1 = TotalCost_p1 - 1;
+	    	    		//Print Total Cost
+	    				program.remove(cost1);
+	    				ShowTotalCost();
+	    		}
 	    	}
+	    	else if(TotalCost < 0 ){
+	    		System.out.println("Cannot bought this piece.");
+				program.remove(toAdd);
+			}
 	    }
 	    //add knight
 	    if(pieceT == 1 && player == 2){
-	    	p.addPiece(7-x, 7-y, PieceType.KNIGHT, false);
-	    	tf = p.a;
-	    	if (tf == 0) {
-	    		program.remove(toAdd);
+	    	int TotalCost = TotalCost_p2 - 3;
+	    	if(TotalCost >= 0) {
+	    		p.addPiece(7-x, 7-y, PieceType.KNIGHT, false);
+	    		tf = p.a;
+	    		if (tf == 0) {
+	    			program.remove(toAdd);
+	    		}
+	    		else if(tf == 1) {
+	    				TotalCost_p2 = TotalCost_p2 - 3;
+	    	    		//Print Total Cost
+	    				program.remove(cost2);
+	    				ShowTotalCost();
+	    		}
 	    	}
+	    	else if(TotalCost < 0 ){
+	    		System.out.println("Cannot bought this piece.");
+				program.remove(toAdd);
+			}
 	    }
 	    if(pieceT == 1 && player == 1){
-	    	p.addPiece(x, y, PieceType.KNIGHT, true);
-	    	tf = p.a;
-	    	if (tf == 0) {
-	    		program.remove(toAdd);
+	    	int TotalCost = TotalCost_p1 - 3;
+	    	if(TotalCost >= 0) {
+	    		p.addPiece(x, y, PieceType.KNIGHT, true);
+	    		tf = p.a;
+	    		if (tf == 0) {
+	    			program.remove(toAdd);
+	    		}
+	    		else if(tf == 1) {
+	    				TotalCost_p1 = TotalCost_p1 - 3;
+	    	    		//Print Total Cost
+	    				program.remove(cost1);
+	    				ShowTotalCost();
+	    		}
 	    	}
+	    	else if(TotalCost < 0 ){
+	    		System.out.println("Cannot bought this piece.");
+				program.remove(toAdd);
+			}
 	    }
 	    //add rook
 	    if(pieceT == 2 && player == 2){
-	    	p.addPiece(7-x, 7-y, PieceType.ROOK, false);
-	    	tf = p.a;
-	    	if (tf == 0) {
-	    		program.remove(toAdd);
+	    	int TotalCost = TotalCost_p2 - 4;
+	    	if(TotalCost >= 0) {
+	    		p.addPiece(7-x, 7-y, PieceType.ROOK, false);
+	    		tf = p.a;
+	    		if (tf == 0) {
+	    			program.remove(toAdd);
+	    		}
+	    		else if(tf == 1) {
+	    				TotalCost_p2 = TotalCost_p2 - 4;
+	    	    		//Print Total Cost
+	    				program.remove(cost2);
+	    				ShowTotalCost();
+	    		}
 	    	}
+	    	else if(TotalCost < 0 ){
+	    		System.out.println("Cannot bought this piece.");
+				program.remove(toAdd);
+			}
 	    }
 	    if(pieceT == 2 && player == 1){
-	    	p.addPiece(x, y, PieceType.ROOK, true);
-	    	tf = p.a;
-	    	if (tf == 0) {
-	    		program.remove(toAdd);
+	    	int TotalCost = TotalCost_p1 - 4;
+	    	if(TotalCost >= 0) {
+	    		p.addPiece(x, y, PieceType.ROOK, true);
+	    		tf = p.a;
+	    		if (tf == 0) {
+	    			program.remove(toAdd);
+	    		}
+	    		else if(tf == 1) {
+	    				TotalCost_p1 = TotalCost_p1 - 4;
+	    	    		//Print Total Cost
+	    				program.remove(cost1);
+	    				ShowTotalCost();
+	    		}
 	    	}
+	    	else if(TotalCost < 0 ){
+	    		System.out.println("Cannot bought this piece.");
+				program.remove(toAdd);
+			}
 	    }
 	    //add bishop
 	    if(pieceT == 3 && player == 2){
-	    	p.addPiece(7-x, 7-y, PieceType.BISHOP, false);
-	    	tf = p.a;
-	    	if (tf == 0) {
-	    		program.remove(toAdd);
+	    	int TotalCost = TotalCost_p2 - 3;
+	    	if(TotalCost >= 0) {
+	    		p.addPiece(7-x, 7-y, PieceType.BISHOP, false);
+	    		tf = p.a;
+	    		if (tf == 0) {
+	    			program.remove(toAdd);
+	    		}
+	    		else if(tf == 1) {
+	    				TotalCost_p2 = TotalCost_p2 - 3;
+	    	    		//Print Total Cost
+	    				program.remove(cost2);
+	    				ShowTotalCost();
+	    		}
 	    	}
+	    	else if(TotalCost < 0 ){
+	    		System.out.println("Cannot bought this piece.");
+				program.remove(toAdd);
+			}
 	    }
 	    if(pieceT == 3 && player == 1){
-	    	p.addPiece(x, y, PieceType.BISHOP, true);
-	    	tf = p.a;
-	    	if (tf == 0) {
-	    		program.remove(toAdd);
+	    	int TotalCost = TotalCost_p1 - 3;
+	    	if(TotalCost >= 0) {
+	    		p.addPiece(x, y, PieceType.BISHOP, true);
+	    		tf = p.a;
+	    		if (tf == 0) {
+	    			program.remove(toAdd);
+	    		}
+	    		else if(tf == 1) {
+	    				TotalCost_p1 = TotalCost_p1 - 3;
+	    	    		//Print Total Cost
+	    				program.remove(cost1);
+	    				ShowTotalCost();
+	    		}
 	    	}
+	    	else if(TotalCost < 0 ){
+	    		System.out.println("Cannot bought this piece.");
+				program.remove(toAdd);
+			}
 	    }
 	    //add queen
 	    if(pieceT == 4 && player == 2){
-	    	p.addPiece(7-x, 7-y, PieceType.QUEEN, false);
-	    	tf = p.a;
-	    	if (tf == 0) {
-	    		program.remove(toAdd);
-	    	}
+	    	int TotalCost = TotalCost_p2 - 7;
+	    	if(TotalCost >= 0) {
+	    		p.addPiece(7-x, 7-y, PieceType.QUEEN, false);
+	    		tf = p.a;
+	    		if (tf == 0) {
+	    			program.remove(toAdd);
+	    		}
+	    		else if(tf == 1) {
+	    			TotalCost_p2 = TotalCost_p2 - 7;
+	    	    	//Print Total Cost
+	    			program.remove(cost2);
+	    			ShowTotalCost();
+	    			}
+	    		}
+	    	else if(TotalCost < 0 ){
+	    		System.out.println("Cannot bought this piece.");
+				program.remove(toAdd);
+			}
+	    	
 	    }
 	    if(pieceT == 4 && player == 1){
-	    	p.addPiece(x, y, PieceType.QUEEN, true);
-	    	tf = p.a;
-	    	if (tf == 0) {
-	    		program.remove(toAdd);
-	    	}
+	    	int TotalCost = TotalCost_p1 - 7;
+	    	if(TotalCost >= 0) {
+	    		p.addPiece(x, y, PieceType.QUEEN, true);
+	    		tf = p.a;
+	    		if (tf == 0) {
+	    			program.remove(toAdd);
+	    		}
+	    		else if(tf == 1) {
+	    			TotalCost_p1 = TotalCost_p1 - 7;
+	    	    	//Print Total Cost
+	    			program.remove(cost1);
+	    			ShowTotalCost();
+	    			}
+	    		}
+	    	else if(TotalCost < 0 ){
+	    		System.out.println("Cannot bought this piece.");
+				program.remove(toAdd);
+			}
 	    }
-    }
+	}
+    
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub

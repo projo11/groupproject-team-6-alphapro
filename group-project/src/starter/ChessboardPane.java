@@ -146,6 +146,7 @@ public void printBoard() {
 	@Override
 	public void showContents() {
 		printBoard();
+		isWhiteTurn = true;
 	}
 
 	@Override
@@ -289,7 +290,7 @@ public void printBoard() {
     	}
     	return colsMoved;
     }
-
+    
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub

@@ -54,6 +54,27 @@ public Board() {
 	addPiece(0, 7, PieceType.ROOK, false);
 }
 
+public void setEqual(Board b) {
+	for (int i = 0; i < 8; i++) {
+		for (int j = 0; j < 8; j++) {
+			if (b.getBoard()[i][j] != null) {
+				Piece toClone = b.getBoard()[i][j];
+				board[i][j] = new Piece(toClone.getRow(), toClone.getCol(), toClone.getType(), toClone.getColor());
+			}
+			else {
+				board[i][j] = null;
+			}
+		}
+	}
+	pieces.clear();
+	for (Piece temp : b.getPieces()) {
+		Piece toClone = temp;
+		pieces.add(new Piece(toClone.getRow(), toClone.getCol(), toClone.getType(), toClone.getColor()));
+	}
+	isBoardFlipped = b.isBoardFlipped();
+	updateAttackLists();
+}
+
 public void playpiecemoveSound() {
 	try{
 	      AudioInputStream audioInputStream =AudioSystem.getAudioInputStream(this.getClass().getResource("piecemovesoundeffect.wav"));
@@ -226,12 +247,7 @@ public void flipBoard() {
 			 board[i][j] = temp[i][j];
 		}
 	}
-	if (isBoardFlipped) {
-		isBoardFlipped = false;
-	}
-	else {
-		isBoardFlipped = true;
-	}
+	isBoardFlipped = !isBoardFlipped;
 	updateAttackLists();
 }
 
@@ -584,6 +600,10 @@ public ArrayList<Piece>getPieces() {
 
 public boolean isBoardFlipped() {
 	return this.isBoardFlipped;
+}
+
+public Piece[][] getBoard() {
+	return board;
 }
 
 public boolean isKingInCheck(boolean isTeamWhite) {

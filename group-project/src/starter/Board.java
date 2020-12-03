@@ -86,6 +86,17 @@ public void playpieceremoveSound() {
 	   {  }
 }
 
+public void playcheckSound() {
+	try{
+	      AudioInputStream audioInputStream =AudioSystem.getAudioInputStream(this.getClass().getResource("checksoundeffect.mp3"));
+	     Clip clip = AudioSystem.getClip();
+	     clip.open(audioInputStream);
+	     clip.start( );
+	    }
+	   catch(Exception ex)
+	   {  }
+}
+
 public boolean isOutOfBounds(Space s) {
 	//Returns true if the Space given has coordinates that are not on the board.
 	if (s.getRow() < 0 || s.getRow() > 7 || s.getCol() < 0 || s.getCol() > 7) {
@@ -599,6 +610,7 @@ public boolean isKingInCheck(boolean isTeamWhite) {
 	for (Piece temp : pieces) {
 		if (temp.getColor() == isTeamWhite && temp.getType() == PieceType.KING) {
 			if (getAttackList(!isTeamWhite)[temp.getRow()][temp.getCol()]) {
+				playcheckSound();
 				return true;
 			}
 			else {

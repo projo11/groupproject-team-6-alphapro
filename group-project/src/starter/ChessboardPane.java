@@ -9,6 +9,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+
 public class ChessboardPane extends GraphicsPane implements ActionListener {
 private MainApplication program;
 
@@ -25,6 +29,18 @@ private boolean isWhiteTurn = true; //Checks to see who's turn it is and which p
 public ChessboardPane(MainApplication app) {
 		program = app;
 	}
+
+public void playcheckSound() {
+	try{
+	      AudioInputStream audioInputStream =AudioSystem.getAudioInputStream(this.getClass().getResource("checksoundeffect.wav"));
+	     Clip clip = AudioSystem.getClip();
+	     clip.open(audioInputStream);
+	     clip.start( );
+	    }
+	   catch(Exception ex)
+	   {  }
+}
+
 public void printBoard() {
 	int x = BOARD_SHIFT;
 	int y = BOARD_SHIFT;
@@ -215,7 +231,7 @@ public void printBoard() {
         				program.quicksave();
         				if (program.getBoard().moveNumSpaces(space, calculateRowsMoved(), calculateColsMoved())) {
         					if (program.getBoard().isKingInCheck(!isWhiteTurn)) {
-        						//Play check sound here
+        						playcheckSound();
         					}
         					if (program.getBoard().checkmate(program.getBoard().isBoardFlipped())) {
             					hideContents();	

@@ -207,32 +207,37 @@ public void printBoard() {
         		if(piece != null)
                	{
         			
-        			if(isWhiteTurn != piece.getColor())
-        			{
+        			if(isWhiteTurn != piece.getColor()) {
         				hideContents();
                    		printBoard(); 
         			}
-        			else if (program.getBoard().moveNumSpaces(space, calculateRowsMoved(), calculateColsMoved())) {
-        					if (program.getBoard().checkmate(program.getBoard().isBoardFlipped())) 
-        					{
-        						hideContents();	
-        						program.switchToVic();
+        			else  {
+        				program.quicksave();
+        				if (program.getBoard().moveNumSpaces(space, calculateRowsMoved(), calculateColsMoved())) {
+        					if (program.getBoard().checkmate(program.getBoard().isBoardFlipped())) {
+            					hideContents();	
+            					program.switchToVic();
+            				}
+        					else if (program.getBoard().isKingInCheck(isWhiteTurn)) {
+        						program.quickload();
+        						hideContents();
+                           		printBoard();
         					}
-        			else {
-        					isWhiteTurn = !isWhiteTurn;
-        					program.getBoard().flipBoard();
-        					hideContents();
+            				else {
+            					isWhiteTurn = !isWhiteTurn;
+            					program.getBoard().flipBoard();
+            					hideContents();
+            					printBoard(); 
+            				}
+            			}
+            			else {
+            				hideContents();
                        		printBoard(); 
-        				}
-        			}
-        			else {
-        				hideContents();
-                   		printBoard(); 
+            			}
         			}
                	}
         	}
     	}
-    	
     }
 	    
     //Below are functions used to help with the mouse listener functions

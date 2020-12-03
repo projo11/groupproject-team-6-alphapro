@@ -34,8 +34,8 @@ public class PieceShopPane extends GraphicsPane implements ActionListener {
 	private final GButton Bb = new GButton("Buy", 820, 160, 70, 30);
 	private final GButton Bq = new GButton("Buy", 820, 240, 70, 30);
 	//total cost
-	int TotalCost_p1 = 45;
-	int TotalCost_p2 = 45;
+	int TotalCost_p1 = 35;
+	int TotalCost_p2 = 35;
 	//Total cost Label
 	private GLabel cost1 = new GLabel("Player1 Total Cost: " + TotalCost_p1, 0, 750);
 	private GLabel cost2 = new GLabel("Player2 Total Cost: " + TotalCost_p2, 0, 750);
@@ -281,7 +281,7 @@ public class PieceShopPane extends GraphicsPane implements ActionListener {
 		if(obj == P2) //After Player 2 is done setting up their board, game goes into a Chess match
 		{
 			program.getBoard().flipBoard();
-			program.saveBoard();
+			program.saveOriginalBoard();
 			program.switchToGame();
 		}
 		if(player == 1) {

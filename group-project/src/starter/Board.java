@@ -88,7 +88,7 @@ public void playpieceremoveSound() {
 
 public void playcheckSound() {
 	try{
-	      AudioInputStream audioInputStream =AudioSystem.getAudioInputStream(this.getClass().getResource("checksoundeffect.mp3"));
+	      AudioInputStream audioInputStream =AudioSystem.getAudioInputStream(this.getClass().getResource("checksoundeffect.wav"));
 	     Clip clip = AudioSystem.getClip();
 	     clip.open(audioInputStream);
 	     clip.start( );

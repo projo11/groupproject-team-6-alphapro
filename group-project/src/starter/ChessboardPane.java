@@ -214,6 +214,9 @@ public void printBoard() {
         			else  {
         				program.quicksave();
         				if (program.getBoard().moveNumSpaces(space, calculateRowsMoved(), calculateColsMoved())) {
+        					if (program.getBoard().isKingInCheck(!isWhiteTurn)) {
+        						//Play check sound here
+        					}
         					if (program.getBoard().checkmate(program.getBoard().isBoardFlipped())) {
             					hideContents();	
             					program.switchToVic();

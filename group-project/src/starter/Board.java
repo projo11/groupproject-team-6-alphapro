@@ -67,9 +67,16 @@ public void setEqual(Board b) {
 		}
 	}
 	pieces.clear();
-	for (Piece temp : b.getPieces()) {
-		Piece toClone = temp;
-		pieces.add(new Piece(toClone.getRow(), toClone.getCol(), toClone.getType(), toClone.getColor()));
+	//for (Piece temp : b.getPieces()) {
+		//Piece toClone = temp;
+		//pieces.add(new Piece(toClone.getRow(), toClone.getCol(), toClone.getType(), toClone.getColor()));
+	//}
+	for (int i = 0; i < 8; i++) {
+		for (int j = 0; j < 8; j++) {
+			if (board[i][j] != null) {
+				pieces.add(board[i][j]);
+			}
+		}
 	}
 	isBoardFlipped = b.isBoardFlipped();
 	updateAttackLists();

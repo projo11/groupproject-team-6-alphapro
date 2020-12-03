@@ -146,6 +146,7 @@ public void printBoard() {
 	@Override
 	public void showContents() {
 		printBoard();
+		isWhiteTurn = true;
 	}
 
 	@Override
@@ -214,7 +215,8 @@ public void printBoard() {
         			else if (program.getBoard().moveNumSpaces(space, calculateRowsMoved(), calculateColsMoved())) {
         					if (program.getBoard().checkmate(program.getBoard().isBoardFlipped())) 
         					{
-        							program.switchToVic();
+        						hideContents();	
+        						program.switchToVic();
         					}
         			else {
         					isWhiteTurn = !isWhiteTurn;
@@ -289,7 +291,7 @@ public void printBoard() {
     	}
     	return colsMoved;
     }
-
+    
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub

@@ -53,29 +53,11 @@ public class MainApplication extends GraphicsApplication{
 	}
 	
 	public void saveBoard() {
-		/*
-		if (originalBoard.getPieces().size() > 0) {
-			for (Piece temp : originalBoard.getPieces()) {
-				originalBoard.removePiece(new Space(temp.getRow(), temp.getCol()));
-			}
-		}
-		for (Piece temp : board.getPieces()) {
-			originalBoard.addPiece(temp.getRow(), temp.getCol(), temp.getType(), temp.getColor());
-		}
-		*/
-		originalBoard = board;
+		originalBoard.setEqual(board);
 	}
 	
 	public void loadBoard() {
-		/*
-		for (Piece temp : board.getPieces()) {
-			board.removePiece(new Space(temp.getRow(), temp.getCol()));
-		}
-		for (Piece temp : originalBoard.getPieces()) {
-			board.addPiece(temp.getRow(), temp.getCol(), temp.getType(), temp.getColor());
-		}
-		*/
-		board = originalBoard;
+		board.setEqual(originalBoard);
 	}
 }
 

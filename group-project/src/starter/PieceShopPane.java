@@ -274,12 +274,7 @@ public class PieceShopPane extends GraphicsPane implements ActionListener {
 		GObject obj = program.getElementAt(e.getX(), e.getY());
 		if(obj == P1) //After Player 1 is done setting up their board, screen changes so that Player 2 now gets to set up the board
 		{
-			if (player == 1) {
-				player = 2;
-			}
-			else {
-				player = 1;
-			}
+			player++;
 			program.removeAll();
 			program.getBoard().flipBoard();
 			showContents();
@@ -287,6 +282,7 @@ public class PieceShopPane extends GraphicsPane implements ActionListener {
 		}
 		if(obj == P2) //After Player 2 is done setting up their board, game goes into a Chess match
 		{
+			player--;
 			program.getBoard().flipBoard();
 			program.saveOriginalBoard();
 			program.switchToGame();

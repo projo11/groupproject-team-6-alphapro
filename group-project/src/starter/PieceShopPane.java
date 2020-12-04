@@ -282,6 +282,7 @@ public class PieceShopPane extends GraphicsPane implements ActionListener {
 		}
 		if(obj == P2) //After Player 2 is done setting up their board, game goes into a Chess match
 		{
+			player--;
 			program.getBoard().flipBoard();
 			program.saveOriginalBoard();
 			program.switchToGame();

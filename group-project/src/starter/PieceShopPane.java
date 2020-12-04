@@ -183,7 +183,6 @@ public class PieceShopPane extends GraphicsPane implements ActionListener {
 	public void showContents() {
 		TotalCost_p1 = 35;
 		TotalCost_p2 = 35;
-		player = 1;
 		// TODO Auto-generated method stub
 		//Board
 		printBoard();
@@ -275,7 +274,12 @@ public class PieceShopPane extends GraphicsPane implements ActionListener {
 		GObject obj = program.getElementAt(e.getX(), e.getY());
 		if(obj == P1) //After Player 1 is done setting up their board, screen changes so that Player 2 now gets to set up the board
 		{
-			player++;
+			if (player == 1) {
+				player = 2;
+			}
+			else {
+				player = 1;
+			}
 			program.removeAll();
 			program.getBoard().flipBoard();
 			showContents();

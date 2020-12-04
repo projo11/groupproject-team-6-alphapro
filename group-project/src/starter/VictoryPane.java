@@ -71,6 +71,7 @@ public void playvictorySound() {
 		if(obj == replay)
 		{
 			program.setSize(900, 900);
+			program.loadEmptyBoard();
 			program.switchToPieceShop();
 		}
 		if(obj == Return)

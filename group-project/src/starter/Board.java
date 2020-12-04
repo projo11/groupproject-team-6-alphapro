@@ -18,12 +18,11 @@ int a = 1;
 //NOTE: Flipped means playing from black's perspective instead of white.
 
 public Board() {
+	/*
 	for (int i = 0; i < 8; i++) {
 		addPiece(6, i, PieceType.PAWN, true);
 		addPiece(1, i, PieceType.PAWN, false);
 	}
-	addPiece(7, 4, PieceType.KING, true);
-	addPiece(0, 4, PieceType.KING, false);
 	addPiece(7, 3, PieceType.QUEEN, true);
 	addPiece(0, 3, PieceType.QUEEN, false);
 	addPiece(7, 2, PieceType.BISHOP, true);
@@ -38,6 +37,9 @@ public Board() {
 	addPiece(0, 0, PieceType.ROOK, false);
 	addPiece(7, 7, PieceType.ROOK, true);
 	addPiece(0, 7, PieceType.ROOK, false);
+	*/
+	addPiece(7, 4, PieceType.KING, true);
+	addPiece(0, 4, PieceType.KING, false);
 }
 
 public void setEqual(Board b) {

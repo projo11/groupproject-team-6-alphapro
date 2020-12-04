@@ -55,7 +55,7 @@ public class PieceShopPane extends GraphicsPane implements ActionListener {
 	private ArrayList<Piece> pieces = new ArrayList<Piece>();
 	
 	Point point = null;
-	Board p = new Board();
+	Board p;
 	int tf = 1;
 	int pieceIcon = 0;
 	
@@ -68,7 +68,7 @@ public class PieceShopPane extends GraphicsPane implements ActionListener {
 
 	public PieceShopPane(MainApplication app) {
 			program = app;
-			
+			p = program.getBoard();
 	}
 	public void printBoard() {
 		int x = BOARD_SHIFT;
@@ -181,6 +181,8 @@ public class PieceShopPane extends GraphicsPane implements ActionListener {
 	}
 	@Override
 	public void showContents() {
+		TotalCost_p1 = 35;
+		TotalCost_p2 = 35;
 		// TODO Auto-generated method stub
 		//Board
 		printBoard();
@@ -436,7 +438,7 @@ public class PieceShopPane extends GraphicsPane implements ActionListener {
     	if(pieceT == 0 && player == 2){
 		    int TotalCost = TotalCost_p2 - 1;
 		    if(TotalCost >= 0) {
-		    	p.addPiece(7-x, 7-y, PieceType.PAWN, false);
+		    	p.addPiece(x, y, PieceType.PAWN, false);
 		    	tf = p.a;
 		    	if (tf == 0) {
 		    		program.remove(toAdd);
@@ -479,7 +481,7 @@ public class PieceShopPane extends GraphicsPane implements ActionListener {
 	    if(pieceT == 1 && player == 2){
 	    	int TotalCost = TotalCost_p2 - 3;
 	    	if(TotalCost >= 0) {
-	    		p.addPiece(7-x, 7-y, PieceType.KNIGHT, false);
+	    		p.addPiece(x, y, PieceType.KNIGHT, false);
 	    		tf = p.a;
 	    		if (tf == 0) {
 	    			program.remove(toAdd);
@@ -520,7 +522,7 @@ public class PieceShopPane extends GraphicsPane implements ActionListener {
 	    if(pieceT == 2 && player == 2){
 	    	int TotalCost = TotalCost_p2 - 4;
 	    	if(TotalCost >= 0) {
-	    		p.addPiece(7-x, 7-y, PieceType.ROOK, false);
+	    		p.addPiece(x, y, PieceType.ROOK, false);
 	    		tf = p.a;
 	    		if (tf == 0) {
 	    			program.remove(toAdd);
@@ -561,7 +563,7 @@ public class PieceShopPane extends GraphicsPane implements ActionListener {
 	    if(pieceT == 3 && player == 2){
 	    	int TotalCost = TotalCost_p2 - 3;
 	    	if(TotalCost >= 0) {
-	    		p.addPiece(7-x, 7-y, PieceType.BISHOP, false);
+	    		p.addPiece(x, y, PieceType.BISHOP, false);
 	    		tf = p.a;
 	    		if (tf == 0) {
 	    			program.remove(toAdd);
@@ -602,7 +604,7 @@ public class PieceShopPane extends GraphicsPane implements ActionListener {
 	    if(pieceT == 4 && player == 2){
 	    	int TotalCost = TotalCost_p2 - 7;
 	    	if(TotalCost >= 0) {
-	    		p.addPiece(7-x, 7-y, PieceType.QUEEN, false);
+	    		p.addPiece(x, y, PieceType.QUEEN, false);
 	    		tf = p.a;
 	    		if (tf == 0) {
 	    			program.remove(toAdd);

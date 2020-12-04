@@ -183,6 +183,7 @@ public class PieceShopPane extends GraphicsPane implements ActionListener {
 	public void showContents() {
 		TotalCost_p1 = 35;
 		TotalCost_p2 = 35;
+		player = 1;
 		// TODO Auto-generated method stub
 		//Board
 		printBoard();

@@ -13,6 +13,7 @@ public class MainApplication extends GraphicsApplication{
 	private VictoryPane victory;
 	private Board originalBoard = new Board();
 	private Board savedBoard = new Board();
+	private Board emptyBoard = new Board();
 
 	public void init(){
 		setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
@@ -66,6 +67,10 @@ public class MainApplication extends GraphicsApplication{
 	
 	public void quickload() {
 		board.setEqual(savedBoard);
+	}
+	
+	public void loadEmptyBoard() {
+		board.setEqual(emptyBoard);
 	}
 }
 

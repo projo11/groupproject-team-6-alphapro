@@ -116,46 +116,89 @@ public void printBoard() {
 		}
 		program.add(toAdd);
 		}
-	String labelName = new String();
 	GLabel toAdd;
-	for (int i = 0; i < 8; i++) {
-		switch(i) {
-		case 0: 
-			labelName = "A";
-			break;
-		case 1: 
-			labelName = "B";
-			break;
-		case 2: 
-			labelName = "C";
-			break;
-		case 3: 
-			labelName = "D";
-			break;
-		case 4: 
-			labelName = "E";
-			break;
-		case 5: 
-			labelName = "F";
-			break;
-		case 6: 
-			labelName = "G";
-			break;
-		case 7: 
-			labelName = "H";
-			break;
+	String labelName = new String();
+	if (!program.getBoard().isBoardFlipped()) {
+		for (int i = 0; i < 8; i++) {
+			switch(i) {
+			case 0: 
+				labelName = "A";
+				break;
+			case 1: 
+				labelName = "B";
+				break;
+			case 2: 
+				labelName = "C";
+				break;
+			case 3: 
+				labelName = "D";
+				break;
+			case 4: 
+				labelName = "E";
+				break;
+			case 5: 
+				labelName = "F";
+				break;
+			case 6: 
+				labelName = "G";
+				break;
+			case 7: 
+				labelName = "H";
+				break;
+			}
+			toAdd = new GLabel(labelName, BOARD_SHIFT+(i+1)*SPACE_SIZE-15, BOARD_SHIFT+8*SPACE_SIZE);
+			toAdd.setFont(LABEL_FONT);
+			toAdd.setColor(LABEL_COLOR);
+			program.add(toAdd);
 		}
-		toAdd = new GLabel(labelName, BOARD_SHIFT+(i+1)*SPACE_SIZE-15, BOARD_SHIFT+8*SPACE_SIZE);
-		toAdd.setFont(LABEL_FONT);
-		toAdd.setColor(LABEL_COLOR);
-		program.add(toAdd);
+		for (int i = 0; i < 8; i++) {
+			toAdd = new GLabel(Integer.toString(8-i), BOARD_SHIFT, BOARD_SHIFT+i*SPACE_SIZE+18);
+			toAdd.setFont(LABEL_FONT);
+			toAdd.setColor(LABEL_COLOR);
+			program.add(toAdd);
+		}
 	}
-	for (int i = 0; i < 8; i++) {
-		toAdd = new GLabel(Integer.toString(8-i), BOARD_SHIFT, BOARD_SHIFT+i*SPACE_SIZE+18);
-		toAdd.setFont(LABEL_FONT);
-		toAdd.setColor(LABEL_COLOR);
-		program.add(toAdd);
+	else {
+		for (int i = 0; i < 8; i++) {
+			switch(i) {
+			case 0: 
+				labelName = "H";
+				break;
+			case 1: 
+				labelName = "G";
+				break;
+			case 2: 
+				labelName = "F";
+				break;
+			case 3: 
+				labelName = "E";
+				break;
+			case 4: 
+				labelName = "D";
+				break;
+			case 5: 
+				labelName = "C";
+				break;
+			case 6: 
+				labelName = "B";
+				break;
+			case 7: 
+				labelName = "A";
+				break;
+			}
+			toAdd = new GLabel(labelName, BOARD_SHIFT+(i+1)*SPACE_SIZE-15, BOARD_SHIFT+8*SPACE_SIZE);
+			toAdd.setFont(LABEL_FONT);
+			toAdd.setColor(LABEL_COLOR);
+			program.add(toAdd);
+		}
+		for (int i = 0; i < 8; i++) {
+			toAdd = new GLabel(Integer.toString(i+1), BOARD_SHIFT, BOARD_SHIFT+i*SPACE_SIZE+18);
+			toAdd.setFont(LABEL_FONT);
+			toAdd.setColor(LABEL_COLOR);
+			program.add(toAdd);
+		}
 	}
+	
 }
 
 

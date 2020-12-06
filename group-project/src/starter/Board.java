@@ -16,7 +16,6 @@ private boolean isBoardFlipped = false;
 
 int a = 1;
 //NOTE: Flipped means playing from black's perspective instead of white.
-
 public Board() {
 	/*
 	for (int i = 0; i < 8; i++) {

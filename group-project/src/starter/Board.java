@@ -381,10 +381,15 @@ public boolean hasLineOfSight(Space start, int r, int c) {
 	else {
 		greater = c;
 	}
-	for (int i = 0; i < Math.abs(greater)-1; i++) {//TODO: Determine if greater-1 is working as intended
+	for (int i = 0; i < Math.abs(greater)-1; i++) {
 		if (start.getRow()+((i+1)*Integer.signum(r)) < 8 && start.getCol()+((i+1)*Integer.signum(c)) < 8 && start.getRow()+((i+1)*Integer.signum(r)) >= 0 && start.getCol()+((i+1)*Integer.signum(c)) >= 0) {
 			if (board[start.getRow()+((i+1)*Integer.signum(r))][start.getCol()+((i+1)*Integer.signum(c))] != null) {
-				return false;
+				if (board[start.getRow()+((i+1)*Integer.signum(r))][start.getCol()+((i+1)*Integer.signum(c))].getColor() != getPiece(start).getColor() && board[start.getRow()+((i+1)*Integer.signum(r))][start.getCol()+((i+1)*Integer.signum(c))].getType() == PieceType.KING) {
+					return true;
+				}
+				else {
+					return false;
+				}
 			}
 		}
 	}
@@ -492,7 +497,7 @@ public boolean checkmate(boolean isTeamWhite) {
 					break;
 				}
 				if (!isOutOfBounds(toCheck) && getPiece(toCheck) != null) {
-					if ((getPiece(toCheck).getType() == PieceType.BISHOP || getPiece(toCheck).getType() == PieceType.QUEEN) && getPiece(toCheck).getColor() == oppositeTeam) {
+					if ((getPiece(toCheck).getType() == PieceType.BISHOP || getPiece(toCheck).getType() == PieceType.QUEEN) && getPiece(toCheck).getColor() == oppositeTeam && hasLineOfSight(toCheck, kingLoc.getRow()-toCheck.getRow(), kingLoc.getCol()-toCheck.getCol())) {
 						if (attacker != null) {
 							return true;
 						}
@@ -521,7 +526,7 @@ public boolean checkmate(boolean isTeamWhite) {
 					break;
 				}
 				if (!isOutOfBounds(toCheck) && getPiece(toCheck) != null) {
-					if ((getPiece(toCheck).getType() == PieceType.ROOK || getPiece(toCheck).getType() == PieceType.QUEEN) && getPiece(toCheck).getColor() == oppositeTeam) {
+					if ((getPiece(toCheck).getType() == PieceType.ROOK || getPiece(toCheck).getType() == PieceType.QUEEN) && getPiece(toCheck).getColor() == oppositeTeam && hasLineOfSight(toCheck, kingLoc.getRow()-toCheck.getRow(), kingLoc.getCol()-toCheck.getCol())) {
 						if (attacker != null) {
 							return true;
 						}
@@ -581,12 +586,6 @@ public boolean checkmate(boolean isTeamWhite) {
 }
 
 public ArrayList<Piece>getPieces() {
-	
-	/*int term = 1;
-	  for (Piece temp : pieces) {
-		System.out.println(term);
-		term++;
-	}*/
 	return pieces;
 }
 

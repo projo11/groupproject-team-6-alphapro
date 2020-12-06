@@ -27,6 +27,7 @@ public class PieceShopPane extends GraphicsPane implements ActionListener {
 	//Location and size of buttons are currently just a placeholder; fix later
 	private GButton P1 = new GButton("P1 Done", 700, 700, 150 , 80);
 	private GButton P2 = new GButton("P2 Done", 700, 700, 150 , 80);
+	private GButton DefaultChess = new GButton("Default Chess", 700, 600, 150 , 80);
 	//buy pieces button
 	private final GButton Bp = new GButton("Buy", 820, 80, 70, 30);
 	private final GButton BK = new GButton("Buy", 820, 120, 70, 30);
@@ -302,6 +303,7 @@ public class PieceShopPane extends GraphicsPane implements ActionListener {
 		program.add(Br);
 		program.add(Bb);
 		program.add(Bq);
+		program.add(DefaultChess);
 	}
 	
 	@Override
@@ -315,6 +317,11 @@ public class PieceShopPane extends GraphicsPane implements ActionListener {
 		lastX = lastY = 0;
 		pieceIcon = 0;
 		GObject obj = program.getElementAt(e.getX(), e.getY());
+		if(obj == DefaultChess) //If the players decide to just play default chess, this button will automatically set up a regular chess game
+		{
+			program.saveOriginalBoard();
+			program.switchToGame();
+		}
 		if(obj == P1) //After Player 1 is done setting up their board, screen changes so that Player 2 now gets to set up the board
 		{
 			player++;

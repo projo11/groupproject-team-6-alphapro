@@ -319,6 +319,24 @@ public class PieceShopPane extends GraphicsPane implements ActionListener {
 		GObject obj = program.getElementAt(e.getX(), e.getY());
 		if(obj == DefaultChess) //If the players decide to just play default chess, this button will automatically set up a regular chess game
 		{
+			for (int i = 0; i < 8; i++) {
+				program.getBoard().addPiece(6, i, PieceType.PAWN, true);
+				program.getBoard().addPiece(1, i, PieceType.PAWN, false);
+			}
+			program.getBoard().addPiece(7, 3, PieceType.QUEEN, true);
+			program.getBoard().addPiece(0, 3, PieceType.QUEEN, false);
+			program.getBoard().addPiece(7, 2, PieceType.BISHOP, true);
+			program.getBoard().addPiece(0, 2, PieceType.BISHOP, false);
+			program.getBoard().addPiece(7, 5, PieceType.BISHOP, true);
+			program.getBoard().addPiece(0, 5, PieceType.BISHOP, false);
+			program.getBoard().addPiece(7, 1, PieceType.KNIGHT, true);
+			program.getBoard().addPiece(0, 1, PieceType.KNIGHT, false);
+			program.getBoard().addPiece(7, 6, PieceType.KNIGHT, true);
+			program.getBoard().addPiece(0, 6, PieceType.KNIGHT, false);
+			program.getBoard().addPiece(7, 0, PieceType.ROOK, true);
+			program.getBoard().addPiece(0, 0, PieceType.ROOK, false);
+			program.getBoard().addPiece(7, 7, PieceType.ROOK, true);
+			program.getBoard().addPiece(0, 7, PieceType.ROOK, false);
 			program.saveOriginalBoard();
 			program.switchToGame();
 		}
@@ -431,9 +449,7 @@ public class PieceShopPane extends GraphicsPane implements ActionListener {
 				if(obj == toAdd) {
 					pieceIcon = 1;
 					toDrag = program.getElementAt(e.getX(), e.getY());
-					point = e.getPoint();
-					
-						
+					point = e.getPoint();	
 				}
 			}
 		}

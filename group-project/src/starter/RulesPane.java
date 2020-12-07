@@ -165,11 +165,6 @@ public RulesPane(MainApplication app) {
 		program.add(exit);
 	}
 
-	private void add(GImage rulesim) {
-		// TODO Auto-generated method stub
-		
-	}
-
 	@Override
 	public void hideContents() {
 		program.removeAll();

@@ -91,7 +91,7 @@ public boolean moveNumSpaces(Space start, int r, int c) {
 	}
 	return false;
 }
-public void addPiece(int r, int c, PieceType type, boolean isWhite) {
+public boolean addPiece(int r, int c, PieceType type, boolean isWhite) {
 	a = 1;
 	//Creates a Piece object using the arguments and adds it to the board at the coordinates given.
 	//Be careful calling this function, because it will override any piece that is currently at that location.
@@ -99,7 +99,7 @@ public void addPiece(int r, int c, PieceType type, boolean isWhite) {
 	if (board[r][c] != null) {
 		System.out.println("ERROR: Could not add piece.");
 		a = 0;
-		return;
+		return false;
 	}
 	
 	Piece piece = new Piece(r, c, type, isWhite);
@@ -111,6 +111,7 @@ public void addPiece(int r, int c, PieceType type, boolean isWhite) {
 		term++;
 	}*/
 	updateAttackLists();
+	return true;
 }
 
 public boolean canMoveNumSpaces(Space start, int r, int c) {

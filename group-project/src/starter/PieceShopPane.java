@@ -7,8 +7,7 @@ import java.lang.Math;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
-import java.util.ArrayList;
-import java.util.Scanner;
+import java.util.*;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -54,6 +53,9 @@ public class PieceShopPane extends GraphicsPane implements ActionListener {
 	public static final Color LABEL_COLOR = Color.red;
 	
 	private ArrayList<Piece> pieces = new ArrayList<Piece>();
+	
+	//MAP
+	Map<GImage, Piece> pieceMap = new HashMap<GImage, Piece>();
 	
 	Point point = null;
 	Board p;
@@ -122,6 +124,8 @@ public class PieceShopPane extends GraphicsPane implements ActionListener {
 				toAdd = new GImage(filePath, temp.getCol()*SPACE_SIZE + BOARD_SHIFT + (((1-SIZE_MOD)*SPACE_SIZE)/2), temp.getRow()*SPACE_SIZE + BOARD_SHIFT + (((1-SIZE_MOD)*SPACE_SIZE)/2));
 				toAdd.setSize(SPACE_SIZE*SIZE_MOD, SPACE_SIZE*SIZE_MOD);
 			}
+			//add the GIamges to a map where they can be matched with their corresponding piece 
+			pieceMap.put(toAdd, temp);
 			program.add(toAdd);
 		}
 		GLabel toAdd;
@@ -208,6 +212,17 @@ public class PieceShopPane extends GraphicsPane implements ActionListener {
 		}
 		
 	}
+	
+	public void clearBoard() { //Removes all the piece images from the board
+		//For each entry in our map...
+		for (Map.Entry<GImage, Piece> entry : pieceMap.entrySet()) {
+			//Remove the GImage
+			program.remove(entry.getKey());
+		}
+		//Empty the map
+		pieceMap.clear();
+	}
+	
 	public void ShowTotalCost() {
 		cost1 = new GLabel("Player1 Total Cost: " + TotalCost_p1, 0, 750);
 		cost1.setFont(new Font("TimesNewRoman", Font.BOLD, 30));
@@ -343,9 +358,9 @@ public class PieceShopPane extends GraphicsPane implements ActionListener {
 		if(obj == P1) //After Player 1 is done setting up their board, screen changes so that Player 2 now gets to set up the board
 		{
 			player++;
-			program.removeAll();
+			clearBoard();
 			program.getBoard().flipBoard();
-			showContents();
+			printBoard();
 			program.add(P2);
 		}
 		if(obj == P2) //After Player 2 is done setting up their board, game goes into a Chess match
@@ -491,7 +506,36 @@ public class PieceShopPane extends GraphicsPane implements ActionListener {
 	    	if(x > -1 && y > -1) {
 	    		if(x < 8 && y < 8) {
 	    			if(pieceIcon == 1 && moveable == true) {
-	    				addP(x,y,pieceT, player);
+	    				//addP(x,y,pieceT, player);
+	    				//add the piece to the board
+	    				boolean color;
+	    				if (player == 1) {
+	    					color = true;
+	    				} else {
+	    					color = false;
+	    				}
+	    				switch (pieceT) {
+	    				case 0:
+	    					p.addPiece(x, y, PieceType.PAWN, color);
+	    					break;
+	    				case 1:
+	    					p.addPiece(x, y, PieceType.KNIGHT, color);
+	    					break;
+	    				case 2:
+	    					p.addPiece(x, y, PieceType.ROOK, color);
+	    					break;
+	    				case 3:
+	    					p.addPiece(x, y, PieceType.BISHOP, color);
+	    					break;
+	    				case 4:
+	    					p.addPiece(x, y, PieceType.QUEEN, color);
+	    					break;
+	    				}
+	    				//clear the existing board from the screen
+	    				program.remove(toAdd);
+	    				clearBoard();
+	    				//reprint the board
+	    				printBoard();
 	    				pieceT = -1;
 	    				moveable = false;
 	    			}

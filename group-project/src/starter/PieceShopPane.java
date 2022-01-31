@@ -413,6 +413,17 @@ public class PieceShopPane extends GraphicsPane implements ActionListener {
 				toDrag = program.getElementAt(e.getX(), e.getY());
 				point = e.getPoint();
 			}
+			//if the object is a piece on the board...
+			if(pieceMap.containsKey(obj)) {
+				//if the piece is ours, and also not the king...
+				Piece piece = pieceMap.get(obj);
+				if (piece.getColor() && piece.getType() != PieceType.KING) {
+					//allow it to be dragged
+					toDrag = program.getElementAt(e.getX(), e.getY());
+					point = e.getPoint();
+					moveable = true;
+				}
+			}
 		}
 		else if(player == 2) {
 			if(obj == Bp && TotalCost_p2 >= 1) {//add pawn
@@ -458,6 +469,16 @@ public class PieceShopPane extends GraphicsPane implements ActionListener {
 				toDrag = program.getElementAt(e.getX(), e.getY());
 				point = e.getPoint();	
 			}
+			if(pieceMap.containsKey(obj)) {
+				//if the piece is ours, and also not the king...
+				Piece piece = pieceMap.get(obj);
+				if (!piece.getColor() && piece.getType() != PieceType.KING) {
+					//allow it to be dragged
+					toDrag = program.getElementAt(e.getX(), e.getY());
+					point = e.getPoint();
+					moveable = true;
+				}
+			}
 		}
 	}
 	
@@ -490,7 +511,9 @@ public class PieceShopPane extends GraphicsPane implements ActionListener {
     	int y = (int)ny;
     	if(lastY <= 60 || lastX <= 60 ||x > 7 || y > 7) {
     		if(pieceIcon == 1) {
-				toAdd.setLocation(0,0);
+				program.remove(toAdd);
+				clearBoard();
+				printBoard();
 			}
     	}
     	else {

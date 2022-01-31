@@ -40,6 +40,9 @@ public class PieceShopPane extends GraphicsPane implements ActionListener {
 	private GLabel cost1 = new GLabel("Player1 Total Cost: " + TotalCost_p1, 0, 750);
 	private GLabel cost2 = new GLabel("Player2 Total Cost: " + TotalCost_p2, 0, 750);
 	
+	//Trash can icon
+	private GImage trashcan = new GImage("trashcan.png");
+	
 	boolean moveable = true;
 	
 	//detect player 1 or 2
@@ -319,6 +322,9 @@ public class PieceShopPane extends GraphicsPane implements ActionListener {
 		program.add(Bb);
 		program.add(Bq);
 		program.add(DefaultChess);
+		
+		trashcan.setBounds(680, 300, 80, 80);
+		program.add(trashcan);
 	}
 	
 	@Override

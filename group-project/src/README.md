@@ -5,6 +5,7 @@ We need to make 3 changes to fix this:
 2. Allow the pieces to be dragged after they are placed
 3. Add a trash can panel that you can drag pieces to, refunding them
 
+
 Pseudocode
 Step 1. reprinting of the board
 in PieceShopPane.java, line 494
@@ -32,3 +33,11 @@ Step 3. allow pieces to be removed and refunded
 	//remove that piece from the board
 	//gain cost equal to that piece's value
 	//reprint the board
+
+	
+To demo this new feature:
+1. Click "Start Battle"
+2. Add any piece of your choice to the board. Notice how it consumes points to add a piece to the board.
+3. Drag the piece over to the trash can icon on the right.
+4. Your points should have been refunded, setting you back to 35 points.
+5. To prove that the piece was truly removed from the board, try placing a different piece in it's place.

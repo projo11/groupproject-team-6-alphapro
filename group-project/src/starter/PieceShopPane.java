@@ -323,7 +323,7 @@ public class PieceShopPane extends GraphicsPane implements ActionListener {
 		program.add(Bq);
 		program.add(DefaultChess);
 		
-		trashcan.setBounds(680, 300, 80, 80);
+		trashcan.setBounds(680, 300, 200, 200);
 		program.add(trashcan);
 	}
 	
@@ -515,6 +515,46 @@ public class PieceShopPane extends GraphicsPane implements ActionListener {
     	double ny = Math.round(((lastX - 60) / 80));
     	int x = (int)nx;
     	int y = (int)ny;
+    	//if we release the mouse on the trash can icon while holding a piece
+    	if(lastY >= 300 && lastY < 500 && lastX >= 680 && lastX < 880) {
+    		if(pieceIcon == 1) {
+    			//check the map to see which piece we are holding
+    			Piece toRemove = pieceMap.get(toAdd);
+    			PieceType type = toRemove.getType();
+    			int cost;
+    	    	//remove that piece from the board
+    			Space removeLocation = new Space(toRemove.getRow(), toRemove.getCol());
+    			p.removePiece(removeLocation);
+    	    	//gain cost equal to that piece's value
+    			if (type == PieceType.PAWN) {
+    				cost = 1;
+    			} else if (type == PieceType.KNIGHT) {
+    				cost = 3;
+    			} else if (type == PieceType.BISHOP) {
+    				cost = 3;
+    			} else if (type == PieceType.ROOK) {
+    				cost = 4;
+    			} else if (type == PieceType.QUEEN) {
+    				cost = 7;
+    			} else {
+    				System.out.println("ERROR");
+    				cost = 0;
+    			}
+    			if (player == 1) {
+    				TotalCost_p1 += cost;
+    				program.remove(cost1);
+	    			ShowTotalCost();
+    			} else {
+    				TotalCost_p2 += cost;
+    				program.remove(cost2);
+	    			ShowTotalCost();
+    			}
+    	    	//reprint the board
+				program.remove(toAdd);
+				clearBoard();
+				printBoard();
+			}
+    	}
     	if(lastY <= 60 || lastX <= 60 ||x > 7 || y > 7) {
     		if(pieceIcon == 1) {
 				program.remove(toAdd);
